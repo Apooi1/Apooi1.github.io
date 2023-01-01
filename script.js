@@ -173,6 +173,7 @@ container_create_button.addEventListener('click', function(){
   created_container.style.borderStyle = "solid"
   created_container.style.borderWidth = "1"
   created_container.style.display = "flex"
+  created_container.style.position = "absolute"
   created_container.id = id_tracker += 1
   draggable(created_container)
 
@@ -215,6 +216,20 @@ function form_update(){
   document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
 //Display
 document.getElementById("display_input").value = document.getElementById(selected_element_4form).style.display
+//Flex direction
+document.getElementById("flex_direction").value = document.getElementById(selected_element_4form).style.flexDirection
+//Justify content
+document.getElementById("justify_content").value = document.getElementById(selected_element_4form).style.justifyContent
+//Align content
+document.getElementById("align_content").value = document.getElementById(selected_element_4form).style.alignContent
+//Align items
+document.getElementById("align_items").value = document.getElementById(selected_element_4form).style.alignItems
+//Flex wrap
+document.getElementById("flex_wrap").value = document.getElementById(selected_element_4form).style.flexWrap
+//Flex gap column
+document.getElementById("flex_gap_column").value = document.getElementById(selected_element_4form).style.columnGap
+//Flex gap row
+document.getElementById("flex_gap_row").value = document.getElementById(selected_element_4form).style.rowGap
 //X
 p = document.getElementById("x_input").value = document.getElementById(selected_element_4form).style.top
 //Y
@@ -275,14 +290,16 @@ function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
   function mousedown() {
+    if (selected.parentElement.id === "body") {
     selected.style.position = 'absolute'
+    }
     document.addEventListener("mousemove", mousemover)
     function mousemover() {
       selected.style.left = event.clientX - selected.offsetWidth / 2 + "px"
       selected.style.top = event.clientY - selected.offsetHeight / 2 + "px"
       //console.log (event.clientX, event.clientY)
     }
-  selected.addEventListener("mouseup", mouseup)
+  document.addEventListener("mouseup", mouseup)
     function mouseup() {
     document.removeEventListener("mousemove", mousemover)
     document.removeEventListener("mousedown", mousedown)
@@ -307,11 +324,36 @@ document.getElementById('form').addEventListener('submit', function(q){
 })
 
 function inputs_change() {
+  console.log("submittion")
+  let docv = document.getElementById
+let elemv = document.getElementById
 //ID submit
+
+// let t = "<script>" + value + "</script>"
+
   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
 //Display submit
 document.getElementById(selected_element_4form).style.display = document.getElementById("display_input").value
 console.log(document.getElementById(selected_element_4form).style.display)
+//Flex direction submit
+document.getElementById(selected_element_4form).style.flexDirection = document.getElementById("flex_direction").value
+//Justify content submit
+document.getElementById(selected_element_4form).style.justifyContent = document.getElementById("justify_content").value
+//align content submit
+document.getElementById(selected_element_4form).style.alignContent = document.getElementById("align_content").value
+//align items submit
+document.getElementById(selected_element_4form).style.alignItems = document.getElementById("align_items").value
+//flex wrap submit
+document.getElementById(selected_element_4form).style.flexWrap = document.getElementById("flex_wrap").value
+//Flex column gap submit
+if (!document.getElementById("flex_gap_column").value.includes("px")) {
+  console.log ("not included")
+  document.getElementById("flex_gap_column").value += "px"
+  console.log(document.getElementById("flex_gap_column").value)
+  document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
+}
+//Flex row gap submit
+document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
 //x submit
 document.getElementById(selected_element_4form).style.top = document.getElementById("x_input").value
 //y submit
@@ -385,32 +427,51 @@ document.getElementById('form_left_right').addEventListener('click', function(){
   
 })
 
+//Input drop downs visability switcher
+let select_parents = document.getElementsByClassName("select_parents")
+for (let x = 0; x < select_parents.length; x++) {
+  document.getElementsByClassName("select_parents")[x].addEventListener('focus', function() {
+    document.getElementsByClassName('select_child')[x].style.display = "block"
+  })
 
-//Border style select visswitch
-document.getElementById('border_style').addEventListener('focus', function(){
-  console.log('selected')
-document.getElementById('border_style_select').style.display = "block"
+  document.getElementsByClassName("select_child")[x].addEventListener('blur', function() {
+    document.getElementsByClassName('select_child')[x].style.display = "none"
+  })
 
-document.getElementById('border_style_select').addEventListener('blur', function(){ document.getElementById('border_style_select').style.display = "none"
-})
-})
-//update border style form when its selector is changed
-document.getElementById("border_style_select").addEventListener("change", function(){
-  document.getElementById('border_style').value = document.getElementById('border_style_select').value
-})
+  document.getElementsByClassName("select_child")[x].addEventListener('change', function() {
+    document.getElementsByClassName('select_parents')[x].value = document.getElementsByClassName("select_child")[x].value
+    inputs_change()
+  })
 
-//display input select visswitch
-document.getElementById('display_input').addEventListener('focus', function(){
-  console.log('selected')
-document.getElementById('display_select').style.display = "block"
+}
 
-document.getElementById('display_select').addEventListener('blur', function(){ document.getElementById('display_select').style.display = "none"
-})
-})
-//update border style form when its selector is changed
-document.getElementById("display_select").addEventListener("change", function(){
-  document.getElementById('display_input').value = document.getElementById('display_select').value
-})
+// //Border style select visswitch
+// document.getElementById('border_style').addEventListener('focus', function(){
+//   console.log('selected')
+// document.getElementById('border_style_select').style.display = "block"
+
+// document.getElementById('border_style_select').addEventListener('blur', function(){ 
+//  document.getElementById('border_style_select').style.display = "none"
+// })
+// })
+// //update border style form when its selector is changed
+// document.getElementById("border_style_select").addEventListener("change", function(){
+//   document.getElementById('border_style').value = document.getElementById('border_style_select').value
+// })
+
+// //display input select visswitch
+// document.getElementById('display_input').addEventListener('focus', function(){
+//   console.log('selected')
+// document.getElementById('display_select').style.display = "block"
+
+// document.getElementById('display_select').addEventListener('blur', function(){
+//  document.getElementById('display_select').style.display = "none"
+// })
+// })
+// //update border style form when its selector is changed
+// document.getElementById("display_select").addEventListener("change", function(){
+//   document.getElementById('display_input').value = document.getElementById('display_select').value
+// })
 
   
 //vislock checkbox for creation menu (create item)

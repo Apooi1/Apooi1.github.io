@@ -18,25 +18,24 @@ Made by K -
 </div>
 
   <div><pa>Display</pa>
-  <INPUT id="display_input" class="myinputs" placeholder="Display type"></INPUT>
-  <select name="display_select" id="display_select" style="display: none;">
+  <INPUT id="display_input" class="myinputs select_parents" placeholder="Display type"></INPUT>
+  <select name="display_select" class="select_child" id="display_select" style="display: none;">
     <option>block</option>
     <option value="flex">flex</option>
     <option>inline-block</option>
     <option">grid</option>
     <option>none</option>
   </select>
-  <div class="flex_options" style="display: none;">
-  <INPUT id="flex_direction" class="myinputs" placeholder="Flex Direction"></INPUT>
-  <select name="" id="flex_direction_select" style="display: none;">
+  <div class="flex_options" >
+  <INPUT id="flex_direction" class="myinputs select_parents" placeholder="Flex Direction"></INPUT>
+  <select name="" id="flex_direction_select" class="select_child" style="display: none;">
     <option value="row">row</option>
     <option>column</option>
-    <option>row-reverse</option>
+    <option>"row-reverse"</option>
     <option>column-reverse</option>
-    <option></option>
   </select>
-  <INPUT id="justify_content" class="myinputs" placeholder="Justify Content" ></INPUT>
-  <select name="" id="justify_content_select" style="display: none;">
+  <INPUT id="justify_content" class="myinputs select_parents" placeholder="Justify Content" ></INPUT>
+  <select name="" id="justify_content_select" class="select_child" style="display: none;">
   <option>normal</option>
   <option>center</option>
   <option>flex-start</option>
@@ -45,8 +44,8 @@ Made by K -
   <option>space-around</option>
   <option>space-evenly</option>
 </select>
-  <INPUT id="align_content" class="myinputs" placeholder="Align Content"></INPUT>
-  <select name="" id="align_content_select" style="display: none;">
+  <INPUT id="align_content" class="myinputs select_parents" placeholder="Align Content"></INPUT>
+  <select name="" id="align_content_select" class="select_child" style="display: none;">
     <option>normal</option>
     <option>center</option>
     <option>flex-start</option>
@@ -55,18 +54,20 @@ Made by K -
     <option>space-evenly</option>
     <option>stretch</option>
   </select>
-  <INPUT id="align_items" class="myinputs" placeholder="Align items"></INPUT>
-  <select name="" id="align_items_select" style="display: none;">
+  <INPUT id="align_items" class="myinputs select_parents" placeholder="Align items"></INPUT>
+  <select name="" id="align_items_select" class="select_child" style="display: none;">
     <option>normal</option>
     <option>center</option>
     <option>flex-start</option>
     <option>stretch</option>
     <option>baseline</option>
   </select>
-  <INPUT id="flex_wrap" class="myinputs" placeholder="Flex wrap"></INPUT>
-  <select name="" id="flex_wrap_select" style="display: none;">
+  <INPUT id="flex_wrap" class="myinputs select_parents" placeholder="Flex wrap"></INPUT>
+  <select name="" id="flex_wrap_select" class="select_child" style="display: none;">
     <option>wrap</option>
     <option value="nowrap">nowrap</option></select>
+  <INPUT id="flex_gap_column" class="myinputs" placeholder="Column Gap"></INPUT>
+  <INPUT id="flex_gap_row" class="myinputs" placeholder="Row Gap"></INPUT>
 </div>
 </div>
 
@@ -91,8 +92,8 @@ Made by K -
 </div>
 
   <div><pa>Border</pa>
-  <INPUT id="border_style" class="myinputs" placeholder="Border style - Try solid"></INPUT>
-  <select name="border_style_select" id="border_style_select" style="display: none;">
+  <INPUT id="border_style" class="myinputs select_parents" placeholder="Border style - Try solid"></INPUT>
+  <select name="border_style_select" id="border_style_select" class="select_child" style="display: none;">
     <option value="none">none</option>
     <option>solid</option>
     <option">dotted</option>
