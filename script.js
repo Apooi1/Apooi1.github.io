@@ -7,6 +7,12 @@ let the_selected_element
 let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 
+let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
+"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.margin", "style.padding"]
+let input_array = ["form_id", "display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
+"x_input", "y_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", 
+"margin_input", "padding_input"]
+
 //rgb to hex function for colors
 //match searches for certain elements
 //toString(16) changes the element into hexidecimal and once goes over 9 starts at A.. B.. C etc, slice removes 2 elements, join() reattachs the results of R, G and B
@@ -212,32 +218,38 @@ form_update()
 //display values in form on click
 //ID
 function form_update(){
+  for (let x = 0; x < input_array.length; x++) {
+    update_total = "document.getElementById(\"" + input_array[x] + "\").value = document.getElementById(selected_element_4form)." + param_array[x]
+    //console.log (total)
+    updateresult = Function(update_total)()
+    //console.log (outresult) 
+  }
 
-  document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
-//Display
-document.getElementById("display_input").value = document.getElementById(selected_element_4form).style.display
-//Flex direction
-document.getElementById("flex_direction").value = document.getElementById(selected_element_4form).style.flexDirection
-//Justify content
-document.getElementById("justify_content").value = document.getElementById(selected_element_4form).style.justifyContent
-//Align content
-document.getElementById("align_content").value = document.getElementById(selected_element_4form).style.alignContent
-//Align items
-document.getElementById("align_items").value = document.getElementById(selected_element_4form).style.alignItems
-//Flex wrap
-document.getElementById("flex_wrap").value = document.getElementById(selected_element_4form).style.flexWrap
-//Flex gap column
-document.getElementById("flex_gap_column").value = document.getElementById(selected_element_4form).style.columnGap
-//Flex gap row
-document.getElementById("flex_gap_row").value = document.getElementById(selected_element_4form).style.rowGap
-//X
-p = document.getElementById("x_input").value = document.getElementById(selected_element_4form).style.top
-//Y
-document.getElementById("y_input").value = document.getElementById(selected_element_4form).style.left
-//height
-document.getElementById("height_input").value = document.getElementById(selected_element_4form).style.height
-//width
-document.getElementById("width_input").value = document.getElementById(selected_element_4form).style.width
+//   document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
+// //Display
+// document.getElementById("display_input").value = document.getElementById(selected_element_4form).style.display
+// //Flex direction
+// document.getElementById("flex_direction").value = document.getElementById(selected_element_4form).style.flexDirection
+// //Justify content
+// document.getElementById("justify_content").value = document.getElementById(selected_element_4form).style.justifyContent
+// //Align content
+// document.getElementById("align_content").value = document.getElementById(selected_element_4form).style.alignContent
+// //Align items
+// document.getElementById("align_items").value = document.getElementById(selected_element_4form).style.alignItems
+// //Flex wrap
+// document.getElementById("flex_wrap").value = document.getElementById(selected_element_4form).style.flexWrap
+// //Flex gap column
+// document.getElementById("flex_gap_column").value = document.getElementById(selected_element_4form).style.columnGap
+// //Flex gap row
+// document.getElementById("flex_gap_row").value = document.getElementById(selected_element_4form).style.rowGap
+// //X
+// p = document.getElementById("x_input").value = document.getElementById(selected_element_4form).style.top
+// //Y
+// document.getElementById("y_input").value = document.getElementById(selected_element_4form).style.left
+// //height
+// document.getElementById("height_input").value = document.getElementById(selected_element_4form).style.height
+// //width
+// document.getElementById("width_input").value = document.getElementById(selected_element_4form).style.width
 //background color (uses rgb2hex function)
 //checks if there is not a color property, set color to unused hex
 //Then checks if there is a color property before allowed to run to prevent null error
@@ -259,23 +271,23 @@ console.log (selected_element_4form)
 if (selected_element_4form != "body") {
 document.getElementById("text_input").value = document.getElementById(selected_element_4form).innerHTML
 }
-//Place holder
-document.getElementById("placeholder_input").value = document.getElementById(selected_element_4form).placeholder
-//Border style
-document.getElementById("border_style").value = document.getElementById(selected_element_4form).style.borderStyle
-//Border width
-document.getElementById("border_width").value = document.getElementById(selected_element_4form).style.borderWidth
-//Border color
+// //Place holder
+// document.getElementById("placeholder_input").value = document.getElementById(selected_element_4form).placeholder
+// //Border style
+// document.getElementById("border_style").value = document.getElementById(selected_element_4form).style.borderStyle
+// //Border width
+// document.getElementById("border_width").value = document.getElementById(selected_element_4form).style.borderWidth
+// //Border color
 if(!document.getElementById(selected_element_4form).style.borderColor) {
 document.getElementById("border_color").value = unused_hex
 }
 if(document.getElementById(selected_element_4form).style.borderColor) {
 document.getElementById('border_color').value = rgb2hex(document.getElementById(selected_element_4form).style.border_color)
 }
-//Margin
-document.getElementById("margin_input").value = document.getElementById(selected_element_4form).style.margin
-//Padding
-document.getElementById("padding_input").value = document.getElementById(selected_element_4form).style.padding
+// //Margin
+// document.getElementById("margin_input").value = document.getElementById(selected_element_4form).style.margin
+// //Padding
+// document.getElementById("padding_input").value = document.getElementById(selected_element_4form).style.padding
 //Parent
 document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
 //Image src
@@ -311,6 +323,10 @@ function draggable(selected){
   }
 }
   
+//Makes form submit not do anything, need to refactor and delete this
+document.getElementById('form').addEventListener('submit', function(q){
+  q.preventDefault()
+})
 
 //Triggers on submit
 //loops through all input classes and adds event listeners to change, on change, submits
@@ -318,50 +334,56 @@ let inputs_all_classes = document.getElementsByClassName("myinputs")
 for (let x = 0; x < inputs_all_classes.length; x++) {
   inputs_all_classes[x].addEventListener ('change', inputs_change)
 }
-//Makes form submit not do anything, need to refactor and delete this
-document.getElementById('form').addEventListener('submit', function(q){
-  q.preventDefault()
-})
 
 function inputs_change() {
-  console.log("submittion")
-  let docv = document.getElementById
-let elemv = document.getElementById
-//ID submit
+  for (let x = 0; x < input_array.length; x++) {
+    total = "document.getElementById(selected_element_4form)." + param_array[x] + " = document.getElementById(\"" + input_array[x] + "\").value"
+    //console.log (total)
+    outresult = Function(total)()
+    //console.log (outresult) 
+  }
 
-// let t = "<script>" + value + "</script>"
-
-  document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
-//Display submit
-document.getElementById(selected_element_4form).style.display = document.getElementById("display_input").value
-console.log(document.getElementById(selected_element_4form).style.display)
-//Flex direction submit
-document.getElementById(selected_element_4form).style.flexDirection = document.getElementById("flex_direction").value
-//Justify content submit
-document.getElementById(selected_element_4form).style.justifyContent = document.getElementById("justify_content").value
+// //ID submit
+//   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
+// //Display submit
+// document.getElementById(selected_element_4form).style.display = document.getElementById("display_input").value
+// console.log(document.getElementById(selected_element_4form).style.display)
+// //Flex direction submit
+// document.getElementById(selected_element_4form).style.flexDirection = document.getElementById("flex_direction").value
+// //Justify content submit
+// document.getElementById(selected_element_4form).style.justifyContent = document.getElementById("justify_content").value
 //align content submit
-document.getElementById(selected_element_4form).style.alignContent = document.getElementById("align_content").value
-//align items submit
-document.getElementById(selected_element_4form).style.alignItems = document.getElementById("align_items").value
-//flex wrap submit
-document.getElementById(selected_element_4form).style.flexWrap = document.getElementById("flex_wrap").value
+// document.getElementById(selected_element_4form).style.alignContent = document.getElementById("align_content").value
+// //align items submit
+// document.getElementById(selected_element_4form).style.alignItems = document.getElementById("align_items").value
+// //flex wrap submit
+// document.getElementById(selected_element_4form).style.flexWrap = document.getElementById("flex_wrap").value
 //Flex column gap submit
-if (!document.getElementById("flex_gap_column").value.includes("px")) {
-  console.log ("not included")
+//Adds "px" if not present, this value needs it for some reason
+if (document.getElementById("flex_gap_column").value != "" && !(document.getElementById("flex_gap_column").value.includes("px"))) {
   document.getElementById("flex_gap_column").value += "px"
-  console.log(document.getElementById("flex_gap_column").value)
+  document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
+}
+else {
   document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
 }
 //Flex row gap submit
-document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
-//x submit
-document.getElementById(selected_element_4form).style.top = document.getElementById("x_input").value
-//y submit
-document.getElementById(selected_element_4form).style.left = document.getElementById("y_input").value
-//Height submit
-document.getElementById(selected_element_4form).style.height = document.getElementById("height_input").value
-//width submit
-document.getElementById(selected_element_4form).style.width = document.getElementById("width_input").value
+//Adds "px" if not present, this value needs it for some reason
+if (document.getElementById("flex_gap_row").value != "" && !(document.getElementById("flex_gap_row").value.includes("px"))) {
+  document.getElementById("flex_gap_row").value += "px"
+  document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
+}
+else {
+  document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
+}
+// //x submit
+// document.getElementById(selected_element_4form).style.top = document.getElementById("x_input").value
+// //y submit
+// document.getElementById(selected_element_4form).style.left = document.getElementById("y_input").value
+// //Height submit
+// document.getElementById(selected_element_4form).style.height = document.getElementById("height_input").value
+// //width submit
+// document.getElementById(selected_element_4form).style.width = document.getElementById("width_input").value
 //Background color submit
 //if statment to prevent default color from submitting
 if (document.getElementById("background_color").value != unused_hex) {
@@ -373,18 +395,18 @@ document.getElementById(selected_element_4form).style.color = document.getElemen
 if (selected_element_4form != "body") {
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
 }
-//Place holder submit
-document.getElementById(selected_element_4form).placeholder = document.getElementById('placeholder_input').value
-//Border style submit
-document.getElementById(selected_element_4form).style.borderStyle = document.getElementById('border_style').value
-//Border width submit
-document.getElementById(selected_element_4form).style.borderWidth = document.getElementById('border_width').value
-//Border color submit
+// //Place holder submit
+// document.getElementById(selected_element_4form).placeholder = document.getElementById('placeholder_input').value
+// //Border style submit
+// document.getElementById(selected_element_4form).style.borderStyle = document.getElementById('border_style').value
+// //Border width submit
+// document.getElementById(selected_element_4form).style.borderWidth = document.getElementById('border_width').value
+// //Border color submit
 if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
-//Margin submit
-document.getElementById(selected_element_4form).style.margin = document.getElementById('margin_input').value
-//Padding submit
-document.getElementById(selected_element_4form).style.padding = document.getElementById('padding_input').value
+// //Margin submit
+// document.getElementById(selected_element_4form).style.margin = document.getElementById('margin_input').value
+// //Padding submit
+// document.getElementById(selected_element_4form).style.padding = document.getElementById('padding_input').value
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
 let child_id = document.getElementById(selected_element_4form)
@@ -444,34 +466,6 @@ for (let x = 0; x < select_parents.length; x++) {
   })
 
 }
-
-// //Border style select visswitch
-// document.getElementById('border_style').addEventListener('focus', function(){
-//   console.log('selected')
-// document.getElementById('border_style_select').style.display = "block"
-
-// document.getElementById('border_style_select').addEventListener('blur', function(){ 
-//  document.getElementById('border_style_select').style.display = "none"
-// })
-// })
-// //update border style form when its selector is changed
-// document.getElementById("border_style_select").addEventListener("change", function(){
-//   document.getElementById('border_style').value = document.getElementById('border_style_select').value
-// })
-
-// //display input select visswitch
-// document.getElementById('display_input').addEventListener('focus', function(){
-//   console.log('selected')
-// document.getElementById('display_select').style.display = "block"
-
-// document.getElementById('display_select').addEventListener('blur', function(){
-//  document.getElementById('display_select').style.display = "none"
-// })
-// })
-// //update border style form when its selector is changed
-// document.getElementById("display_select").addEventListener("change", function(){
-//   document.getElementById('display_input').value = document.getElementById('display_select').value
-// })
 
   
 //vislock checkbox for creation menu (create item)
