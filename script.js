@@ -8,10 +8,10 @@ let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 
 let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
-"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.margin", "style.padding"]
+"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.margin", "style.padding", "style.position"]
 let input_array = ["form_id", "display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
 "x_input", "y_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", 
-"margin_input", "padding_input"]
+"margin_input", "padding_input", "position_input"]
 
 //rgb to hex function for colors
 //match searches for certain elements
@@ -412,13 +412,16 @@ let parent_id = document.getElementById("parent_input").value
 let child_id = document.getElementById(selected_element_4form)
 if (parent_id != "") {
 document.getElementById(parent_id).appendChild(child_id)
+}
 //sets position from absolute to initial
+if (parent_id === child_id.parentElement.id) {
+  console.log('set')
 let initial_pos = the_selected_element.style.position
 if (initial_pos === "absolute") {
   the_selected_element.style.position = "initial"
 }
-
 }
+
 //img src submit
 document.getElementById(selected_element_4form).src = document.getElementById('img_src').value
 //img checkbox natural height / width 
