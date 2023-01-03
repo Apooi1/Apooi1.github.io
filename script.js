@@ -7,6 +7,8 @@ let the_selected_element
 let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 
+let border_tracker = []
+
 let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
 "style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.margin", "style.padding", "style.position"]
 let input_array = ["form_id", "display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
@@ -81,7 +83,8 @@ button_create_button.addEventListener('click', function(){
   created_button.style.left = "40%"
   created_button.style.display = "flex"
   created_button.style.position = "absolute"
-  created_button.id = id_tracker += 1
+  id_tracker+= 1
+  created_button.id = "btn" + id_tracker
   draggable(created_button)
 
 //Button: click
@@ -105,7 +108,8 @@ document.getElementById("input_create_button").addEventListener('click', functio
   let created_input = document.createElement("INPUT")
   document.body.appendChild(created_input)
   created_input.value = "INPUTED"
-  created_input.id = id_tracker += 1
+  id_tracker +=1
+  created_input.id = created_input.nodeName + id_tracker
   created_input.className = "created_input_class"
   draggable(created_input)
 
@@ -128,7 +132,8 @@ document.getElementById("textarea_create_button").addEventListener('click', func
   let created_textarea = document.createElement("TEXTAREA")
   document.body.appendChild(created_textarea)
   created_textarea.value = "Write your text here..."
-  created_textarea.id = id_tracker += 1
+  id_tracker += 1
+  created_textarea.id = created_textarea.nodeName + id_tracker
   created_textarea.className = "created_textarea_class"
   draggable(created_textarea)
 
@@ -153,7 +158,8 @@ img_create_button.addEventListener('click', function(){
   created_img.style.height = 150;
   created_img.style.width = 150;
   created_img.src = "test"
-  created_img.id = id_tracker += 1
+  id_tracker += 1
+  created_img.id = created_img.nodeName + id_tracker
   draggable(created_img)
 
 //img: click
@@ -180,7 +186,10 @@ container_create_button.addEventListener('click', function(){
   created_container.style.borderWidth = "1"
   created_container.style.display = "flex"
   created_container.style.position = "absolute"
-  created_container.id = id_tracker += 1
+  id_tracker += 1
+  created_container.id = "div" + id_tracker
+  border_tracker.push(created_container)
+  console.log (border_tracker)
   draggable(created_container)
 
 //Container: click
@@ -302,11 +311,11 @@ function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
   function mousedown() {
-    if (selected.parentElement.id === "body") {
-    selected.style.position = 'absolute'
-    }
     document.addEventListener("mousemove", mousemover)
     function mousemover() {
+      if (selected.parentElement.id === "body") {
+        selected.style.position = 'absolute'
+        }
       selected.style.left = event.clientX - selected.offsetWidth / 2 + "px"
       selected.style.top = event.clientY - selected.offsetHeight / 2 + "px"
       //console.log (event.clientX, event.clientY)
@@ -541,7 +550,7 @@ output.value = ""
 //removes the first 600 or so pieces, and joins it back together in a for loop by adding new line after each piece
 let bodyhtml = lines[4]
   console.log(bodyhtml)
-lines.splice(0, 30)  //script tag +1 in html
+lines.splice(0, 142)  //script tag -1 in html
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
   //console.log (lines[y])
@@ -627,18 +636,111 @@ document.getElementById("import_button").addEventListener('click', function(){
   alert("Not yet implemented.")
 })
 
+
+let alreadyopen = false
+document.addEventListener('contextmenu', function(w) {
+  w.preventDefault()
+
+  if (alreadyopen === false) {
+    console.log('rhuhh')
+  document.getElementById("rightclick_menu").style.display = "flex"
+  document.getElementById("rightclick_menu").style.top = event.clientY + 1
+  document.getElementById("rightclick_menu").style.left = event.clientX
+  console.log(document.elementsFromPoint(event.clientX, event.clientY))
   
+  document.getElementById("rc_children_container").textContent = ""
+  document.getElementById("rc_parent_container").textContent = ""
+
+  let elementspoint = document.elementsFromPoint(event.clientX, event.clientY)
+  for (let x = 0; x < elementspoint.length; x++) {
+    console.log(elementspoint.length)
+    console.log(elementspoint[x].id)
+
+    if (elementspoint[x].id != "") {
+    let rc_children = document.createElement("button")
+    document.getElementById('rc_children_container').appendChild(rc_children)
+    rc_children.innerHTML = elementspoint[x].id
+    rc_children.addEventListener('contextmenu', rc_btn_rc)
+    rc_children.addEventListener('click', rc_btn_click)
+    rc_children.addEventListener('mouseover', rc_hover)
+    rc_children.addEventListener('mouseleave', rc_leave)
+    }
+  }
+  if (elementspoint[0].parentElement.id != "body") {
+    let rc_parent = document.createElement("button")
+    rc_parent.innerHTML = elementspoint[0].parentElement.id
+    document.getElementById("rc_parent_container").appendChild(rc_parent)
+    rc_parent.addEventListener('contextmenu', rc_btn_rc)
+    rc_parent.addEventListener('click', rc_btn_click)
+    rc_parent.addEventListener('mouseover', rc_hover)
+    rc_parent.addEventListener('mouseleave', rc_leave)
+    }
+}
+})
+//Right click ---> left click
+function rc_btn_rc() {
+  console.log("clicked")
+  alreadyopen = true
+  
+}
+//Right click ---> right click
+function rc_btn_click() {
+  selected_element_4form = this.innerHTML
+  form_update()
+  alreadyopen = false
+  document.getElementById("rightclick_menu").style.display = "none"
+}
+
+//Sets outline on hover over right click elements
+function rc_hover() {
+  document.getElementById(this.innerHTML).style.outline = "3px solid #84ff00"
+}
+//Removes outline on mouseleave
+function rc_leave() {
+document.getElementById(this.innerHTML).style.outline = "unset"
+}
 
 
+// COPY and DELETE
+document.getElementById("rc_copy").addEventListener('click', function() {
+  let clone = document.getElementById(selected_element_4form).cloneNode(true)
+  let parent = document.getElementById(selected_element_4form).parentElement
+  document.getElementById(parent.id).appendChild(clone)
+})
 
+document.getElementById("rc_del").addEventListener('click', function() {
+  if (selected_element_4form != "body") {
+  document.getElementById(selected_element_4form).remove()
+  }
+  else {
+    alert('please don\'t remove body')
+  }
+})
+
+document.addEventListener('click', function() {
+  if (alreadyopen === false) {
+    document.getElementById("rightclick_menu").style.display = "none"
+  }
+})
+
+//Border for container visability switcher checkbox
+document.getElementById('border_checkbox').addEventListener('change', function() {
+  if (this.checked) {
+    console.log(border_tracker.length)
+    for (x = 0; x < border_tracker.length; x++) {
+      console.log("anything")
+      document.getElementById(border_tracker[x].id).style.borderStyle = 'none'
+    }
+  }
+  else {
+    for (x = 0; x < border_tracker.length; x++) {
+      console.log("anything")
+      document.getElementById(border_tracker[x].id).style.borderStyle = 'solid'
+    }
+  }
+})
   
-let img_og_size_checker_label = document.createElement("LABEL")
-document.getElementById('form').appendChild(img_og_size_checker_label)
-img_og_size_checker_label.innerHTML = "Original size?"
-//onmousemove = function(e){
-  //console.log("mouse location:", e.clientX, e.clientY)
-//}
-  
+
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)

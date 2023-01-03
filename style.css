@@ -148,3 +148,46 @@
     top: 0px;
   }
   
+#rc_copy {
+  height: 50px;
+}
+
+#rc_del {
+  color: red;
+  height: 50px;
+}
+
+#rc_copy_container {
+  position: relative;
+  left: 50px;
+}
+
+#rightclick_menu {
+  flex-direction: column;
+  position: absolute;
+  z-index: 10;
+}
+
+#rc_children_container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+#rc_parent_container {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  border-style: none none solid none;
+  border-width: 1px;
+  border-color: red;
+}
+
+#img_src_container {
+  display: flex;
+  flex-direction: row;
+}
+
+#img_src {
+  width: 90%;
+}

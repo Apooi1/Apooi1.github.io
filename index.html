@@ -20,6 +20,7 @@ Made by K -
   <div><pa>Display</pa>
   <INPUT id="display_input" class="myinputs select_parents" placeholder="Display type"></INPUT>
   <select name="display_select" class="select_child" id="display_select" style="display: none;">
+    <option>initial</option>
     <option>block</option>
     <option value="flex">flex</option>
     <option>inline-block</option>
@@ -121,11 +122,24 @@ Made by K -
   <INPUT id="margin_input" class="myinputs" placeholder="Padding outside element"></INPUT>
   <INPUT id="padding_input" class="myinputs" placeholder="Padding inside element"></INPUT>
 </div>
+<div id="img_src_container">
   <INPUT id="img_src" class="myinputs" placeholder="Image source / file"></INPUT>
   <INPUT id="img_checkbox" class="myinputs" type="checkbox" placeholder="Original size?"></INPUT>
-
+</div>
+<INPUT id="border_checkbox" type="checkbox" placeholder=""></INPUT>
 
 </FORM>
+
+
+<div id="rightclick_menu" style="display: none;">
+  <div id="rc_copy_container" style="display: flex;">
+    <button id="rc_copy">Copy</button>
+    <button id="rc_del">Delete</button>
+  </div>
+  <div id="rc_parent_container"></div>
+  <div id="rc_children_container"></div>
+</div>
+
 
 <script src="script.js"></script>
 </body>
