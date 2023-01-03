@@ -10,10 +10,12 @@ let vislock_creation = 1      //lock for +button visability
 let border_tracker = []
 
 let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
-"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.margin", "style.padding", "style.position"]
+"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
+, "style.fontSize", "style.fontWeight", "style.fontStyle", "style.lineHeight"]
 let input_array = ["form_id", "display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-"x_input", "y_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", 
-"margin_input", "padding_input", "position_input"]
+"x_input", "y_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
+"margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
+, "lineheight_input"]
 
 //rgb to hex function for colors
 //match searches for certain elements
@@ -423,7 +425,7 @@ if (parent_id != "") {
 document.getElementById(parent_id).appendChild(child_id)
 }
 //sets position from absolute to initial
-if (parent_id === child_id.parentElement.id) {
+if (parent_id === child_id.parentElement.id && child_id.parentElement.id != "body") {
   console.log('set')
 let initial_pos = the_selected_element.style.position
 if (initial_pos === "absolute") {
