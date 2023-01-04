@@ -1,5 +1,8 @@
 <head>
   <link rel="stylesheet" type="text/css" href="style.css"/>
+  <div>
+  <link id="googlefonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
+</div>
 </head>
 
 <body>
@@ -19,7 +22,7 @@ Made by K -
 
   <div><pa>Display</pa>
   <INPUT id="display_input" class="myinputs select_parents" placeholder="Display type"></INPUT>
-  <select name="display_select" class="select_child" id="display_select" style="display: none;">
+  <select name="display_select" id="display_select" class="select_child" style="display: none;">
     <option>initial</option>
     <option>block</option>
     <option value="flex">flex</option>
@@ -101,7 +104,25 @@ Made by K -
 </div>
 
 <div> <pa>Font</pa>
-  <INPUT id="fontfamily_input" class="myinputs" placeholder="Font Family"></INPUT>
+  <div id="fontfamily_container">
+  <INPUT id="fontfamily_input" class="myinputs select_parents" placeholder="Font Family"></INPUT>
+  <button id="fontfamily_add">+</button>
+</div>
+<select name="" id="fontfamily_items_select" class="select_child" style="display: none;">
+  <option>select</option>
+</select>
+<div id="fontfamily_link_container" style="display: none;">
+  <div class="fontfamily_links">
+  <INPUT id="fontfamily_link_input" class="" placeholder="Font file to add..."></INPUT>
+  <button id="fontfamily_link_add">add</button>
+</div>
+<div class="fontfamily_links">
+  <INPUT id="fontfamily_link_input_google" class="" placeholder="google font link to add..."></INPUT>
+  <button id="fontfamily_link_add_google">add</button>
+</div>
+<button id="fontfamily_link_delete">Remove</button>
+</div>
+
   <INPUT id="fontsize_input" class="myinputs" placeholder="Font Size"></INPUT>
   <INPUT id="fontweight_input" class="myinputs" placeholder="Font weight"></INPUT>
   <INPUT id="fontstyle_input" class="myinputs select_parents" placeholder="Font style"></INPUT>
@@ -110,7 +131,7 @@ Made by K -
     <option>italic</option>
     <option>oblique</option>
   </select>
-  <INPUT id="lineheight_input" class="myinputs select_parents" placeholder="Line Height"></INPUT>
+  <INPUT id="lineheight_input" class="myinputs" placeholder="Line Height"></INPUT>
 </div>
 
 

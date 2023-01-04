@@ -8,6 +8,7 @@ let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 
 let border_tracker = []
+let font_array = []
 
 let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
 "style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
@@ -469,11 +470,10 @@ for (let x = 0; x < select_parents.length; x++) {
   document.getElementsByClassName("select_parents")[x].addEventListener('focus', function() {
     document.getElementsByClassName('select_child')[x].style.display = "block"
   })
-
+  
   document.getElementsByClassName("select_child")[x].addEventListener('blur', function() {
     document.getElementsByClassName('select_child')[x].style.display = "none"
   })
-
   document.getElementsByClassName("select_child")[x].addEventListener('change', function() {
     document.getElementsByClassName('select_parents')[x].value = document.getElementsByClassName("select_child")[x].value
     inputs_change()
@@ -552,7 +552,7 @@ output.value = ""
 //removes the first 600 or so pieces, and joins it back together in a for loop by adding new line after each piece
 let bodyhtml = lines[4]
   console.log(bodyhtml)
-lines.splice(0, 142)  //script tag -1 in html
+lines.splice(0, 159)  //script tag -1 in html
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
   //console.log (lines[y])
@@ -742,6 +742,49 @@ document.getElementById('border_checkbox').addEventListener('change', function()
   }
 })
   
+//Font family + button for adding fonts
+let fontfamily_finish = false
+document.getElementById('fontfamily_add').addEventListener('click', function() {
+  if (fontfamily_finish === true) {
+    document.getElementById("fontfamily_link_container").style.display = "none"
+    this.innerHTML = "+"
+    fontfamily_finish = false
+  }
+  else {
+    document.getElementById("fontfamily_link_container").style.display = "flex"
+    this.innerHTML = "-"
+    fontfamily_finish = true
+  }
+})
+
+document.getElementById('fontfamily_link_add').addEventListener('click', function() {
+  var option = document.createElement("option")
+  option.text = document.getElementById("fontfamily_link_input").value
+  document.getElementById('fontfamily_items_select').add(option)
+})
+
+//Adds google font from font_arrays (fonts --> + ---> google fonts)
+document.getElementById('fontfamily_link_add_google').addEventListener('click', function() {
+  var option = document.createElement("option")
+  option.text = document.getElementById("fontfamily_link_input_google").value
+  document.getElementById('fontfamily_items_select').add(option)
+  font_array.push(option.text)
+  let font_string
+    font_string = font_array.toString().replaceAll(',', "|")
+  document.getElementById('googlefonts').href = "https://fonts.googleapis.com/css?family=" + font_string
+})
+
+//delete button (fonts ---> remove)
+document.getElementById('fontfamily_link_delete').addEventListener('click', function() {
+  let remove1 = document.getElementById("fontfamily_items_select")
+  remove1.remove(document.getElementById("fontfamily_items_select").selectedIndex)
+  //potentially problematic, can remove safely under here
+  let index = font_array.indexOf(remove1.options[remove1.selectedIndex])
+  if (index != -1) {
+    font_array.splice(index, 1)
+  }
+})
+
 
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;

@@ -191,3 +191,30 @@
 #img_src {
   width: 90%;
 }
+
+#fontfamily_input {
+  width: 90%;
+}
+
+#fontfamily_link_input {
+  width: 90%;
+}
+
+#fontfamily_link_input_google {
+  width: 90%;
+}
+
+.fontfamily_links {
+  display: flex;
+  flex-direction: row;
+}
+
+#fontfamily_container {
+  display: flex;
+  flex-direction: row;
+}
+
+#fontfamily_link_container {
+  display: flex;
+  flex-direction: column;
+}
