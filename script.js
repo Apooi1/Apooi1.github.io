@@ -679,13 +679,32 @@ document.addEventListener('contextmenu', function(w) {
     }
 }
 })
-//Right click ---> left click
+
+//Right click ---> right click
 function rc_btn_rc() {
   console.log("clicked")
   alreadyopen = true
+  setTimeout(() => {
+    alreadyopen = false
+  }, 1)
+  //console.log(document.getElementById(this.innerHTML).childNodes)
+  document.getElementById("rc_children_container").textContent = ""
+  let allchilds = document.getElementById(this.innerHTML).children
+  for (let x = 0; x < allchilds.length; x++) {
+    console.log(x)
+    console.log(allchilds.length)
+    console.log(allchilds)
+    let rc_children = document.createElement("button")
+    document.getElementById('rc_children_container').appendChild(rc_children)
+    rc_children.innerHTML = allchilds[x].id
+    rc_children.addEventListener('contextmenu', rc_btn_rc)
+    rc_children.addEventListener('click', rc_btn_click)
+    rc_children.addEventListener('mouseover', rc_hover)
+    rc_children.addEventListener('mouseleave', rc_leave)
+  }
   
 }
-//Right click ---> right click
+//Right click ---> left click
 function rc_btn_click() {
   selected_element_4form = this.innerHTML
   form_update()
@@ -719,6 +738,7 @@ document.getElementById("rc_del").addEventListener('click', function() {
   }
 })
 
+//doc click anywhere
 document.addEventListener('click', function() {
   if (alreadyopen === false) {
     document.getElementById("rightclick_menu").style.display = "none"
