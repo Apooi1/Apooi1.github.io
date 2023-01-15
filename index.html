@@ -1,18 +1,17 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css"/>
+  <link rel="stylesheet" type="text/css" href="style.css"/>>
   <div>
   <link id="googlefonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 </div>
 </head>
 
-<body>
-Made by K -
+<body id="body" style="inset: 0px;">
+<title>Made by K -</title>
 
 
+<div id="tester" style="display:flex; position: relative; left: 40%; width: 70px; height: 70px; background-color: red;"></div>
 
-
-
-<FORM id="form">
+<form_container id="form_container">
   <button id="form_left_right" type="button" style="right: 0;">&lt  &nbsp &nbsp  &gt</button>
   <div>
   <INPUT id="form_id" class="myinputs" placeholder="ID" style="height: 21px;"></INPUT>
@@ -20,6 +19,8 @@ Made by K -
   <INPUT id="parent_input" class="myinputs" placeholder="Parent"></INPUT>
 </div>
 
+<input type="file"  accept="image/*" name="image" id="file" multiple onchange="loadFile(event)" >
+<img id="output" width="200" />
   <div><pa>Display</pa>
   <INPUT id="display_input" class="myinputs select_parents" placeholder="Display type"></INPUT>
   <select name="display_select" id="display_select" class="select_child" style="display: none;">
@@ -76,8 +77,10 @@ Made by K -
 </div>
 
 <div><pa>Position</pa>
-  <INPUT id="x_input" class="myinputs" placeholder="X"></INPUT>
-  <INPUT id="y_input" class="myinputs" placeholder="Y"></INPUT>
+  <INPUT id="x_input" class="myinputs" placeholder="Left"></INPUT>
+  <INPUT id="y_input" class="myinputs" placeholder="Top"></INPUT>
+  <INPUT id="bottom_input" class="myinputs" placeholder="Bottom"></INPUT>
+  <INPUT id="right_input" class="myinputs" placeholder="Right"></INPUT>
   <INPUT id="position_input" class="myinputs select_parents" placeholder="Position type"></INPUT>
   <select name="" id="position_items_select" class="select_child" style="display: none;">
     <option>absolute</option>
@@ -162,9 +165,12 @@ Made by K -
   <INPUT id="img_src" class="myinputs" placeholder="Image source / file"></INPUT>
   <INPUT id="img_checkbox" class="myinputs" type="checkbox" placeholder="Original size?"></INPUT>
 </div>
+<button id="btn_standard" class="btn_hovers_style">Standard</button>
+<button id="btn_hover" class="btn_hovers_style">Hover</button>
+<button id="btn_active" class="btn_hovers_style">Active</button>
 <INPUT id="border_checkbox" type="checkbox" placeholder=""></INPUT>
 
-</FORM>
+</form_container>
 
 
 <div id="rightclick_menu" style="display: none;">
@@ -177,6 +183,16 @@ Made by K -
 </div>
 
 
+<div id="output_and_counter">
+
+<textarea id="css_output" ></textarea>
+
+<button id="output_updater">Output</button>
+</div>
+
+
+
 <script src="script.js"></script>
+<style id="stylecss"></style>
 </body>
 </head>

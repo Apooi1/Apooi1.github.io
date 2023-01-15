@@ -1,3 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
+#body {
+  margin: 0;
+  left: 0px;
+  top: 0px;
+  position: relative;
+}
+
 #btn {
     position: absolute;
     top: 5px;
@@ -25,7 +36,6 @@
     
   }
   
-  
   #submission_btn {
     position: relative;
     left: calc(100% - 177px);
@@ -40,19 +50,20 @@
     left: -2px;
   } 
   
-  #form {
+  #form_container {
     position: absolute;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     align-content: space-between;
-    height: 900px;
+    height: 1200px;
     width: 177px;
     left: calc(100% - 180px);
     top: 0%;
     margin: 7px 0px 0px 0px;
     gap: 10px;
     background-color: #F3F3F3;
+    z-index: 100;
   }
   
   label {
@@ -84,6 +95,13 @@
     border-color: transparent;
     background-color: #F3F3F3;
   }
+
+  #css_output {
+    width: 90%;
+    outline: none;
+    border-color: transparent;
+    background-color: #F3F3F3;
+  }
   
   #line_counter {
     outline: none;
@@ -107,6 +125,7 @@
     top: 0px;
     width: 200px;
     height: 200px;
+    z-index: 100;
     background-color: #2f3136;
   }
   
@@ -116,6 +135,7 @@
     width: 30px;
     top: -2px;
     left: -2px;
+    z-index: 100;
   }
     
   #button_create_button {
@@ -217,4 +237,13 @@
 #fontfamily_link_container {
   display: flex;
   flex-direction: column;
+}
+
+#inputz_img {
+  height: 50px;
+  width: 50px;
+}
+
+#btn_standard {
+  background-color: aqua;
 }

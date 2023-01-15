@@ -10,13 +10,24 @@ let vislock_creation = 1      //lock for +button visability
 let border_tracker = []
 let font_array = []
 
-let param_array = ["id", "style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", 
+let param_array = ["style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", "style.bottom", "style.right",
 "style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
 , "style.fontSize", "style.fontWeight", "style.fontStyle", "style.lineHeight"]
-let input_array = ["form_id", "display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-"x_input", "y_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
+
+let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top", "left", "bottom", "right",
+"height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin", "padding", "position", "font-family"
+, "font-size", "font-weight", "font-style", "line-height", "background-color", "color", "column-row", "column-gap",
+"border-color"]
+
+let input_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
+"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
 "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
 , "lineheight_input"]
+
+let cssinput_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
+"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
+"margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
+, "lineheight_input", "background_color", "color_input", "flex_gap_row", "flex_gap_column", "border_color"]
 
 //rgb to hex function for colors
 //match searches for certain elements
@@ -182,13 +193,12 @@ container_create_button.id = "container_create_button"
 container_create_button.addEventListener('click', function(){
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
-  created_container.style.left = "40%"
-  created_container.style.height = 150;
-  created_container.style.width = 150;
+  //created_container.style.left = "40%"
+  created_container.style.width = "100%"
   created_container.style.borderStyle = "solid"
   created_container.style.borderWidth = "1"
   created_container.style.display = "flex"
-  created_container.style.position = "absolute"
+  created_container.style.padding = "2%"
   id_tracker += 1
   created_container.id = "div" + id_tracker
   border_tracker.push(created_container)
@@ -203,8 +213,8 @@ selector(created_container)
 })
 
 //Container: select body
-document.body.id = "body"
-document.body.style.zIndex = "-999"
+//document.body.id = "body"
+//document.body.style.zIndex = "-999"
 let body_select = document.createElement('button')
 document.getElementById('select_container').appendChild(body_select)
 body_select.style.position = "relative"
@@ -237,7 +247,8 @@ function form_update(){
     //console.log (outresult) 
   }
 
-//   document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
+//ID
+document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
 // //Display
 // document.getElementById("display_input").value = document.getElementById(selected_element_4form).style.display
 // //Flex direction
@@ -310,6 +321,7 @@ document.getElementById("img_src").value = document.getElementById(selected_elem
 
 
   //Button: Dragend handler
+ // let resize = false
 function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
@@ -319,8 +331,15 @@ function draggable(selected){
       if (selected.parentElement.id === "body") {
         selected.style.position = 'absolute'
         }
-      selected.style.left = event.clientX - selected.offsetWidth / 2 + "px"
-      selected.style.top = event.clientY - selected.offsetHeight / 2 + "px"
+        let rect = selected.parentNode.getBoundingClientRect();
+        console.log(selected.parentNode.id)
+        //console.log(rect)
+        let lefter = event.clientX - rect.left
+        let toper = event.clientY - rect.top
+      selected.style.left = lefter - selected.offsetWidth / 2 + "px"
+      selected.style.top = toper - selected.offsetHeight / 2 + "px"
+      //console.log(event.clientX - rect.left)
+      //console.log(event.clientY - rect.top)
       //console.log (event.clientX, event.clientY)
     }
   document.addEventListener("mouseup", mouseup)
@@ -335,10 +354,7 @@ function draggable(selected){
   }
 }
   
-//Makes form submit not do anything, need to refactor and delete this
-document.getElementById('form').addEventListener('submit', function(q){
-  q.preventDefault()
-})
+
 
 //Triggers on submit
 //loops through all input classes and adds event listeners to change, on change, submits
@@ -348,15 +364,49 @@ for (let x = 0; x < inputs_all_classes.length; x++) {
 }
 
 function inputs_change() {
-  for (let x = 0; x < input_array.length; x++) {
-    total = "document.getElementById(selected_element_4form)." + param_array[x] + " = document.getElementById(\"" + input_array[x] + "\").value"
-    //console.log (total)
-    outresult = Function(total)()
-    //console.log (outresult) 
-  }
+  // for (let x = 0; x < input_array.length; x++) {
+  //   total = "document.getElementById(selected_element_4form)." + param_array[x] + " = document.getElementById(\"" + input_array[x] + "\").value"
+  //   //console.log (total)
+  //   outresult = Function(total)()
+  //   //console.log (outresult) 
+  // }
 
-// //ID submit
-//   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
+  let potential_hover = ""
+  if (btn_hover_selected === "btn_standard") {
+    potential_hover = ""
+  }
+  else if (btn_hover_selected === "btn_active") {
+    potential_hover = ":active"
+  }
+  else if (btn_hover_selected === "btn_hover") {
+    potential_hover = ":hover"
+  }
+  let cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover  +" {" + "\n"
+  for (let i = 0; i < cssinput_array.length; i++) {
+    if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
+    cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
+    }
+
+  }
+  cssline += "}"
+ 
+  let css_output = document.createTextNode(cssline)
+  let stylecss = document.getElementById('stylecss').textContent
+  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id)
+  let last_index = stylecss.indexOf("}", first_index)
+  console.log (first_index)
+  console.log (last_index)
+  //Deletes the css code
+  if (first_index != -1) {
+    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), "")
+  }
+  //Then rebinds the new one
+  document.getElementById('stylecss').appendChild(css_output)
+  console.log(cssline)
+
+
+//ID submit
+   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
 // //Display submit
 // document.getElementById(selected_element_4form).style.display = document.getElementById("display_input").value
 // console.log(document.getElementById(selected_element_4form).style.display)
@@ -372,6 +422,7 @@ function inputs_change() {
 // document.getElementById(selected_element_4form).style.flexWrap = document.getElementById("flex_wrap").value
 //Flex column gap submit
 //Adds "px" if not present, this value needs it for some reason
+/* NEEDED?!
 if (document.getElementById("flex_gap_column").value != "" && !(document.getElementById("flex_gap_column").value.includes("px"))) {
   document.getElementById("flex_gap_column").value += "px"
   document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
@@ -379,8 +430,10 @@ if (document.getElementById("flex_gap_column").value != "" && !(document.getElem
 else {
   document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
 }
+*/ //NEEDED?!
 //Flex row gap submit
 //Adds "px" if not present, this value needs it for some reason
+/*  NEEDED?!
 if (document.getElementById("flex_gap_row").value != "" && !(document.getElementById("flex_gap_row").value.includes("px"))) {
   document.getElementById("flex_gap_row").value += "px"
   document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
@@ -388,6 +441,7 @@ if (document.getElementById("flex_gap_row").value != "" && !(document.getElement
 else {
   document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
 }
+*/
 // //x submit
 // document.getElementById(selected_element_4form).style.top = document.getElementById("x_input").value
 // //y submit
@@ -398,11 +452,13 @@ else {
 // document.getElementById(selected_element_4form).style.width = document.getElementById("width_input").value
 //Background color submit
 //if statment to prevent default color from submitting
+/* NEEDED?!
 if (document.getElementById("background_color").value != unused_hex) {
 document.getElementById(selected_element_4form).style.backgroundColor = document.getElementById('background_color').value
 }
 //color submit
 document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
+*/
 //Text submit
 if (selected_element_4form != "body") {
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
@@ -414,7 +470,9 @@ document.getElementById(selected_element_4form).innerHTML = document.getElementB
 // //Border width submit
 // document.getElementById(selected_element_4form).style.borderWidth = document.getElementById('border_width').value
 // //Border color submit
+/* NEEDED?
 if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
+*/
 // //Margin submit
 // document.getElementById(selected_element_4form).style.margin = document.getElementById('margin_input').value
 // //Padding submit
@@ -448,16 +506,16 @@ if (document.getElementById('img_checkbox').checked) {
 
 //Moves form left to right
 document.getElementById('form_left_right').addEventListener('click', function(){
-  if(document.getElementById('form').style.left == 0) {
-  document.getElementById('form').style.right = null
-  document.getElementById('form').style.left = 0
+  if(document.getElementById('form_container').style.left == 0) {
+  document.getElementById('form_container').style.right = null
+  document.getElementById('form_container').style.left = 0
   document.getElementById('form_left_right').style.right = null
   document.getElementById('form_left_right').style.left = 0
   }
 
   else {
-    document.getElementById('form').style.left = null
-    document.getElementById('form').style.right = 0
+    document.getElementById('form_container').style.left = null
+    document.getElementById('form_container').style.right = 0
   document.getElementById('form_left_right').style.left = null
   document.getElementById('form_left_right').style.right = 0
   }
@@ -499,23 +557,16 @@ vislock_create.addEventListener('click', function(){
 })
 
   
-//Submission button
-let submission_btn = document.createElement('button')
-document.getElementById('form').appendChild(submission_btn)
-submission_btn.innerHTML = "Subsmit"
-submission_btn.id = "submission_btn"
 
-
-//console.log(document.documentElement.outerHTML)
 
 
 
 
   
 //output and counter text areas container
-let output_and_counter = document.createElement("div")
-document.body.appendChild(output_and_counter)
-output_and_counter.id = "output_and_counter"
+// let output_and_counter = document.createElement("div")
+// document.body.appendChild(output_and_counter)
+// output_and_counter.id = "output_and_counter"
 
 //Output text area
 let output = document.createElement("TextArea")
@@ -530,32 +581,33 @@ line_counter.readOnly = true
 line_counter.id = "line_counter"
 
   
-//update button
-let output_updater = document.createElement('button')
-document.getElementById("output_and_counter").appendChild(output_updater)
-output_updater.innerHTML = "OUTPUT"
-output_updater.id = "output_updater"
+// //update button
+// let output_updater = document.createElement('button')
+// document.getElementById("output_and_counter").appendChild(output_updater)
+// output_updater.innerHTML = "OUTPUT"
+// output_updater.id = "output_updater"
 
 
 //update button click
-output_updater.addEventListener("click", function(){
-
+document.getElementById('output_updater').addEventListener("click", function(){
 //Outputs document to output textarea including own code
 output.value = document.documentElement.innerHTML
 //Cuts code into many pieces
 var lines = output.value.split('\n')
 console.log(lines.length)
+//number of lines of style so it can be deducted
+let csslines = document.getElementById('stylecss').textContent.split('\n').length
+console.log(csslines)
 
 //Resets output value
 output.value = ""
   
-//removes the first 600 or so pieces, and joins it back together in a for loop by adding new line after each piece
-let bodyhtml = lines[4]
+//removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
+let bodyhtml = lines[7]
   console.log(bodyhtml)
-lines.splice(0, 159)  //script tag -1 in html
+lines.splice(0, 196 + csslines)  //script tag +1 in html and remove stylecss
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
-  //console.log (lines[y])
   merged_output[y] = lines[y]
 }
 output.value = bodyhtml + "\n" + merged_output.join('\n')
@@ -567,9 +619,11 @@ var new_lines = output.value.split('\n').length
   
 //Loops to write numbers 1 - ?? in line counter textarea
   for (var x = 1; x < new_lines; x++) {
-    //console.log (x)
     line_counter.value += x + "." + "\n"
   }
+
+  //output to stylecss textcontent from stylesheet
+  document.getElementById("css_output").value = document.getElementById('stylecss').textContent
 })
 
 
@@ -804,6 +858,35 @@ document.getElementById('fontfamily_link_delete').addEventListener('click', func
     font_array.splice(index, 1)
   }
 })
+
+var loadFile = function(event) {
+	var image = document.getElementById('output');
+  let reader = new FileReader();
+  let file = event.target.files[0]
+  window.open('./assets/disc.PNG')
+  //image.src = URL.createObjectURL(event.target.files[0]); ////Method 1
+  // // reader.addEventListener("load", function() {  //////Method 2
+  // //   image.src = reader.result;
+  // // });
+  // // if (file) {
+  // //   reader.readAsDataURL(file);
+  // // }                                           //////Method 2
+}
+
+document.getElementById('btn_standard').addEventListener('click', btns_hover)
+document.getElementById('btn_hover').addEventListener('click', btns_hover)
+document.getElementById('btn_active').addEventListener('click', btns_hover)
+
+let btn_hover_selected = "btn_standard"
+function btns_hover() {
+  btn_hover_selected = this.id
+  console.log(this.id)
+  document.getElementById('btn_standard').style.backgroundColor = "unset"
+  document.getElementById('btn_hover').style.backgroundColor = "unset"
+  document.getElementById('btn_active').style.backgroundColor = "unset"
+  this.style.backgroundColor = "aqua"
+}
+
 
 
 var screenWidth = window.innerWidth;
