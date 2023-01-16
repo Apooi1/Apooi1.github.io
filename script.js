@@ -6,6 +6,8 @@ let selected_element_4form = ""
 let the_selected_element
 let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
+let potential_hover = ""
+let matches
 
 let border_tracker = []
 let font_array = []
@@ -194,15 +196,22 @@ container_create_button.addEventListener('click', function(){
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
   //created_container.style.left = "40%"
-  created_container.style.width = "100%"
-  created_container.style.borderStyle = "solid"
-  created_container.style.borderWidth = "1"
-  created_container.style.display = "flex"
-  created_container.style.padding = "2%"
+  //created_container.style.width = "100%"
+  //created_container.style.borderStyle = "solid"
+  // created_container.style.borderWidth = "1"
+  // created_container.style.display = "flex"
+  // created_container.style.padding = "2%"
   id_tracker += 1
   created_container.id = "div" + id_tracker
   border_tracker.push(created_container)
   console.log (border_tracker)
+  selector(created_container)
+  //inputs_change (["width", "border-style", "border-width", "padding"], ["100%", "solid", "1px", "2%"])
+  document.getElementById('width_input').value = "100%"
+  document.getElementById('border_style').value = "solid"
+  document.getElementById('border_width').value = "1px"
+  document.getElementById('padding_input').value = "2%"
+  inputs_change()
   draggable(created_container)
 
 //Container: click
@@ -212,9 +221,7 @@ selector(created_container)
 })
 })
 
-//Container: select body
-//document.body.id = "body"
-//document.body.style.zIndex = "-999"
+document.body.id = "body"
 let body_select = document.createElement('button')
 document.getElementById('select_container').appendChild(body_select)
 body_select.style.position = "relative"
@@ -240,12 +247,48 @@ form_update()
 //display values in form on click
 //ID
 function form_update(){
-  for (let x = 0; x < input_array.length; x++) {
-    update_total = "document.getElementById(\"" + input_array[x] + "\").value = document.getElementById(selected_element_4form)." + param_array[x]
-    //console.log (total)
-    updateresult = Function(update_total)()
-    //console.log (outresult) 
+  // for (let x = 0; x < input_array.length; x++) {
+  //   update_total = "document.getElementById(\"" + input_array[x] + "\").value = document.getElementById(selected_element_4form)." + param_array[x]
+  //   updateresult = Function(update_total)() 
+  // }
+
+  let stylecss = document.getElementById('stylecss').textContent
+  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
+  let last_index = stylecss.indexOf("}", first_index)
+  let selectedcss = stylecss.substring(first_index, last_index+1)
+  console.log(selectedcss)
+  //alternative ... before stylecss instead of Array.from
+
+  //matches = Array.from(stylecss.matchAll(/;/g))
+  let oldmatch
+  if (matches) {
+   matches.forEach((match) => {
+    if (match.index > first_index && match.index < last_index) {
+    console.log(match.index)
+    if (oldmatch) {
+    console.log(oldmatch.index)
+    console.log(stylecss.substring(oldmatch.index, match.index))
+    let value = stylecss.substring(oldmatch.index, match.index)
+    let divide13 = value.indexOf (':')
+    console.log(divide13 + "  : divider is at")
+    let cssproperty = value.substring(1, divide13)
+    console.log(cssproperty + " cssproperty")
+    let cssparm = value.substring(divide13+1, value.length-1)
+    console.log(cssparm + " cssparm")
+    let indexofproperty = cssparm_array.indexOf(cssproperty)
+    //Finally
+    document.getElementById(cssinput_array[indexofproperty]).value = cssparm
+
+    }
+    
+    if (oldmatch != match) {
+    oldmatch = match
+    }
   }
+  })
+}
+
+  
 
 //ID
 document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
@@ -276,19 +319,19 @@ document.getElementById("form_id").value = document.getElementById(selected_elem
 //background color (uses rgb2hex function)
 //checks if there is not a color property, set color to unused hex
 //Then checks if there is a color property before allowed to run to prevent null error
-if(!document.getElementById(selected_element_4form).style.backgroundColor) {
-document.getElementById("background_color").value = unused_hex
-}
-if(document.getElementById(selected_element_4form).style.backgroundColor) {
-document.getElementById('background_color').value = rgb2hex(document.getElementById(selected_element_4form).style.backgroundColor)
-}
-//color (uses rgb2hex function)
-if(!document.getElementById(selected_element_4form).style.color) {
-  document.getElementById("color_input").value = unused_hex
-}
-if(document.getElementById(selected_element_4form).style.backgroundColor) {
-document.getElementById('color_input').value = rgb2hex(document.getElementById(selected_element_4form).style.color)
-}
+// if(!document.getElementById(selected_element_4form).style.backgroundColor) {
+// document.getElementById("background_color").value = unused_hex
+// }
+// if(document.getElementById(selected_element_4form).style.backgroundColor) {
+// document.getElementById('background_color').value = rgb2hex(document.getElementById(selected_element_4form).style.backgroundColor)
+// }
+// //color (uses rgb2hex function)
+// if(!document.getElementById(selected_element_4form).style.color) {
+//   document.getElementById("color_input").value = unused_hex
+// }
+// if(document.getElementById(selected_element_4form).style.backgroundColor) {
+// document.getElementById('color_input').value = rgb2hex(document.getElementById(selected_element_4form).style.color)
+// }
 //Text
 console.log (selected_element_4form)
 if (selected_element_4form != "body") {
@@ -371,7 +414,6 @@ function inputs_change() {
   //   //console.log (outresult) 
   // }
 
-  let potential_hover = ""
   if (btn_hover_selected === "btn_standard") {
     potential_hover = ""
   }
@@ -386,23 +428,30 @@ function inputs_change() {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
     cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
     }
-
   }
+
   cssline += "}"
  
   let css_output = document.createTextNode(cssline)
   let stylecss = document.getElementById('stylecss').textContent
-  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id)
+  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   console.log (first_index)
   console.log (last_index)
   //Deletes the css code
   if (first_index != -1) {
-    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), "")
+    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), cssline)
+    console.log(css_output.textContent, cssline)
   }
   //Then rebinds the new one
+  if (first_index === -1) {
+    console.log("run")
   document.getElementById('stylecss').appendChild(css_output)
-  console.log(cssline)
+  }
+
+  //Grabs all ";"s for input_change()
+  matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
+  
 
 
 //ID submit
@@ -460,6 +509,7 @@ document.getElementById(selected_element_4form).style.backgroundColor = document
 document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
 */
 //Text submit
+
 if (selected_element_4form != "body") {
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
 }
@@ -480,7 +530,8 @@ if (document.getElementById("border_color").value != unused_hex) { document.getE
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
 let child_id = document.getElementById(selected_element_4form)
-if (parent_id != "") {
+if (parent_id != "" && parent_id != child_id.parentNode.id) {
+  console.log (child_id.parentNode.id)
 document.getElementById(parent_id).appendChild(child_id)
 }
 //sets position from absolute to initial
@@ -492,13 +543,17 @@ if (initial_pos === "absolute") {
 }
 }
 
+
+
 //img src submit
 document.getElementById(selected_element_4form).src = document.getElementById('img_src').value
+
 //img checkbox natural height / width 
 if (document.getElementById('img_checkbox').checked) { 
   document.getElementById(selected_element_4form).style.height = document.getElementById(selected_element_4form).naturalHeight;
   document.getElementById(selected_element_4form).style.width = document.getElementById(selected_element_4form).naturalWidth;
 }
+
   
 // }) //NO REMOVE
 }
