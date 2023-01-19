@@ -41,7 +41,7 @@ const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice
 let button_and_container = document.createElement("button")
 document.body.appendChild(button_and_container)
 button_and_container.id = "button_and_container"
-draggable(button_and_container)
+//draggable(button_and_container)
   
  //+ button
 let create_new = document.createElement('button')
@@ -96,11 +96,18 @@ button_create_button.addEventListener('click', function(){
   let created_button = document.createElement('button')
   document.body.appendChild(created_button)
   created_button.innerHTML = "Button here"
-  created_button.style.left = "40%"
-  created_button.style.display = "flex"
-  created_button.style.position = "absolute"
+  // created_button.style.left = "40%"
+  // created_button.style.display = "flex"
+  // created_button.style.position = "absolute"
   id_tracker+= 1
   created_button.id = "btn" + id_tracker
+  selector(created_button)
+  clear()
+  document.getElementById('x_input').value = "40%"
+  document.getElementById('display_input').value = "flex"
+  inputs_change()
+  form_update()
+  
   draggable(created_button)
 
 //Button: click
@@ -206,12 +213,13 @@ container_create_button.addEventListener('click', function(){
   border_tracker.push(created_container)
   console.log (border_tracker)
   selector(created_container)
-  //inputs_change (["width", "border-style", "border-width", "padding"], ["100%", "solid", "1px", "2%"])
+  clear()
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
   document.getElementById('padding_input').value = "2%"
   inputs_change()
+  form_update()
   draggable(created_container)
 
 //Container: click
@@ -247,8 +255,9 @@ form_update()
 //display values in form on click
 //ID
 function form_update(){
+  clear()
   // for (let x = 0; x < input_array.length; x++) {
-  //   update_total = "document.getElementById(\"" + input_array[x] + "\").value = document.getElementById(selected_element_4form)." + param_array[x]
+  //   update_total = "document.getElementById(\"" + input_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
   //   updateresult = Function(update_total)() 
   // }
 
@@ -256,10 +265,14 @@ function form_update(){
   let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   let selectedcss = stylecss.substring(first_index, last_index+1)
-  console.log(selectedcss)
+  console.log("THE FIRST INDEX IS " + first_index)
+  console.log("THE LAST INDEX IS " + last_index)
+  console.log("THE SELECTED CSS " + selectedcss)
+  console.log("THE SELECTED ELEMENT IS " + selected_element_4form)
   //alternative ... before stylecss instead of Array.from
-
   //matches = Array.from(stylecss.matchAll(/;/g))
+
+  //complicated af string minipulation
   let oldmatch
   if (matches) {
    matches.forEach((match) => {
@@ -361,40 +374,70 @@ document.getElementById("img_src").value = document.getElementById(selected_elem
 
   }  //NO REMOVE
 
+  function clear() {
+    for (let x = 0; x < input_array.length; x++) {
+      update_total = "document.getElementById(\"" + input_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
+      updateresult = Function(update_total)() 
+    }
+
+    document.getElementById("background_color").value = "#000001"
+  }
 
 
+  let mousedown_triggered = false
   //Button: Dragend handler
- // let resize = false
 function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
-  function mousedown() {
+  function mousedown(q) {
+    let drag_select
+      mousedown_triggered = true
+        drag_select = q.target.id
+      
+      
+    console.log (drag_select)
+    let node = document.getElementById(drag_select)
+    let clone = node.cloneNode()
+    document.body.appendChild(clone)
+    clone.style.position = "absolute"
+      
     document.addEventListener("mousemove", mousemover)
-    function mousemover() {
-      if (selected.parentElement.id === "body") {
-        selected.style.position = 'absolute'
-        }
-        let rect = selected.parentNode.getBoundingClientRect();
-        console.log(selected.parentNode.id)
-        //console.log(rect)
-        let lefter = event.clientX - rect.left
-        let toper = event.clientY - rect.top
-      selected.style.left = lefter - selected.offsetWidth / 2 + "px"
-      selected.style.top = toper - selected.offsetHeight / 2 + "px"
-      //console.log(event.clientX - rect.left)
-      //console.log(event.clientY - rect.top)
-      //console.log (event.clientX, event.clientY)
+    function mousemover(q) {
+      drag_target = q.target.id
+      
+      // if (selected.parentElement.id === "body") {
+      //   selected.style.position = 'absolute'
+      //   }
+      //   let rect = selected.parentNode.getBoundingClientRect();
+      //   console.log(selected.parentNode.id)
+
+      //   let lefter = event.clientX - rect.left
+      //   let toper = event.clientY - rect.top
+      // selected.style.left = lefter - selected.offsetWidth / 2 + "px"
+      // selected.style.top = toper - selected.offsetHeight / 2 + "px"
+      document.getElementById("mouse_tooltip").innerHTML = drag_select + " child of " + drag_target + "?"
+      
+
+      clone.style.opacity = 0.5
+      clone.style.top = event.clientY + 10 + "px"
+      clone.style.left = event.clientX + 10 + "px"
     }
+  
   document.addEventListener("mouseup", mouseup)
-    function mouseup() {
+    function mouseup(q) {
+      q.preventDefault()
+      clone.remove()
+      if (drag_target != drag_select && drag_select != null) {
+      document.getElementById(drag_target).appendChild(document.getElementById(drag_select))
+      }
+
     document.removeEventListener("mousemove", mousemover)
-    document.removeEventListener("mousedown", mousedown)
-    if (selected.style.id != "create") {
-    //selected.style.position = initial_pos
+    mousedown_triggered = false
+    drag_select = null
+    //document.removeEventListener("mousedown", mousedown)
     }
   }
-  }
-  }
+}
 }
   
 
@@ -445,7 +488,6 @@ function inputs_change() {
   }
   //Then rebinds the new one
   if (first_index === -1) {
-    console.log("run")
   document.getElementById('stylecss').appendChild(css_output)
   }
 
@@ -456,49 +498,7 @@ function inputs_change() {
 
 //ID submit
    document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
-// //Display submit
-// document.getElementById(selected_element_4form).style.display = document.getElementById("display_input").value
-// console.log(document.getElementById(selected_element_4form).style.display)
-// //Flex direction submit
-// document.getElementById(selected_element_4form).style.flexDirection = document.getElementById("flex_direction").value
-// //Justify content submit
-// document.getElementById(selected_element_4form).style.justifyContent = document.getElementById("justify_content").value
-//align content submit
-// document.getElementById(selected_element_4form).style.alignContent = document.getElementById("align_content").value
-// //align items submit
-// document.getElementById(selected_element_4form).style.alignItems = document.getElementById("align_items").value
-// //flex wrap submit
-// document.getElementById(selected_element_4form).style.flexWrap = document.getElementById("flex_wrap").value
-//Flex column gap submit
-//Adds "px" if not present, this value needs it for some reason
-/* NEEDED?!
-if (document.getElementById("flex_gap_column").value != "" && !(document.getElementById("flex_gap_column").value.includes("px"))) {
-  document.getElementById("flex_gap_column").value += "px"
-  document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
-}
-else {
-  document.getElementById(selected_element_4form).style.columnGap = document.getElementById("flex_gap_column").value
-}
-*/ //NEEDED?!
-//Flex row gap submit
-//Adds "px" if not present, this value needs it for some reason
-/*  NEEDED?!
-if (document.getElementById("flex_gap_row").value != "" && !(document.getElementById("flex_gap_row").value.includes("px"))) {
-  document.getElementById("flex_gap_row").value += "px"
-  document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
-}
-else {
-  document.getElementById(selected_element_4form).style.rowGap = document.getElementById("flex_gap_row").value
-}
-*/
-// //x submit
-// document.getElementById(selected_element_4form).style.top = document.getElementById("x_input").value
-// //y submit
-// document.getElementById(selected_element_4form).style.left = document.getElementById("y_input").value
-// //Height submit
-// document.getElementById(selected_element_4form).style.height = document.getElementById("height_input").value
-// //width submit
-// document.getElementById(selected_element_4form).style.width = document.getElementById("width_input").value
+
 //Background color submit
 //if statment to prevent default color from submitting
 /* NEEDED?!
@@ -509,24 +509,13 @@ document.getElementById(selected_element_4form).style.backgroundColor = document
 document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
 */
 //Text submit
-
 if (selected_element_4form != "body") {
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
 }
-// //Place holder submit
-// document.getElementById(selected_element_4form).placeholder = document.getElementById('placeholder_input').value
-// //Border style submit
-// document.getElementById(selected_element_4form).style.borderStyle = document.getElementById('border_style').value
-// //Border width submit
-// document.getElementById(selected_element_4form).style.borderWidth = document.getElementById('border_width').value
 // //Border color submit
 /* NEEDED?
 if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
 */
-// //Margin submit
-// document.getElementById(selected_element_4form).style.margin = document.getElementById('margin_input').value
-// //Padding submit
-// document.getElementById(selected_element_4form).style.padding = document.getElementById('padding_input').value
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
 let child_id = document.getElementById(selected_element_4form)
@@ -831,7 +820,7 @@ document.getElementById(this.innerHTML).style.outline = "unset"
 }
 
 
-// COPY and DELETE
+//Right click COPY and DELETE
 document.getElementById("rc_copy").addEventListener('click', function() {
   let clone = document.getElementById(selected_element_4form).cloneNode(true)
   let parent = document.getElementById(selected_element_4form).parentElement
@@ -847,12 +836,35 @@ document.getElementById("rc_del").addEventListener('click', function() {
   }
 })
 
-//doc click anywhere
+//doc click anywhere                                  //IMPORTANT
 document.addEventListener('click', function() {
   if (alreadyopen === false) {
     document.getElementById("rightclick_menu").style.display = "none"
   }
 })
+
+//doc hover anywhere
+document.addEventListener ("mouseover", function(q) {
+  if (q.target.id) {
+  document.getElementById(q.target.id).style.outline = "2px solid #84ff00"
+  }
+})
+document.addEventListener ("mouseout", function(t) {
+  if (t.target.id) {
+  document.getElementById(t.target.id).style.outline = "unset"
+  }
+})
+
+document.addEventListener("mousemove", function(t) {
+  let mouse = document.getElementById('mouse_tooltip')
+        let rect = mouse.parentNode.getBoundingClientRect();
+      let lefter = event.clientX - rect.left
+      let toper = event.clientY - rect.top
+      mouse.style.left = lefter + 12 + "px"
+      mouse.style.top = toper + -23 + "px"
+      mouse.innerHTML = t.target.id
+})
+
 
 //Border for container visability switcher checkbox
 document.getElementById('border_checkbox').addEventListener('change', function() {
@@ -903,7 +915,7 @@ document.getElementById('fontfamily_link_add_google').addEventListener('click', 
   document.getElementById('googlefonts').href = "https://fonts.googleapis.com/css?family=" + font_string
 })
 
-//delete button (fonts ---> remove)
+//fonts delete button (fonts ---> remove)
 document.getElementById('fontfamily_link_delete').addEventListener('click', function() {
   let remove1 = document.getElementById("fontfamily_items_select")
   remove1.remove(document.getElementById("fontfamily_items_select").selectedIndex)
@@ -914,24 +926,24 @@ document.getElementById('fontfamily_link_delete').addEventListener('click', func
   }
 })
 
-var loadFile = function(event) {
-	var image = document.getElementById('output');
-  let reader = new FileReader();
-  let file = event.target.files[0]
-  window.open('./assets/disc.PNG')
-  //image.src = URL.createObjectURL(event.target.files[0]); ////Method 1
-  // // reader.addEventListener("load", function() {  //////Method 2
-  // //   image.src = reader.result;
-  // // });
-  // // if (file) {
-  // //   reader.readAsDataURL(file);
-  // // }                                           //////Method 2
-}
+// var loadFile = function(event) {
+// 	var image = document.getElementById('output');
+//   let reader = new FileReader();
+//   let file = event.target.files[0]
+//   window.open('./assets/disc.PNG')
+//   //image.src = URL.createObjectURL(event.target.files[0]); ////Method 1
+//   // // reader.addEventListener("load", function() {  //////Method 2
+//   // //   image.src = reader.result;
+//   // // });
+//   // // if (file) {
+//   // //   reader.readAsDataURL(file);
+//   // // }                                           //////Method 2
+// }
 
+//Standard, hover and active selectors in form
 document.getElementById('btn_standard').addEventListener('click', btns_hover)
 document.getElementById('btn_hover').addEventListener('click', btns_hover)
 document.getElementById('btn_active').addEventListener('click', btns_hover)
-
 let btn_hover_selected = "btn_standard"
 function btns_hover() {
   btn_hover_selected = this.id
