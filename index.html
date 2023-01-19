@@ -1,5 +1,5 @@
 <head>
-  <link rel="stylesheet" type="text/css" href="style.css"/>>
+  <link rel="stylesheet" type="text/css" href="style.css"/>
   <div>
   <link id="googlefonts" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Sofia">
 </div>
@@ -9,7 +9,6 @@
 <title>Made by K -</title>
 
 
-<div id="tester" style="display:flex; position: relative; left: 40%; width: 70px; height: 70px; background-color: red;"></div>
 
 <form_container id="form_container">
   <button id="form_left_right" type="button" style="right: 0;">&lt  &nbsp &nbsp  &gt</button>
@@ -19,7 +18,6 @@
   <INPUT id="parent_input" class="myinputs" placeholder="Parent"></INPUT>
 </div>
 
-<input type="file"  accept="image/*" name="image" id="file" multiple onchange="loadFile(event)" >
 <img id="output" width="200" />
   <div><pa>Display</pa>
   <INPUT id="display_input" class="myinputs select_parents" placeholder="Display type"></INPUT>
@@ -97,8 +95,8 @@
 </div>
 
 <div><pa>Colors</pa> <br>
-  <INPUT id="background_color" class="myinputs" placeholder="Background color" type="color"></INPUT> <pa>Backgrnd color</pa><br>
-  <INPUT id="color_input" class="myinputs" type="color" placeholder="Color"></INPUT> <pa>Color</pa>
+  <INPUT id="background_color" class="myinputs" placeholder="Background color" type="color" value="#000001"></INPUT> <pa>Backgrnd color</pa><br>
+  <INPUT id="color_input" class="myinputs" type="color" placeholder="Color" value="#000001"></INPUT> <pa>Color</pa>
 </div>
 
 <div><pa>Text</pa>
@@ -138,7 +136,8 @@
 </div>
 
 
-  <div><pa>Border</pa>
+  <div>
+    <pa>Border</pa>
   <INPUT id="border_style" class="myinputs select_parents" placeholder="Border style - Try solid"></INPUT>
   <select name="border_style_select" id="border_style_select" class="select_child" style="display: none;">
     <option value="none">none</option>
@@ -157,7 +156,8 @@
   <INPUT id="border_color" class="myinputs" placeholder="Border color" type="color"></INPUT>
 </div>
 
-<div><pa>Paddings</pa>
+<div>
+  <pa>Paddings</pa>
   <INPUT id="margin_input" class="myinputs" placeholder="Padding outside element"></INPUT>
   <INPUT id="padding_input" class="myinputs" placeholder="Padding inside element"></INPUT>
 </div>
@@ -184,12 +184,11 @@
 
 
 <div id="output_and_counter">
-
 <textarea id="css_output" ></textarea>
-
 <button id="output_updater">Output</button>
 </div>
 
+<div id="mouse_tooltip">TEST</div>
 
 
 <script src="script.js"></script>
