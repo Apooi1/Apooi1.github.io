@@ -47,6 +47,14 @@
   <option>space-around</option>
   <option>space-evenly</option>
 </select>
+<INPUT id="align_items" class="myinputs select_parents" placeholder="Align items"></INPUT>
+<select name="" id="align_items_select" class="select_child" style="display: none;">
+  <option>normal</option>
+  <option>center</option>
+  <option>flex-start</option>
+  <option>stretch</option>
+  <option>baseline</option>
+</select>
   <INPUT id="align_content" class="myinputs select_parents" placeholder="Align Content"></INPUT>
   <select name="" id="align_content_select" class="select_child" style="display: none;">
     <option>normal</option>
@@ -57,14 +65,7 @@
     <option>space-evenly</option>
     <option>stretch</option>
   </select>
-  <INPUT id="align_items" class="myinputs select_parents" placeholder="Align items"></INPUT>
-  <select name="" id="align_items_select" class="select_child" style="display: none;">
-    <option>normal</option>
-    <option>center</option>
-    <option>flex-start</option>
-    <option>stretch</option>
-    <option>baseline</option>
-  </select>
+
   <INPUT id="flex_wrap" class="myinputs select_parents" placeholder="Flex wrap"></INPUT>
   <select name="" id="flex_wrap_select" class="select_child" style="display: none;">
     <option>wrap</option>
@@ -74,29 +75,46 @@
 </div>
 </div>
 
-<div><pa>Position</pa>
-  <INPUT id="x_input" class="myinputs" placeholder="Left"></INPUT>
-  <INPUT id="y_input" class="myinputs" placeholder="Top"></INPUT>
-  <INPUT id="bottom_input" class="myinputs" placeholder="Bottom"></INPUT>
-  <INPUT id="right_input" class="myinputs" placeholder="Right"></INPUT>
-  <INPUT id="position_input" class="myinputs select_parents" placeholder="Position type"></INPUT>
-  <select name="" id="position_items_select" class="select_child" style="display: none;">
-    <option>absolute</option>
-    <option>relative</option>
-    <option>fixed</option>
-    <option>initial</option>
-    <option>baseline</option>
-  </select>
-</div>
-
 <div><pa>Size</pa>
   <INPUT id="height_input" class="myinputs" placeholder="Height"></INPUT>
   <INPUT id="width_input" class="myinputs" placeholder="Width"></INPUT>
 </div>
 
+<div>
+  <pa>Paddings</pa>
+  <INPUT id="margin_input" class="myinputs" placeholder="Padding outside element"></INPUT>
+  <INPUT id="padding_input" class="myinputs" placeholder="Padding inside element"></INPUT>
+</div>
+
 <div><pa>Colors</pa> <br>
-  <INPUT id="background_color" class="myinputs" placeholder="Background color" type="color" value="#000001"></INPUT> <pa>Backgrnd color</pa><br>
-  <INPUT id="color_input" class="myinputs" type="color" placeholder="Color" value="#000001"></INPUT> <pa>Color</pa>
+  <div class="flexer">
+  <INPUT id="background_color" class="myinputs width100 coloree" placeholder="Background color"> </INPUT> <INPUT id="background_colo" class="myinputs colorers" placeholder="Background color" type="color" value="#000001"></INPUT>
+  </div>
+  <div class="flexer">
+  <INPUT id="color_input" class="myinputs width100 coloree" placeholder="Color"> </INPUT> <INPUT id="color_inpu" class="myinputs colorers" type="color" placeholder="Color" value="#000001"></INPUT>
+</div>
+</div>
+
+<div>
+  <pa>Border</pa>
+<INPUT id="border_style" class="myinputs select_parents" placeholder="Border style - Try solid"></INPUT>
+<select name="border_style_select" id="border_style_select" class="select_child" style="display: none;">
+  <option value="none">none</option>
+  <option>solid</option>
+  <option">dotted</option>
+  <option>dashed</option>
+  <option>double</option>
+  <option>groove</option>
+  <option>ridge</option>
+  <option>inset</option>
+  <option>outset</option>
+  <option>initial</option>
+</select>
+<INPUT id="border_width" class="myinputs" placeholder="Border width"></INPUT>
+<INPUT id="border_radius" class="myinputs" placeholder="Border curve - needs px"></INPUT>
+<div class="flexer">
+  <INPUT id="border_color" class="myinputs width100 coloree" placeholder="Border color"> </INPUT> <INPUT id="border_colo" class="myinputs colorers" placeholder="Border color" type="color"></INPUT>
+</div>
 </div>
 
 <div><pa>Text</pa>
@@ -135,32 +153,23 @@
   <INPUT id="lineheight_input" class="myinputs" placeholder="Line Height"></INPUT>
 </div>
 
-
-  <div>
-    <pa>Border</pa>
-  <INPUT id="border_style" class="myinputs select_parents" placeholder="Border style - Try solid"></INPUT>
-  <select name="border_style_select" id="border_style_select" class="select_child" style="display: none;">
-    <option value="none">none</option>
-    <option>solid</option>
-    <option">dotted</option>
-    <option>dashed</option>
-    <option>double</option>
-    <option>groove</option>
-    <option>ridge</option>
-    <option>inset</option>
-    <option>outset</option>
+<div><pa>Position</pa>
+  <INPUT id="x_input" class="myinputs" placeholder="Left"></INPUT>
+  <INPUT id="y_input" class="myinputs" placeholder="Top"></INPUT>
+  <INPUT id="bottom_input" class="myinputs" placeholder="Bottom"></INPUT>
+  <INPUT id="right_input" class="myinputs" placeholder="Right"></INPUT>
+  <INPUT id="position_input" class="myinputs select_parents" placeholder="Position type"></INPUT>
+  <select name="" id="position_items_select" class="select_child" style="display: none;">
+    <option>absolute</option>
+    <option>relative</option>
+    <option>fixed</option>
     <option>initial</option>
+    <option>baseline</option>
   </select>
-  <INPUT id="border_width" class="myinputs" placeholder="Border width"></INPUT>
-  <INPUT id="border_radius" class="myinputs" placeholder="Border curve - needs px"></INPUT>
-  <INPUT id="border_color" class="myinputs" placeholder="Border color" type="color"></INPUT>
 </div>
 
-<div>
-  <pa>Paddings</pa>
-  <INPUT id="margin_input" class="myinputs" placeholder="Padding outside element"></INPUT>
-  <INPUT id="padding_input" class="myinputs" placeholder="Padding inside element"></INPUT>
-</div>
+
+
 <div id="img_src_container">
   <INPUT id="img_src" class="myinputs" placeholder="Image source / file"></INPUT>
   <INPUT id="img_checkbox" class="myinputs" type="checkbox" placeholder="Original size?"></INPUT>

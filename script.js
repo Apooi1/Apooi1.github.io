@@ -1,6 +1,3 @@
-//var socket = io()
-// cool gray #d8d8d8;
-
 let id_tracker = 0
 let selected_element_4form = ""
 let the_selected_element
@@ -12,24 +9,25 @@ let matches
 let border_tracker = []
 let font_array = []
 
-let param_array = ["style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", "style.bottom", "style.right",
-"style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
-, "style.fontSize", "style.fontWeight", "style.fontStyle", "style.lineHeight"]
+// let param_array = ["style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", "style.bottom", "style.right",
+// "style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
+// , "style.fontSize", "style.fontWeight", "style.fontStyle", "style.lineHeight"]
 
-let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top", "left", "bottom", "right",
-"height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin", "padding", "position", "font-family"
-, "font-size", "font-weight", "font-style", "line-height", "background-color", "color", "column-row", "column-gap",
-"border-color"]
+let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top",
+ "left", "bottom", "right", "height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin",
+  "padding", "position", "font-family", "font-size", "font-weight", "font-style", "line-height", "background-color", 
+  "color", "row-gap", "column-gap", "border-color"]
 
-let input_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
-"margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
-, "lineheight_input"]
+// let input_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
+// "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
+// "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
+// , "lineheight_input"]
 
 let cssinput_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
-"margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
-, "lineheight_input", "background_color", "color_input", "flex_gap_row", "flex_gap_column", "border_color"]
+"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style",
+ "border_width", "border_radius", "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input",
+  "fontweight_input", "fontstyle_input", "lineheight_input", "background_color", "color_input", "flex_gap_row",
+   "flex_gap_column", "border_color"]
 
 //rgb to hex function for colors
 //match searches for certain elements
@@ -107,15 +105,14 @@ button_create_button.addEventListener('click', function(){
   document.getElementById('display_input').value = "flex"
   inputs_change()
   form_update()
-  
   draggable(created_button)
-
+})
 //Button: click
-created_button.addEventListener('click', function(v) {
-v.stopPropagation();
-selector(created_button)
-})
-})
+// created_button.addEventListener('click', function(v) {
+// v.stopPropagation();
+// selector(created_button)
+// })
+// })
 
 
 //Input creation button to create Inputs
@@ -133,14 +130,19 @@ document.getElementById("input_create_button").addEventListener('click', functio
   created_input.value = "INPUTED"
   id_tracker +=1
   created_input.id = created_input.nodeName + id_tracker
-  created_input.className = "created_input_class"
+  selector(created_input)
+  clear()
+  
+  inputs_change()
+  form_update()
   draggable(created_input)
+})
 
 //Input click
-created_input.addEventListener('click', function() {
-selector(created_input)
-})
-})
+// created_input.addEventListener('click', function() {
+// selector(created_input)
+// })
+// })
 
 
 //Text area creation button to create textareas
@@ -157,14 +159,21 @@ document.getElementById("textarea_create_button").addEventListener('click', func
   created_textarea.value = "Write your text here..."
   id_tracker += 1
   created_textarea.id = created_textarea.nodeName + id_tracker
-  created_textarea.className = "created_textarea_class"
+  //created_textarea.className = "created_textarea_class"
+  selector(created_textarea)
+  clear()
+  document.getElementById('height_input').value = "120px"
+  document.getElementById('width_input').value = "300px"
+  inputs_change()
+  form_update()
   draggable(created_textarea)
+})
 
 //Text Area click
-created_textarea.addEventListener('click', function() {
-selector(created_textarea)
-})
-})
+// created_textarea.addEventListener('click', function() {
+// selector(created_textarea)
+// })
+// })
 
 
 //Image creation button to create images
@@ -177,19 +186,23 @@ img_create_button.id = "img_create_button"
 img_create_button.addEventListener('click', function(){
   let created_img = document.createElement('IMG')
   document.body.appendChild(created_img)
-  created_img.innerHTML = "HOLY TRINITY"
-  created_img.style.height = 150;
-  created_img.style.width = 150;
-  created_img.src = "test"
   id_tracker += 1
   created_img.id = created_img.nodeName + id_tracker
-  draggable(created_img)
+  selector(created_img)
+  clear()
+  document.getElementById('width_input').value = "150px"
+  document.getElementById('height_input').value = "150px"
+  document.getElementById('img_src').value = "test"
 
+  inputs_change()
+  form_update()
+  draggable(created_img)
+})
 //img: click
-created_img.addEventListener('click', function() {
-selector(created_img)
-})
-})
+// created_img.addEventListener('click', function() {
+// selector(created_img)
+// })
+// })
                                    
 
 //Container creation button to create containers
@@ -216,16 +229,16 @@ container_create_button.addEventListener('click', function(){
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
-  document.getElementById('padding_input').value = "2%"
+  document.getElementById('padding_input').value = "30px"
   inputs_change()
   form_update()
   draggable(created_container)
 
 //Container: click
-created_container.addEventListener('click', function(s) {
-s.stopPropagation();
-selector(created_container)
-})
+// created_container.addEventListener('click', function(s) {
+// s.stopPropagation();
+// selector(created_container)
+// })
 })
 
 document.body.id = "body"
@@ -246,9 +259,15 @@ function selector(selected_element){
   the_selected_element = selected_element
   console.log(selected_element_4form)
 draggable(selected_element)
-form_update()  
+selected_element.addEventListener('click', function(q) {
+  selected_element_4form = q.target.id
+form_update()
+})
+form_update()
 }
   
+
+
 
 //display values in form on click
 //ID
@@ -279,6 +298,7 @@ function form_update(){
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
+  
 
     }
     
@@ -313,23 +333,28 @@ document.getElementById("form_id").value = document.getElementById(selected_elem
 if (selected_element_4form != "body") {
 document.getElementById("text_input").value = document.getElementById(selected_element_4form).innerHTML
 }
-// //Border color
-if(!document.getElementById(selected_element_4form).style.borderColor) {
-document.getElementById("border_color").value = unused_hex
-}
-if(document.getElementById(selected_element_4form).style.borderColor) {
-document.getElementById('border_color').value = rgb2hex(document.getElementById(selected_element_4form).style.border_color)
-}
+// //Border color !!used to be important
+// if(!document.getElementById(selected_element_4form).style.borderColor) {
+// document.getElementById("border_color").value = unused_hex
+// }
+// if(document.getElementById(selected_element_4form).style.borderColor) {
+// document.getElementById('border_color').value = rgb2hex(document.getElementById(selected_element_4form).style.border_color)
+// }
 //Parent
 document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
 //Image src
 document.getElementById("img_src").value = document.getElementById(selected_element_4form).src
+
+let coloree_classes = document.getElementsByClassName('coloree')
+for (let x = 0; x < coloree_classes.length; x++) {
+  document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
+}
   }  //NO REMOVE
 
 
   function clear() {
-    for (let x = 0; x < input_array.length; x++) {
-      update_total = "document.getElementById(\"" + input_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
+    for (let x = 0; x < cssinput_array.length; x++) {
+      update_total = "document.getElementById(\"" + cssinput_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
       updateresult = Function(update_total)() 
     }
 
@@ -339,11 +364,14 @@ document.getElementById("img_src").value = document.getElementById(selected_elem
 
   let mousedown_triggered = false
   //Button: Dragend handler
-  let drag_select
+  let drag_select = null
 function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
   function mousedown(q) {
+    if (q.buttons != 1) {
+      return
+    }
       mousedown_triggered = true
         drag_select = q.target.id
       
@@ -391,6 +419,18 @@ function draggable(selected){
 }
   
 
+//colors to input fields
+let colorers_all_classes = document.getElementsByClassName("colorers")
+let colorers_array = []
+for (x = 0; x < colorers_all_classes.length; x++) {
+  colorers_array.push(colorers_all_classes[x])
+  document.getElementsByClassName("colorers")[x].addEventListener("change", function() {
+    console.log(colorers_array.indexOf(this))
+    //console.log(document.getElementsByClassName("colorers")[3])
+    document.getElementsByClassName("coloree")[colorers_array.indexOf(this)].value = this.value
+  })
+}
+
 
 //Triggers on submit
 //loops through all input classes and adds event listeners to change, on change, submits
@@ -434,10 +474,11 @@ function inputs_change() {
   //Deletes the css code
   if (first_index != -1) {
     document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), cssline)
-    console.log(css_output.textContent, cssline)
+    //console.log(css_output.textContent, cssline)
   }
   //Then rebinds the new one
   if (first_index === -1) {
+    //document.getElementById('stylecss').appendChild(css_default)
   document.getElementById('stylecss').appendChild(css_output)
   }
 
@@ -494,40 +535,6 @@ if (document.getElementById('img_checkbox').checked) {
 // }) //NO REMOVE
 }
 
-
-//Moves form left to right
-document.getElementById('form_left_right').addEventListener('click', function(){
-  if(document.getElementById('form_container').style.left == 0) {
-  document.getElementById('form_container').style.right = null
-  document.getElementById('form_container').style.left = 0
-  document.getElementById('form_left_right').style.right = null
-  document.getElementById('form_left_right').style.left = 0
-  }
-
-  else {
-    document.getElementById('form_container').style.left = null
-    document.getElementById('form_container').style.right = 0
-  document.getElementById('form_left_right').style.left = null
-  document.getElementById('form_left_right').style.right = 0
-  }
-})
-
-//Input drop downs visability switcher
-let select_parents = document.getElementsByClassName("select_parents")
-for (let x = 0; x < select_parents.length; x++) {
-  document.getElementsByClassName("select_parents")[x].addEventListener('focus', function() {
-    document.getElementsByClassName('select_child')[x].style.display = "block"
-  })
-  
-  document.getElementsByClassName("select_child")[x].addEventListener('blur', function() {
-    document.getElementsByClassName('select_child')[x].style.display = "none"
-  })
-  document.getElementsByClassName("select_child")[x].addEventListener('change', function() {
-    document.getElementsByClassName('select_parents')[x].value = document.getElementsByClassName("select_child")[x].value
-    inputs_change()
-  })
-}
-
   
 //vislock checkbox for creation menu (create item)
 let vislock_create = document.createElement("INPUT")
@@ -545,7 +552,43 @@ vislock_create.addEventListener('click', function(){
   }
 })
 
+
+//Moves form left to right
+document.getElementById('form_left_right').addEventListener('click', function(){
+  if(document.getElementById('form_container').style.left == 0) {
+  document.getElementById('form_container').style.right = null
+  document.getElementById('form_container').style.left = 0
+  document.getElementById('form_left_right').style.right = null
+  document.getElementById('form_left_right').style.left = 0
+  }
+
+  else {
+    document.getElementById('form_container').style.left = null
+    document.getElementById('form_container').style.right = 0
+  document.getElementById('form_left_right').style.left = null
+  document.getElementById('form_left_right').style.right = 0
+  }
   
+})
+
+
+//Input drop downs visability switcher
+let select_parents = document.getElementsByClassName("select_parents")
+for (let x = 0; x < select_parents.length; x++) {
+  document.getElementsByClassName("select_parents")[x].addEventListener('focus', function() {
+    document.getElementsByClassName('select_child')[x].style.display = "block"
+  })
+
+  document.getElementsByClassName("select_child")[x].addEventListener('blur', function() {
+    document.getElementsByClassName('select_child')[x].style.display = "none"
+  })
+
+  document.getElementsByClassName("select_child")[x].addEventListener('change', function() {
+    document.getElementsByClassName('select_parents')[x].value = document.getElementsByClassName("select_child")[x].value
+    inputs_change()
+  })
+
+}
 
 
 
@@ -584,7 +627,7 @@ output.value = ""
 //removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
 let bodyhtml = lines[7]
   console.log(bodyhtml)
-lines.splice(0, 196 + csslines)  //script tag +1 in html and remove stylecss
+lines.splice(0, 202 + csslines)  //script tag +1 in html and remove stylecss
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
   merged_output[y] = lines[y]
@@ -641,18 +684,21 @@ setTimeout(function(){
 //Output visswitcher hide button
 let output_visswitch = document.createElement('button')
 document.body.appendChild(output_visswitch)
-output_visswitch.innerHTML = "Hide"
+output_visswitch.innerHTML = "output"
 output_visswitch.style.left = 'calc(65% - 250px)'
 output_visswitch.id = "output_visswitch"
+document.getElementById("output_and_counter").style.display = "none"
  //Output visswitcher hide button click
   document.getElementById("output_visswitch").addEventListener('click', function() {
-    if (document.getElementById("output_and_counter").style.display != "none") {  document.getElementById("output_and_counter").style.display = "none"
-output_visswitch.style.bottom = 0
-output_visswitch.innerHTML = "Output"
-    }    
-else { document.getElementById("output_and_counter").style.display = "flex"
+    if (document.getElementById("output_and_counter").style.display === "none") {
+      document.getElementById("output_and_counter").style.display = "flex"
 output_visswitch.style.bottom = 200
-output_visswitch.innerHTML = "Hide"
+output_visswitch.innerHTML = "hide"
+    }    
+else { 
+  document.getElementById("output_and_counter").style.display = "none"
+output_visswitch.style.bottom = 0
+output_visswitch.innerHTML = "output"
 }
 })
 
@@ -666,10 +712,22 @@ import_button.style.bottom = 0
 import_button.id = "import_button"
 
 document.getElementById("import_button").addEventListener('click', function(){
-  alert("Not yet implemented.")
+  document.getElementById("stylecss").textContent = document.getElementById("css_output").value
+  inputs_change()
+
+  let body1 = document.createElement("body1")
+  body1.id = "body1"
+  document.body.appendChild(body1)
+  body1.innerHTML = output.value
+
+  document.addEventListener("click", function() {
+    console.log('Lmao')
+  })
+  
 })
 
 
+//Right click visability handler
 let alreadyopen = false
 document.addEventListener('contextmenu', function(w) {
   w.preventDefault()
@@ -713,7 +771,6 @@ document.addEventListener('contextmenu', function(w) {
 
 //Right click ---> right click
 function rc_btn_rc() {
-  console.log("clicked")
   alreadyopen = true
   setTimeout(() => {
     alreadyopen = false
@@ -756,8 +813,13 @@ document.getElementById(this.innerHTML).style.outline = "unset"
 //Right click COPY and DELETE
 document.getElementById("rc_copy").addEventListener('click', function() {
   let clone = document.getElementById(selected_element_4form).cloneNode(true)
+  id_tracker+=1
   let parent = document.getElementById(selected_element_4form).parentElement
   document.getElementById(parent.id).appendChild(clone)
+  clone.id =  selected_element_4form + "clone" + id_tracker
+  document.getElementById("form_id").value = clone.id
+  selected_element_4form = clone.id
+  inputs_change()
 })
 
 document.getElementById("rc_del").addEventListener('click', function() {
@@ -874,7 +936,7 @@ document.getElementById('fontfamily_link_delete').addEventListener('click', func
 //   // // }                                           //////Method 2
 // }
 
-//Standard, hover and active selectors in form
+//Standard, hover and active selectors in form, latter part adjusts for input_changes()
 document.getElementById('btn_standard').addEventListener('click', btns_hover)
 document.getElementById('btn_hover').addEventListener('click', btns_hover)
 document.getElementById('btn_active').addEventListener('click', btns_hover)
@@ -886,6 +948,16 @@ function btns_hover() {
   document.getElementById('btn_hover').style.backgroundColor = "unset"
   document.getElementById('btn_active').style.backgroundColor = "unset"
   this.style.backgroundColor = "aqua"
+
+  if (btn_hover_selected === "btn_standard") {
+    potential_hover = ""
+  }
+  else if (btn_hover_selected === "btn_active") {
+    potential_hover = ":active"
+  }
+  else if (btn_hover_selected === "btn_hover") {
+    potential_hover = ":hover"
+  }
 }
 
 
