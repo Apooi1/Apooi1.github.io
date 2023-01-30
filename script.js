@@ -252,7 +252,8 @@ body_select.addEventListener('click', function(){
   selector(document.body)
 })
 
-  
+
+//------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SELECTOR<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------
 //Find ID of selected element
 function selector(selected_element){
   selected_element_4form = selected_element.id
@@ -268,15 +269,14 @@ form_update()
   
 
 
-
+//&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&~~CSS UPDATER~~&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 //display values in form on click
 //ID
 function form_update(){
   clear()
-  // for (let x = 0; x < input_array.length; x++) {
-  //   update_total = "document.getElementById(\"" + input_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
-  //   updateresult = Function(update_total)() 
-  // }
+
+    //Grabs all ";"s for input_change()
+    matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
 
   let stylecss = document.getElementById('stylecss').textContent
   let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
@@ -284,7 +284,6 @@ function form_update(){
   let selectedcss = stylecss.substring(first_index, last_index+1)
   //alternative ... before stylecss instead of Array.from
   //matches = Array.from(stylecss.matchAll(/;/g))
-
   //complicated af string minipulation
   let oldmatch
   if (matches) {
@@ -292,16 +291,18 @@ function form_update(){
     if (match.index > first_index && match.index < last_index) {
     if (oldmatch) {
     let value = stylecss.substring(oldmatch.index, match.index)
+    value = value.replaceAll(" ", "")
     let divide13 = value.indexOf (':')
     let cssproperty = value.substring(1, divide13)
     let cssparm = value.substring(divide13+1, value.length-1)
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
+    console.log(value + "TJE VA:UE")
+    console.log(oldmatch.index + " wtf " + match.index)
+    console.log(cssproperty)
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
   
-
     }
-    
     if (oldmatch != match) {
     oldmatch = match
     }
@@ -309,9 +310,8 @@ function form_update(){
   })
 }
 
-  
-
 //ID
+console.log(selected_element_4form+ "THE HOLY ELEMENT")
 document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
 //background color (uses rgb2hex function)
 //checks if there is not a color property, set color to unused hex
@@ -357,13 +357,13 @@ for (let x = 0; x < coloree_classes.length; x++) {
       update_total = "document.getElementById(\"" + cssinput_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
       updateresult = Function(update_total)() 
     }
-
+    //document.getElementById("form_id").value = ""
     document.getElementById("background_color").value = "#000001"
   }
 
 
+    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>--DRAG HANDLER--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   let mousedown_triggered = false
-  //Button: Dragend handler
   let drag_select = null
 function draggable(selected){
   if (selected != document.body) {
@@ -374,7 +374,6 @@ function draggable(selected){
     }
       mousedown_triggered = true
         drag_select = q.target.id
-      
       
     console.log ("selected is " + drag_select)
     let node = document.getElementById(drag_select)
@@ -418,7 +417,6 @@ function draggable(selected){
 }
 }
   
-
 //colors to input fields
 let colorers_all_classes = document.getElementsByClassName("colorers")
 let colorers_array = []
@@ -432,6 +430,7 @@ for (x = 0; x < colorers_all_classes.length; x++) {
 }
 
 
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!>> INPUT SUBMITTER <<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //Triggers on submit
 //loops through all input classes and adds event listeners to change, on change, submits
 let inputs_all_classes = document.getElementsByClassName("myinputs")
@@ -482,8 +481,7 @@ function inputs_change() {
   document.getElementById('stylecss').appendChild(css_output)
   }
 
-  //Grabs all ";"s for input_change()
-  matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
+
   
 
 
@@ -501,6 +499,7 @@ document.getElementById(selected_element_4form).style.color = document.getElemen
 */
 //Text submit
 if (selected_element_4form != "body") {
+  console.log(selected_element_4form + "IS IT ACTUALLY NULL?")
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
 }
 // //Border color submit
@@ -720,9 +719,18 @@ document.getElementById("import_button").addEventListener('click', function(){
   document.body.appendChild(body1)
   body1.innerHTML = output.value
 
-  document.addEventListener("click", function() {
-    console.log('Lmao')
-  })
+  let body1_collection = body1.getElementsByTagName('*')
+  for (let x = 0; x < body1_collection.length; x++) {
+    body1_collection[x].addEventListener("click", function(q) {
+      selected_element_4form = q.target.id
+      console.log(selected_element_4form + "THE HOLY ELEMENTSS!!!")
+      clear()
+      form_update()
+    })
+  }
+  // .addEventListener("click", function(q) {
+  //   draggable(q.target)
+  // })
   
 })
 
@@ -966,3 +974,241 @@ var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)
 
+
+  output.value = `
+  <div id="div2" style="outline: unset;">
+      <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png"
+              style="outline: unset;"></div>
+      <div id="div22" style="outline: unset;"><input id="INPUT17"
+              src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
+          <div id="div18" style="outline: unset;">
+              <div id="div19" style="outline: unset;">Something</div>
+              <div id="div20" style="outline: unset;">More</div>
+              <div id="div21" style="outline: unset;">About</div>
+          </div>
+      </div>
+  </div>
+  <div id="div4" style="outline: unset;">
+      <div id="div7" style="outline: unset;">
+          <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/8zM3JJGZ/Untitled.png"
+                  style="outline: unset;"></div>
+          <div id="div12" style="outline: unset;">learn</div>
+      </div>
+      <div id="div7clone9" style="outline: unset;"></div>
+      <div id="div7clone9clone10" style="outline: unset;"></div>
+      <div id="div7clone9clone10clone14" style="outline: unset;"></div>
+  </div>`
+
+  document.getElementById("css_output").value = `#div1 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div2 {
+    display: flex;
+    width: 100%;
+    border-style: none none solid none;
+    border-width: 5px;
+    background-color: #106B19;
+    border-color: #1AAB28;
+}
+
+#div3 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div4 {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    margin: 0;
+    padding: 30px 20% 30px 20%;
+    background-color: #106B19;
+    row-gap: 20px;
+}
+
+#div5 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div6 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div7 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #1AAB28;
+    border-color: #adf7ab;
+}
+
+#div8 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div7clone9 {
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div7clone9clone10 {
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div11 {
+    height: 100%;
+    width: 100%;
+    border-style: none;
+}
+
+#div12 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    bottom: 20px;
+    height: 15%;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    padding: 0;
+    position: relative;
+    font-family: comfortaa;
+    font-size: 25px;
+    color: #ffffff;
+}
+
+#IMG13 {
+    height: 100%;
+    width: 100%;
+}
+
+#div7clone9clone10clone14 {
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div15 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div16 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 53px;
+    width: 150px;
+    border-style: none;
+    border-width: 1px;
+    font-family: Comfortaa;
+    font-size: 25px;
+    color: #ffffff;
+}
+
+#INPUT17 {
+    width: 70%;
+    placeholder: Search...;
+    border-style: solid;
+    border-radius: 3px;
+    margin: 6px 20px 6px 20px;
+    padding: 10px;
+    font-family: Comfortaa;
+    font-size: 15px;
+    background-color: #1AAB28;
+    color: #fcfcfc;
+    border-color: #1AAB28;
+}
+
+#div18 {
+    display: flex;
+    right: 0;
+    height: 52px;
+    width: 30%;
+    border-style: none;
+    border-width: 1px;
+    padding: 0;
+    position: initial;
+    color: #f2f2f2;
+}
+
+#div19 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    padding: 20px;
+    font-family: Comfortaa;
+}
+
+#div20 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    padding: 20px;
+    font-family: Comfortaa;
+}
+
+#div21 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    padding: 20px;
+    font-family: Comfortaa;
+}
+
+#div22 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+}
+
+#IMG23 {
+    height: 170%;
+    width: 100%;
+}`
