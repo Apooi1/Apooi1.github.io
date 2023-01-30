@@ -726,12 +726,10 @@ document.getElementById("import_button").addEventListener('click', function(){
       console.log(selected_element_4form + "THE HOLY ELEMENTSS!!!")
       clear()
       form_update()
+      draggable(q.target)
     })
   }
-  // .addEventListener("click", function(q) {
-  //   draggable(q.target)
-  // })
-  
+
 })
 
 
