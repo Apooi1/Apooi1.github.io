@@ -1,10 +1,11 @@
 let id_tracker = 0
-let selected_element_4form = ""
+let selected_element_4form = "rightclick_menu"
 let the_selected_element
 let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 let potential_hover = ""
 let matches
+let radio_id_css = "ID"
 
 let border_tracker = []
 let font_array = []
@@ -297,9 +298,6 @@ function form_update(){
     let cssparm = value.substring(divide13+1, value.length-1)
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
-    console.log(value + "TJE VA:UE")
-    console.log(oldmatch.index + " wtf " + match.index)
-    console.log(cssproperty)
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
   
     }
@@ -311,8 +309,22 @@ function form_update(){
 }
 
 //ID
-console.log(selected_element_4form+ "THE HOLY ELEMENT")
 document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
+//CLASS
+document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
+
+if (selected_element_4form != "body") {
+document.getElementById("text_input").value = document.getElementById(selected_element_4form).innerHTML
+}
+//Parent
+document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
+//Image src
+document.getElementById("img_src").value = document.getElementById(selected_element_4form).src
+
+let coloree_classes = document.getElementsByClassName('coloree')
+for (let x = 0; x < coloree_classes.length; x++) {
+  document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
+}
 //background color (uses rgb2hex function)
 //checks if there is not a color property, set color to unused hex
 //Then checks if there is a color property before allowed to run to prevent null error
@@ -330,9 +342,6 @@ document.getElementById("form_id").value = document.getElementById(selected_elem
 // document.getElementById('color_input').value = rgb2hex(document.getElementById(selected_element_4form).style.color)
 // }
 //Text
-if (selected_element_4form != "body") {
-document.getElementById("text_input").value = document.getElementById(selected_element_4form).innerHTML
-}
 // //Border color !!used to be important
 // if(!document.getElementById(selected_element_4form).style.borderColor) {
 // document.getElementById("border_color").value = unused_hex
@@ -340,15 +349,6 @@ document.getElementById("text_input").value = document.getElementById(selected_e
 // if(document.getElementById(selected_element_4form).style.borderColor) {
 // document.getElementById('border_color').value = rgb2hex(document.getElementById(selected_element_4form).style.border_color)
 // }
-//Parent
-document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
-//Image src
-document.getElementById("img_src").value = document.getElementById(selected_element_4form).src
-
-let coloree_classes = document.getElementsByClassName('coloree')
-for (let x = 0; x < coloree_classes.length; x++) {
-  document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
-}
   }  //NO REMOVE
 
 
@@ -445,6 +445,7 @@ function inputs_change() {
   //   outresult = Function(total)()
   //   //console.log (outresult) 
   // }
+  let cssline
 
   if (btn_hover_selected === "btn_standard") {
     potential_hover = ""
@@ -455,13 +456,22 @@ function inputs_change() {
   else if (btn_hover_selected === "btn_hover") {
     potential_hover = ":hover"
   }
-  let cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover  +" {" + "\n"
+  if (radio_id_css === "ID") {
+  cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover  +" {" + "\n"
+  console.log("ID CHECKED")
+  }
+  else /*if (radio_id_css === "CLASS")*/ {
+    console.log("YES IT RAN")
+  cssline = "." + document.getElementById(selected_element_4form).className + potential_hover  +" {" + "\n"
+  console.log("CSS CHECKED")
+  }
+  console.log(cssline)
+  console.log(radio_id_css)
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
     cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
     }
   }
-
   cssline += "}"
  
   let css_output = document.createTextNode(cssline)
@@ -482,30 +492,15 @@ function inputs_change() {
   }
 
 
-  
-
 
 //ID submit
    document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
-
-//Background color submit
-//if statment to prevent default color from submitting
-/* NEEDED?!
-if (document.getElementById("background_color").value != unused_hex) {
-document.getElementById(selected_element_4form).style.backgroundColor = document.getElementById('background_color').value
-}
-//color submit
-document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
-*/
+//class submit
+   document.getElementById(selected_element_4form).className = document.getElementById("class_input").value
 //Text submit
 if (selected_element_4form != "body") {
-  console.log(selected_element_4form + "IS IT ACTUALLY NULL?")
 document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
 }
-// //Border color submit
-/* NEEDED?
-if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
-*/
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
 let child_id = document.getElementById(selected_element_4form)
@@ -521,8 +516,6 @@ if (initial_pos === "absolute") {
   the_selected_element.style.position = "initial"
 }
 }
-
-
 //img src submit
 document.getElementById(selected_element_4form).src = document.getElementById('img_src').value
 
@@ -531,6 +524,20 @@ if (document.getElementById('img_checkbox').checked) {
   document.getElementById(selected_element_4form).style.height = document.getElementById(selected_element_4form).naturalHeight;
   document.getElementById(selected_element_4form).style.width = document.getElementById(selected_element_4form).naturalWidth;
 }
+
+//Background color submit
+//if statment to prevent default color from submitting
+/* NEEDED?!
+if (document.getElementById("background_color").value != unused_hex) {
+document.getElementById(selected_element_4form).style.backgroundColor = document.getElementById('background_color').value
+}
+//color submit
+document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
+*/
+// //Border color submit
+/* NEEDED?
+if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
+*/
 // }) //NO REMOVE
 }
 
@@ -966,7 +973,16 @@ function btns_hover() {
   }
 }
 
-
+for (let x = 0; x < document.getElementsByClassName("radio_id_class").length; x++) {
+document.getElementsByClassName("radio_id_class")[x].addEventListener("change", function() {
+  if (this.id === "ID_radio") {
+    radio_id_css = "ID"
+  }
+  else {
+    radio_id_css = "CSS"
+  }
+})
+}
 
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
@@ -974,30 +990,32 @@ var screenHeight = window.innerHeight;
 
 
   output.value = `
-  <div id="div2" style="outline: unset;">
-      <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png"
-              style="outline: unset;"></div>
-      <div id="div22" style="outline: unset;"><input id="INPUT17"
-              src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
-          <div id="div18" style="outline: unset;">
-              <div id="div19" style="outline: unset;">Something</div>
-              <div id="div20" style="outline: unset;">More</div>
-              <div id="div21" style="outline: unset;">About</div>
-          </div>
-      </div>
-  </div>
-  <div id="div4" style="outline: unset;">
-      <div id="div7" style="outline: unset;">
-          <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/8zM3JJGZ/Untitled.png"
-                  style="outline: unset;"></div>
-          <div id="div12" style="outline: unset;">learn</div>
-      </div>
-      <div id="div7clone9" style="outline: unset;"></div>
-      <div id="div7clone9clone10" style="outline: unset;"></div>
-      <div id="div7clone9clone10clone14" style="outline: unset;"></div>
-  </div>`
+    <div id="div2" style="outline: unset;">
+        <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png"
+                style="outline: unset;"></div>
+        <div id="div22" style="outline: unset;"><input id="INPUT17"
+                src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
+            <div id="div18" style="outline: unset;">
+                <div id="div19" style="outline: unset;">Something</div>
+                <div id="div20" style="outline: unset;">More</div>
+                <div id="div21" style="outline: unset;">About</div>
+            </div>
+        </div>
+    </div>
+    <div id="div4" style="outline: unset;">
+        <div id="div7" style="outline: unset;" class="">
+            <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/8zM3JJGZ/Untitled.png"
+                    style="outline: unset;"></div>
+            <div id="div12" style="outline: unset;">learn</div>
+        </div>
+        <div id="div7clone9" style="outline: unset;"></div>
+        <div id="div7clone9clone10" style="outline: unset;"></div>
+        <div id="div7clone9clone10clone14" style="outline: unset;"></div>
+    </div>
+    `
 
-  document.getElementById("css_output").value = `#div1 {
+  document.getElementById("css_output").value = `
+  #div1 {
     width: 100%;
     border-style: solid;
     border-width: 1px;
@@ -1209,4 +1227,34 @@ var screenHeight = window.innerHeight;
 #IMG23 {
     height: 170%;
     width: 100%;
+}
+#btn1 {
+    display: flex;
+    top: 40%;
+}
+
+#div7:hover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #106B19;
+    border-color: #adf7ab;
+}
+
+#div7:active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #1CB82B;
+    border-color: #adf7ab;
 }`
