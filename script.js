@@ -41,27 +41,23 @@ let button_and_container = document.createElement("button")
 document.body.appendChild(button_and_container)
 button_and_container.id = "button_and_container"
 //draggable(button_and_container)
-  
  //+ button
 let create_new = document.createElement('button')
 document.getElementById("button_and_container").appendChild(create_new)
 create_new.innerHTML = "+"
 create_new.id = "create"
-
 //+ button click
 create_new.addEventListener('click', function() {
 if (vislock_creation === 1) {
 visswitch_create_button()
 }
 })
-
 // Triggers when children are clicked (create item)
 button_and_container.addEventListener('click', function(){
 if (vislock_creation === 0) {
 visswitch_create_button()
 }
 })
-
 //Switches visability for creation menu
 function visswitch_create_button() {
 if(document.getElementById("select_container").style.display != "none") { document.getElementById("select_container").style.display = "none";
@@ -72,8 +68,6 @@ document.getElementById("select_container").style.display = "flex";
 document.getElementById('create').innerHTML = " - "
 }
 }
-
-
 //Container for creation buttons
 let select_container = document.createElement("container")
 document.getElementById("button_and_container").appendChild(select_container)
@@ -83,6 +77,7 @@ select_container.addEventListener("mousedown", function (s){
 })
 
 
+//>>>>>>>>>>>>>>>>>>>>>>>>>   CREATION   <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 //Button creation button to create buttons
 let button_create_button = document.createElement('button')
@@ -95,9 +90,6 @@ button_create_button.addEventListener('click', function(){
   let created_button = document.createElement('button')
   document.body.appendChild(created_button)
   created_button.innerHTML = "Button here"
-  // created_button.style.left = "40%"
-  // created_button.style.display = "flex"
-  // created_button.style.position = "absolute"
   id_tracker+= 1
   created_button.id = "btn" + id_tracker
   selector(created_button)
@@ -108,13 +100,6 @@ button_create_button.addEventListener('click', function(){
   form_update()
   draggable(created_button)
 })
-//Button: click
-// created_button.addEventListener('click', function(v) {
-// v.stopPropagation();
-// selector(created_button)
-// })
-// })
-
 
 //Input creation button to create Inputs
 let input_create_button = document.createElement("button")
@@ -133,18 +118,10 @@ document.getElementById("input_create_button").addEventListener('click', functio
   created_input.id = created_input.nodeName + id_tracker
   selector(created_input)
   clear()
-  
   inputs_change()
   form_update()
   draggable(created_input)
 })
-
-//Input click
-// created_input.addEventListener('click', function() {
-// selector(created_input)
-// })
-// })
-
 
 //Text area creation button to create textareas
 let textarea_create_button = document.createElement("button")
@@ -170,13 +147,6 @@ document.getElementById("textarea_create_button").addEventListener('click', func
   draggable(created_textarea)
 })
 
-//Text Area click
-// created_textarea.addEventListener('click', function() {
-// selector(created_textarea)
-// })
-// })
-
-
 //Image creation button to create images
 let img_create_button = document.createElement('button')
 document.getElementById('select_container').appendChild(img_create_button)
@@ -194,18 +164,11 @@ img_create_button.addEventListener('click', function(){
   document.getElementById('width_input').value = "150px"
   document.getElementById('height_input').value = "150px"
   document.getElementById('img_src').value = "test"
-
   inputs_change()
   form_update()
   draggable(created_img)
 })
-//img: click
-// created_img.addEventListener('click', function() {
-// selector(created_img)
-// })
-// })
                                    
-
 //Container creation button to create containers
 let container_create_button = document.createElement('button')
 document.getElementById('select_container').appendChild(container_create_button)
@@ -216,12 +179,6 @@ container_create_button.id = "container_create_button"
 container_create_button.addEventListener('click', function(){
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
-  //created_container.style.left = "40%"
-  //created_container.style.width = "100%"
-  //created_container.style.borderStyle = "solid"
-  // created_container.style.borderWidth = "1"
-  // created_container.style.display = "flex"
-  // created_container.style.padding = "2%"
   id_tracker += 1
   created_container.id = "div" + id_tracker
   border_tracker.push(created_container)
@@ -234,12 +191,6 @@ container_create_button.addEventListener('click', function(){
   inputs_change()
   form_update()
   draggable(created_container)
-
-//Container: click
-// created_container.addEventListener('click', function(s) {
-// s.stopPropagation();
-// selector(created_container)
-// })
 })
 
 document.body.id = "body"
@@ -255,6 +206,7 @@ body_select.addEventListener('click', function(){
 
 
 //------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SELECTOR<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------
+
 //Find ID of selected element
 function selector(selected_element){
   selected_element_4form = selected_element.id
@@ -271,6 +223,7 @@ form_update()
 
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&~~CSS UPDATER~~&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
+
 //display values in form on click
 //ID
 function form_update(){
@@ -458,15 +411,12 @@ function inputs_change() {
   }
   if (radio_id_css === "ID") {
   cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover  +" {" + "\n"
-  console.log("ID CHECKED")
   }
   else /*if (radio_id_css === "CLASS")*/ {
-    console.log("YES IT RAN")
   cssline = "." + document.getElementById(selected_element_4form).className + potential_hover  +" {" + "\n"
-  console.log("CSS CHECKED")
   }
   console.log(cssline)
-  console.log(radio_id_css)
+  console.log(document.getElementById(selected_element_4form).className)
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
     cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
@@ -730,7 +680,6 @@ document.getElementById("import_button").addEventListener('click', function(){
   for (let x = 0; x < body1_collection.length; x++) {
     body1_collection[x].addEventListener("click", function(q) {
       selected_element_4form = q.target.id
-      console.log(selected_element_4form + "THE HOLY ELEMENTSS!!!")
       clear()
       form_update()
       draggable(q.target)
@@ -746,19 +695,18 @@ document.addEventListener('contextmenu', function(w) {
   w.preventDefault()
 
   if (alreadyopen === false) {
-    console.log('rhuhh')
   document.getElementById("rightclick_menu").style.display = "flex"
   document.getElementById("rightclick_menu").style.top = event.clientY + 1
   document.getElementById("rightclick_menu").style.left = event.clientX
-  console.log(document.elementsFromPoint(event.clientX, event.clientY))
+  //console.log(document.elementsFromPoint(event.clientX, event.clientY))
   
   document.getElementById("rc_children_container").textContent = ""
   document.getElementById("rc_parent_container").textContent = ""
 
   let elementspoint = document.elementsFromPoint(event.clientX, event.clientY)
   for (let x = 0; x < elementspoint.length; x++) {
-    console.log(elementspoint.length)
-    console.log(elementspoint[x].id)
+    //console.log(elementspoint.length)
+    //console.log(elementspoint[x].id)
 
     if (elementspoint[x].id != "") {
     let rc_children = document.createElement("button")
@@ -825,14 +773,64 @@ document.getElementById(this.innerHTML).style.outline = "unset"
 
 //Right click COPY and DELETE
 document.getElementById("rc_copy").addEventListener('click', function() {
-  let clone = document.getElementById(selected_element_4form).cloneNode(true)
-  id_tracker+=1
-  let parent = document.getElementById(selected_element_4form).parentElement
-  document.getElementById(parent.id).appendChild(clone)
-  clone.id =  selected_element_4form + "clone" + id_tracker
-  document.getElementById("form_id").value = clone.id
-  selected_element_4form = clone.id
-  inputs_change()
+  let rc_select = document.getElementById(document.getElementById("form_id").value).getElementsByTagName('*')
+  console.log(rc_select)
+  let initial_select = selected_element_4form
+
+  //checks and adds class for MAIN
+  if (document.getElementById("class_input").value === "") {
+    id_tracker += 1
+    document.getElementById("class_input").value = "class_of_" + selected_element_4form + id_tracker
+    console.log (document.getElementById("class_input").value)
+    console.log("called")
+    inputs_change()
+    //
+    document.getElementById("CLASS_radio").checked = true
+    radio_id_css = "CSS"
+    console.log("called")
+    inputs_change()
+  }
+
+  //checks and adds class for CHILDREN
+  for (let x = 0; x < rc_select.length; x++) {
+    console.log(rc_select[x].id)
+    selected_element_4form = rc_select[x].id
+    form_update()
+    //checks and adds class for children
+    if (document.getElementById("class_input").value === "") {
+      id_tracker += 1
+      document.getElementById("class_input").value = "class_of_" + selected_element_4form + id_tracker
+      console.log (document.getElementById("class_input").value)
+      console.log("called")
+      inputs_change()
+      //
+      document.getElementById("CLASS_radio").checked = true
+      radio_id_css = "CSS"
+      console.log("called")
+      inputs_change()
+    }
+  }
+
+  document.getElementById("ID_radio").checked = true
+  radio_id_css = "ID"
+  selected_element_4form = initial_select
+
+    // //cloning process
+    let clone = document.getElementById(selected_element_4form).cloneNode(true)
+    let parent = document.getElementById(selected_element_4form).parentElement
+    document.getElementById(parent.id).appendChild(clone)
+    clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
+    selected_element_4form = clone.id
+    // inputs_change()
+
+  // let clone = document.getElementById(selected_element_4form).cloneNode(true)
+  // id_tracker+=1
+  // let parent = document.getElementById(selected_element_4form).parentElement
+  // document.getElementById(parent.id).appendChild(clone)
+  // clone.id =  selected_element_4form + "clone" + id_tracker
+  // document.getElementById("form_id").value = clone.id
+  // selected_element_4form = clone.id
+  // inputs_change()
 })
 
 document.getElementById("rc_del").addEventListener('click', function() {
@@ -984,6 +982,24 @@ document.getElementsByClassName("radio_id_class")[x].addEventListener("change", 
 })
 }
 
+
+//Load random element on load
+document.addEventListener("DOMContentLoaded", function() {
+  console.log("LOADED")
+  let temp_created_container = document.createElement('div')
+  document.body.appendChild(temp_created_container)
+  id_tracker += 1
+  temp_created_container.id = "div" + id_tracker
+  selector(temp_created_container)
+  document.getElementById('width_input').value = "100%"
+  document.getElementById('border_style').value = "solid"
+  document.getElementById('border_width').value = "1px"
+  document.getElementById('padding_input').value = "30px"
+});
+
+
+
+
 var screenWidth = window.innerWidth;
 var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)
@@ -1004,13 +1020,10 @@ var screenHeight = window.innerHeight;
     </div>
     <div id="div4" style="outline: unset;">
         <div id="div7" style="outline: unset;" class="">
-            <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/8zM3JJGZ/Untitled.png"
+            <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/rpYJ2tsN/Untitled.png"
                     style="outline: unset;"></div>
             <div id="div12" style="outline: unset;">learn</div>
         </div>
-        <div id="div7clone9" style="outline: unset;"></div>
-        <div id="div7clone9clone10" style="outline: unset;"></div>
-        <div id="div7clone9clone10clone14" style="outline: unset;"></div>
     </div>
     `
 
@@ -1086,22 +1099,6 @@ var screenHeight = window.innerHeight;
     padding: 30px;
 }
 
-#div7clone9 {
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 1px;
-    padding: 30px;
-}
-
-#div7clone9clone10 {
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 1px;
-    padding: 30px;
-}
-
 #div11 {
     height: 100%;
     width: 100%;
@@ -1127,14 +1124,6 @@ var screenHeight = window.innerHeight;
 #IMG13 {
     height: 100%;
     width: 100%;
-}
-
-#div7clone9clone10clone14 {
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 1px;
-    padding: 30px;
 }
 
 #div15 {
@@ -1257,4 +1246,5 @@ var screenHeight = window.innerHeight;
     border-radius: 2px;
     background-color: #1CB82B;
     border-color: #adf7ab;
-}`
+}
+`
