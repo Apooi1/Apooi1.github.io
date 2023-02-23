@@ -1,6 +1,7 @@
 let id_tracker = 0
 let selected_element_4form = "rightclick_menu"
 let the_selected_element
+let selected_target
 let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 let potential_hover = ""
@@ -215,6 +216,7 @@ function selector(selected_element){
 draggable(selected_element)
 selected_element.addEventListener('click', function(q) {
   selected_element_4form = q.target.id
+  selected_target = q.target
 form_update()
 })
 form_update()
@@ -251,8 +253,12 @@ function form_update(){
     let cssparm = value.substring(divide13+1, value.length-1)
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
+    // console.log("value is " + value)
+    // console.log(selected_element_4form)
+    // console.log(oldmatch.index, match.index)
+    // console.log("first index is " + first_index)
+    // console.log("last index is " + last_index)
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
-  
     }
     if (oldmatch != match) {
     oldmatch = match
@@ -262,6 +268,7 @@ function form_update(){
 }
 
 //ID
+console.log(selected_element_4form)
 document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
 //CLASS
 document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
@@ -415,8 +422,7 @@ function inputs_change() {
   else /*if (radio_id_css === "CLASS")*/ {
   cssline = "." + document.getElementById(selected_element_4form).className + potential_hover  +" {" + "\n"
   }
-  console.log(cssline)
-  console.log(document.getElementById(selected_element_4form).className)
+  //console.log(cssline)        //ENABLE THIS
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
     cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
@@ -425,31 +431,37 @@ function inputs_change() {
   cssline += "}"
  
   let css_output = document.createTextNode(cssline)
+  //console.log("THE CSS OUTPUT IS " + css_output.textContent)
   let stylecss = document.getElementById('stylecss').textContent
   let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
-  console.log (first_index)
-  console.log (last_index)
+  // console.log (first_index)
+  // console.log (last_index)
+  // console.log(stylecss.substring(first_index, last_index+1))
+  // console.log(document.getElementById(selected_element_4form))
+  // console.log(document.getElementById(selected_element_4form).id)
   //Deletes the css code
   if (first_index != -1) {
     document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), cssline)
-    //console.log(css_output.textContent, cssline)
   }
   //Then rebinds the new one
   if (first_index === -1) {
     //document.getElementById('stylecss').appendChild(css_default)
   document.getElementById('stylecss').appendChild(css_output)
   }
-
+//IT DELETES SHIT MAN THAT IT SHUD NOT
 
 
 //ID submit
    document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
 //class submit
+
    document.getElementById(selected_element_4form).className = document.getElementById("class_input").value
+
 //Text submit
 if (selected_element_4form != "body") {
-document.getElementById(selected_element_4form).innerHTML = document.getElementById('text_input').value
+  console.log(document.getElementById(selected_element_4form))
+selected_target.innerHTML = document.getElementById('text_input').value
 }
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
@@ -460,14 +472,14 @@ document.getElementById(parent_id).appendChild(child_id)
 }
 //sets position from absolute to initial
 if (parent_id === child_id.parentElement.id && child_id.parentElement.id != "body") {
-  console.log('set')
+  // console.log('set')
 let initial_pos = the_selected_element.style.position
 if (initial_pos === "absolute") {
   the_selected_element.style.position = "initial"
 }
 }
 //img src submit
-document.getElementById(selected_element_4form).src = document.getElementById('img_src').value
+selected_target.src = document.getElementById('img_src').value
 
 //img checkbox natural height / width 
 if (document.getElementById('img_checkbox').checked) { 
@@ -680,12 +692,14 @@ document.getElementById("import_button").addEventListener('click', function(){
   for (let x = 0; x < body1_collection.length; x++) {
     body1_collection[x].addEventListener("click", function(q) {
       selected_element_4form = q.target.id
+      selected_target = q.target
       clear()
       form_update()
       draggable(q.target)
     })
   }
 
+  document.getElementById("div1").remove()
 })
 
 
@@ -695,9 +709,15 @@ document.addEventListener('contextmenu', function(w) {
   w.preventDefault()
 
   if (alreadyopen === false) {
+    let rcer = document.getElementById("rightclick_menu")
+    let rect = rcer.parentNode.getBoundingClientRect();
+    let lefter = event.clientX - rect.left
+    let toper = event.clientY - rect.top
+    rcer.style.left = lefter + "px"
+    rcer.style.top = toper + 1 + "px"
   document.getElementById("rightclick_menu").style.display = "flex"
-  document.getElementById("rightclick_menu").style.top = event.clientY + 1
-  document.getElementById("rightclick_menu").style.left = event.clientX
+  // document.getElementById("rightclick_menu").style.top = event.clientY + 1
+  // document.getElementById("rightclick_menu").style.left = event.clientX
   //console.log(document.elementsFromPoint(event.clientX, event.clientY))
   
   document.getElementById("rc_children_container").textContent = ""
@@ -787,7 +807,6 @@ document.getElementById("rc_copy").addEventListener('click', function() {
     //
     document.getElementById("CLASS_radio").checked = true
     radio_id_css = "CSS"
-    console.log("called")
     inputs_change()
   }
 
@@ -795,18 +814,14 @@ document.getElementById("rc_copy").addEventListener('click', function() {
   for (let x = 0; x < rc_select.length; x++) {
     console.log(rc_select[x].id)
     selected_element_4form = rc_select[x].id
-    form_update()
     //checks and adds class for children
     if (document.getElementById("class_input").value === "") {
       id_tracker += 1
-      document.getElementById("class_input").value = "class_of_" + selected_element_4form + id_tracker
-      console.log (document.getElementById("class_input").value)
-      console.log("called")
+      document.getElementById("class_input").value = "class_of_" + rc_select[x].id + id_tracker
       inputs_change()
       //
       document.getElementById("CLASS_radio").checked = true
       radio_id_css = "CSS"
-      console.log("called")
       inputs_change()
     }
   }
@@ -816,21 +831,35 @@ document.getElementById("rc_copy").addEventListener('click', function() {
   selected_element_4form = initial_select
 
     // //cloning process
+    clear()
     let clone = document.getElementById(selected_element_4form).cloneNode(true)
     let parent = document.getElementById(selected_element_4form).parentElement
-    document.getElementById(parent.id).appendChild(clone)
+    console.log(parent)
     clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
+    document.getElementById(parent.id).appendChild(clone)
     selected_element_4form = clone.id
-    // inputs_change()
+    console.log(selected_element_4form)
+    clear()
+    inputs_change()
+    clone.addEventListener("click", function() {
+      selected_element_4form = q.target.id
+      selected_target = q.target
+    })
 
-  // let clone = document.getElementById(selected_element_4form).cloneNode(true)
-  // id_tracker+=1
-  // let parent = document.getElementById(selected_element_4form).parentElement
-  // document.getElementById(parent.id).appendChild(clone)
-  // clone.id =  selected_element_4form + "clone" + id_tracker
-  // document.getElementById("form_id").value = clone.id
-  // selected_element_4form = clone.id
-  // inputs_change()
+
+    //when these commands are run, it deletes a lot of css
+
+
+  //addeventlistener
+  // for (let x = 0; x < rc_select.length; x++) {
+  //   document.getElementById(rc_select[x].id).addEventListener("click", function(q) {
+  //     selected_element_4form = q.target.id
+  //     clear()
+  //     form_update()
+  //     draggable(q.target)
+  //   })
+  // }
+
 })
 
 document.getElementById("rc_del").addEventListener('click', function() {
@@ -853,12 +882,14 @@ function clickany(q) {
 //doc hover anywhere
 document.addEventListener ("mouseover", function(q) {
   if (q.target.id) {
-  document.getElementById(q.target.id).style.outline = "2px solid #84ff00"
+  //document.getElementById(q.target.id).style.outline = "2px solid #84ff00"
+  q.target.style.outline = "2px solid #84ff00"
   }
 })
 document.addEventListener ("mouseout", function(t) {
   if (t.target.id) {
-  document.getElementById(t.target.id).style.outline = "unset"
+  //document.getElementById(t.target.id).style.outline = "unset"
+  t.target.style.outline = "unset"
   }
 })
 
@@ -991,6 +1022,7 @@ document.addEventListener("DOMContentLoaded", function() {
   id_tracker += 1
   temp_created_container.id = "div" + id_tracker
   selector(temp_created_container)
+  selected_target = temp_created_container
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
