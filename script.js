@@ -325,6 +325,7 @@ for (let x = 0; x < coloree_classes.length; x++) {
     // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>--DRAG HANDLER--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
   let mousedown_triggered = false
   let drag_select = null
+  let drag_target
 function draggable(selected){
   if (selected != document.body) {
   selected.addEventListener("mousedown", mousedown)
@@ -333,10 +334,10 @@ function draggable(selected){
       return
     }
       mousedown_triggered = true
-        drag_select = q.target.id
+        drag_select = q.target
       
-    console.log ("selected is " + drag_select)
-    let node = document.getElementById(drag_select)
+    console.log ("selected is ", drag_select.id)
+    let node = drag_select
     let clone = node.cloneNode()
     document.body.appendChild(clone)
     clone.style.position = "absolute"
@@ -344,13 +345,13 @@ function draggable(selected){
       
     document.addEventListener("mousemove", mousemover)
     function mousemover(q) {
-      drag_target = q.target.id
+      drag_target = q.target
       // let rect = selected.parentNode.getBoundingClientRect();
       // let lefter = event.clientX - rect.left
       // let toper = event.clientY - rect.top
       // selected.style.left = lefter + "px"
       // selected.style.top = toper + "px"
-      document.getElementById("mouse_tooltip").innerHTML = drag_select + " child of " + drag_target + "?"
+      document.getElementById("mouse_tooltip").innerHTML = drag_select.id + " child of " + drag_target.id + "?"
       
       clone.style.display = "block"   //needs only once
       clone.style.opacity = 0.2
@@ -362,15 +363,15 @@ function draggable(selected){
     function mouseup(q) {
       q.preventDefault()
       clone.remove()
-      console.log("target is " + drag_target)
+      console.log("target is " + drag_target.id)
       if (drag_target != drag_select && drag_select != null && drag_target != null) {
-      document.getElementById(drag_target).appendChild(document.getElementById(drag_select))
+      drag_target.appendChild(drag_select)
       }
 
     document.removeEventListener("mousemove", mousemover)
     mousedown_triggered = false
     drag_select = null
-    drag_target = null
+    //drag_target = null   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
     //document.removeEventListener("mousedown", mousedown)
     }
   }
@@ -460,7 +461,7 @@ function inputs_change() {
 
 //Text submit
 if (selected_element_4form != "body") {
-  console.log(document.getElementById(selected_element_4form))
+  //console.log(selected_target)
 selected_target.innerHTML = document.getElementById('text_input').value
 }
 //parent input submit
@@ -692,7 +693,7 @@ document.getElementById("import_button").addEventListener('click', function(){
   for (let x = 0; x < body1_collection.length; x++) {
     body1_collection[x].addEventListener("click", function(q) {
       selected_element_4form = q.target.id
-      selected_target = q.target
+      selected_target = q.target          // FIX THIS PUT IN OWN BAG
       clear()
       form_update()
       draggable(q.target)
@@ -776,6 +777,7 @@ function rc_btn_rc() {
 //Right click ---> left click
 function rc_btn_click() {
   selected_element_4form = this.innerHTML
+  selected_target = this.innerHTML      //FIX THIS ADD TO OWN BAG
   form_update()
   alreadyopen = false
   document.getElementById("rightclick_menu").style.display = "none"
@@ -794,7 +796,6 @@ document.getElementById(this.innerHTML).style.outline = "unset"
 //Right click COPY and DELETE
 document.getElementById("rc_copy").addEventListener('click', function() {
   let rc_select = document.getElementById(document.getElementById("form_id").value).getElementsByTagName('*')
-  console.log(rc_select)
   let initial_select = selected_element_4form
 
   //checks and adds class for MAIN
@@ -812,7 +813,6 @@ document.getElementById("rc_copy").addEventListener('click', function() {
 
   //checks and adds class for CHILDREN
   for (let x = 0; x < rc_select.length; x++) {
-    console.log(rc_select[x].id)
     selected_element_4form = rc_select[x].id
     //checks and adds class for children
     if (document.getElementById("class_input").value === "") {
@@ -834,7 +834,6 @@ document.getElementById("rc_copy").addEventListener('click', function() {
     clear()
     let clone = document.getElementById(selected_element_4form).cloneNode(true)
     let parent = document.getElementById(selected_element_4form).parentElement
-    console.log(parent)
     clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
     document.getElementById(parent.id).appendChild(clone)
     selected_element_4form = clone.id
