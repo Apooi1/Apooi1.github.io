@@ -64,9 +64,9 @@ user-select: none; /* Standard */
   #output_and_counter {
     position: fixed;
     flex-direction: row-reverse;
-    left: 50px;
+    left: 30px;
     bottom: 0px;
-    width: calc(100% - 250px);
+    width: calc(100% - 230px);
     height: 200px;
     z-index: 10;
   }
@@ -268,3 +268,11 @@ user-select: none; /* Standard */
   border-bottom: inset;
 } 
 */
+
+#output_exit_button {
+  height: 23px;
+  width:23px;
+  position: absolute;
+  right: 0;
+  opacity: 0.8;
+}

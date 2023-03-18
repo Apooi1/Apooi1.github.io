@@ -1,3 +1,7 @@
+//Note for dumass, try selecting div4 and creating a new element, now start commenting out functions that take place
+// when an element is created, I am thinking draggable, now I play synthetik - have fun :) bug is 477 text change in inputs_change()
+// boom fixed, good work
+
 let id_tracker = 0
 let selected_element_4form = "rightclick_menu"
 let the_selected_element
@@ -7,6 +11,10 @@ let vislock_creation = 1      //lock for +button visability
 let potential_hover = ""
 let matches
 let radio_id_css = "ID"
+
+const person = {}
+let my = {}
+let wow = {}
 
 let border_tracker = []
 let font_array = []
@@ -97,8 +105,8 @@ button_create_button.addEventListener('click', function(){
   clear()
   document.getElementById('x_input').value = "40%"
   document.getElementById('display_input').value = "flex"
-  inputs_change()
   form_update()
+  inputs_change()
   draggable(created_button)
 })
 
@@ -119,8 +127,8 @@ document.getElementById("input_create_button").addEventListener('click', functio
   created_input.id = created_input.nodeName + id_tracker
   selector(created_input)
   clear()
-  inputs_change()
   form_update()
+  inputs_change()
   draggable(created_input)
 })
 
@@ -143,8 +151,8 @@ document.getElementById("textarea_create_button").addEventListener('click', func
   clear()
   document.getElementById('height_input').value = "120px"
   document.getElementById('width_input').value = "300px"
-  inputs_change()
   form_update()
+  inputs_change()
   draggable(created_textarea)
 })
 
@@ -165,8 +173,8 @@ img_create_button.addEventListener('click', function(){
   document.getElementById('width_input').value = "150px"
   document.getElementById('height_input').value = "150px"
   document.getElementById('img_src').value = "test"
-  inputs_change()
   form_update()
+  inputs_change()
   draggable(created_img)
 })
                                    
@@ -183,14 +191,20 @@ container_create_button.addEventListener('click', function(){
   id_tracker += 1
   created_container.id = "div" + id_tracker
   border_tracker.push(created_container)
+  console.log(created_container)
   selector(created_container)
+  // console.log(selected_element_4form)
+  // console.log(created_container.id)
+  // console.log(created_container)
+  // console.log(document.getElementById(selected_element_4form))
   clear()
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
   document.getElementById('padding_input').value = "30px"
-  inputs_change()
   form_update()
+  inputs_change()  //breaks everything only if comes first
+
   draggable(created_container)
 })
 
@@ -209,17 +223,25 @@ body_select.addEventListener('click', function(){
 //------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SELECTOR<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------
 
 //Find ID of selected element
-function selector(selected_element){
-  selected_element_4form = selected_element.id
-  the_selected_element = selected_element
+function selector(selected_element1){
   console.log(selected_element_4form)
-draggable(selected_element)
-selected_element.addEventListener('click', function(q) {
+  selected_element_4form = selected_element1.id
+  console.log(document.getElementById(selected_element_4form))
+  console.log(selected_element_4form)
+  console.log(selected_element1)
+  the_selected_element = selected_element1
+  selected_target = selected_element1
+//draggable(selected_element1)
+selected_element1.addEventListener('click', function(q) {
   selected_element_4form = q.target.id
-  selected_target = q.target
+  selected_target1 = q.target
 form_update()
 })
-form_update()
+//form_update()  //Is being run before inputs are changed, so it can not find the right match because it does not exist yet
+//Another BUG occurs when this is disabled however, and that is that line 225 for some reason does not work, why? Idk, tested in replit and works, now delete every single other line of code until it does
+//EDIT: FOUND IT, its FUNCTION CLEAR - I go sleep now, good luck
+//EDIT: clear() only fixes the bug as long as its called, but if its just ignored the bug remains, FUCK
+//EDIT: clear() was same as draggable, the real issue is line 465 rewritting ID, good luck
 }
   
 
@@ -241,23 +263,27 @@ function form_update(){
   //alternative ... before stylecss instead of Array.from
   //matches = Array.from(stylecss.matchAll(/;/g))
   //complicated af string minipulation
+  //LESSON LEARNT, SPACES FUCKING SUCK, REMOVE SPACES FIRST AND BE CAREFUL OF THEM, HARD TO SEE
   let oldmatch
   if (matches) {
    matches.forEach((match) => {
     if (match.index > first_index && match.index < last_index) {
     if (oldmatch) {
     let value = stylecss.substring(oldmatch.index, match.index)
-    value = value.replaceAll(" ", "")
+    //value = value.replaceAll(" ", "")
     let divide13 = value.indexOf (':')
     let cssproperty = value.substring(1, divide13)
+    cssproperty = cssproperty.replaceAll(" ", "")
     let cssparm = value.substring(divide13+1, value.length-1)
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
     // console.log("value is " + value)
     // console.log(selected_element_4form)
     // console.log(oldmatch.index, match.index)
+     console.log(stylecss.substring(first_index, last_index))
     // console.log("first index is " + first_index)
     // console.log("last index is " + last_index)
+    // console.log(document.getElementById(cssinput_array[indexofproperty]))
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
     }
     if (oldmatch != match) {
@@ -285,32 +311,10 @@ let coloree_classes = document.getElementsByClassName('coloree')
 for (let x = 0; x < coloree_classes.length; x++) {
   document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
 }
-//background color (uses rgb2hex function)
-//checks if there is not a color property, set color to unused hex
-//Then checks if there is a color property before allowed to run to prevent null error
-// if(!document.getElementById(selected_element_4form).style.backgroundColor) {
-// document.getElementById("background_color").value = unused_hex
-// }
-// if(document.getElementById(selected_element_4form).style.backgroundColor) {
-// document.getElementById('background_color').value = rgb2hex(document.getElementById(selected_element_4form).style.backgroundColor)
-// }
-// //color (uses rgb2hex function)
-// if(!document.getElementById(selected_element_4form).style.color) {
-//   document.getElementById("color_input").value = unused_hex
-// }
-// if(document.getElementById(selected_element_4form).style.backgroundColor) {
-// document.getElementById('color_input').value = rgb2hex(document.getElementById(selected_element_4form).style.color)
-// }
-//Text
-// //Border color !!used to be important
-// if(!document.getElementById(selected_element_4form).style.borderColor) {
-// document.getElementById("border_color").value = unused_hex
-// }
-// if(document.getElementById(selected_element_4form).style.borderColor) {
-// document.getElementById('border_color').value = rgb2hex(document.getElementById(selected_element_4form).style.border_color)
-// }
+
   }  //NO REMOVE
 
+  //BOOM FOUND YA BITCH
 
   function clear() {
     for (let x = 0; x < cssinput_array.length; x++) {
@@ -345,6 +349,7 @@ function draggable(selected){
       
     document.addEventListener("mousemove", mousemover)
     function mousemover(q) {
+      let rect
       drag_target = q.target
       // let rect = selected.parentNode.getBoundingClientRect();
       // let lefter = event.clientX - rect.left
@@ -353,25 +358,31 @@ function draggable(selected){
       // selected.style.top = toper + "px"
       document.getElementById("mouse_tooltip").innerHTML = drag_select.id + " child of " + drag_target.id + "?"
       
+
+      if (clone.parentNode != null) {
+      rect = clone.parentNode.getBoundingClientRect();
       clone.style.display = "block"   //needs only once
       clone.style.opacity = 0.2
-      clone.style.top = event.clientY + 10 + "px"
-      clone.style.left = event.clientX + 10 + "px"
+      let lefter = event.clientX - rect.left
+      let toper = event.clientY - rect.top
+      clone.style.top = toper + 10 + "px"
+      clone.style.left = lefter + 10 + "px"
+      }
     }
   
   document.addEventListener("mouseup", mouseup)
     function mouseup(q) {
       q.preventDefault()
       clone.remove()
-      console.log("target is " + drag_target.id)
-      if (drag_target != drag_select && drag_select != null && drag_target != null) {
+      //console.log("target is " + drag_target.id)
+      if (drag_target != drag_select && drag_select != null && drag_target != "") {
       drag_target.appendChild(drag_select)
       }
 
     document.removeEventListener("mousemove", mousemover)
     mousedown_triggered = false
     drag_select = null
-    //drag_target = null   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
+    drag_target = ""   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
     //document.removeEventListener("mousedown", mousedown)
     }
   }
@@ -423,16 +434,22 @@ function inputs_change() {
   else /*if (radio_id_css === "CLASS")*/ {
   cssline = "." + document.getElementById(selected_element_4form).className + potential_hover  +" {" + "\n"
   }
-  //console.log(cssline)        //ENABLE THIS
+  console.log(cssline)        //ENABLE THIS
+  //paramter of css values + the value of CURRENT input fields
+  person[selected_element_4form] = {}
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
-    cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
+      cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
+      console.log(cssline)
+
+      person[selected_element_4form][cssparm_array[i]] = document.getElementById(cssinput_array[i]).value
     }
   }
   cssline += "}"
+
+  console.log(person)
  
   let css_output = document.createTextNode(cssline)
-  //console.log("THE CSS OUTPUT IS " + css_output.textContent)
   let stylecss = document.getElementById('stylecss').textContent
   let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
@@ -454,14 +471,18 @@ function inputs_change() {
 
 
 //ID submit
-   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value
+   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value //Lmao found
 //class submit
 
    document.getElementById(selected_element_4form).className = document.getElementById("class_input").value
 
-//Text submit
+//Text submit      //FOUND YOU, BUG
 if (selected_element_4form != "body") {
   //console.log(selected_target)
+  console.log(selected_target)
+  console.log(selected_element_4form)
+  console.log(document.getElementById('text_input').value)
+  //selected_target is not updating
 selected_target.innerHTML = document.getElementById('text_input').value
 }
 //parent input submit
@@ -488,23 +509,16 @@ if (document.getElementById('img_checkbox').checked) {
   document.getElementById(selected_element_4form).style.width = document.getElementById(selected_element_4form).naturalWidth;
 }
 
-//Background color submit
-//if statment to prevent default color from submitting
-/* NEEDED?!
-if (document.getElementById("background_color").value != unused_hex) {
-document.getElementById(selected_element_4form).style.backgroundColor = document.getElementById('background_color').value
-}
-//color submit
-document.getElementById(selected_element_4form).style.color = document.getElementById('color_input').value
-*/
-// //Border color submit
-/* NEEDED?
-if (document.getElementById("border_color").value != unused_hex) { document.getElementById(selected_element_4form).style.borderColor = document.getElementById('border_color').value }
-*/
+// const person = {firstname: {},what: "XD"}
+
+// person.firstname.WTF = {}
+// person.firstname.WTF = "WHAT XD"
+// console.log(person)
 // }) //NO REMOVE
 }
-
+//^^^^^^^^^^^^^!!!!!!!!!!!!!!!!!!!!!>> INPUT SUBMITTER <<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^^^^^^^^^
   
+
 //vislock checkbox for creation menu (create item)
 let vislock_create = document.createElement("INPUT")
 vislock_create.type = "checkbox"
@@ -596,7 +610,7 @@ output.value = ""
 //removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
 let bodyhtml = lines[7]
   console.log(bodyhtml)
-lines.splice(0, 202 + csslines)  //script tag +1 in html and remove stylecss
+lines.splice(0, 211 + csslines)  //script tag +1 in html and remove stylecss
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
   merged_output[y] = lines[y]
@@ -629,12 +643,6 @@ document.getElementById("line_counter").addEventListener("scroll", function(){
 })
 
 
-//Open in new tab button
-let new_tab_btn = document.createElement("button")
-document.getElementById('output_and_counter').appendChild(new_tab_btn)
-new_tab_btn.innerHTML = "Open in tab"
-new_tab_btn.style.right = 72
-new_tab_btn.id = "new_tab_btn"
 //Open in new tab button CLICK
 document.getElementById('new_tab_btn').addEventListener('click', function(){
 let win = window.open()
@@ -650,20 +658,16 @@ setTimeout(function(){
 })
 
   
-//Output visswitcher hide button
-let output_visswitch = document.createElement('button')
-document.body.appendChild(output_visswitch)
-output_visswitch.innerHTML = "output"
-output_visswitch.style.left = 'calc(65% - 250px)'
-output_visswitch.id = "output_visswitch"
+//Output visswitcher hide
 document.getElementById("output_and_counter").style.display = "none"
  //Output visswitcher hide button click
   document.getElementById("output_visswitch").addEventListener('click', function() {
     if (document.getElementById("output_and_counter").style.display === "none") {
       document.getElementById("output_and_counter").style.display = "flex"
-output_visswitch.style.bottom = 200
-output_visswitch.innerHTML = "hide"
+      document.getElementById("output_visswitch").style.bottom = 200
+      document.getElementById("output_visswitch").innerHTML = "hide"
     }    
+    
 else { 
   document.getElementById("output_and_counter").style.display = "none"
 output_visswitch.style.bottom = 0
@@ -671,24 +675,27 @@ output_visswitch.innerHTML = "output"
 }
 })
 
-  
- //Import mode button
-let import_button = document.createElement('button')
-document.getElementById("output_and_counter").appendChild(import_button)
-import_button.innerHTML = "Import"
-import_button.style.left = -50
-import_button.style.bottom = 0
-import_button.id = "import_button"
+document.getElementById("output_exit_button").addEventListener('click', function() {
+  document.getElementById("output_and_counter").style.display = "none"
+  output_visswitch.style.bottom = 0
+  output_visswitch.innerHTML = "output"
+})
 
+  
+//Import mode
 document.getElementById("import_button").addEventListener('click', function(){
   document.getElementById("stylecss").textContent = document.getElementById("css_output").value
-  inputs_change()
-
+  // let tempor = document.createElement('button')
+  // document.body.appendChild(tempor)
+  // tempor.id = "5R21"
+  // selected_element_4form = tempor.id
+  //inputs_change()
   let body1 = document.createElement("body1")
   body1.id = "body1"
   document.body.appendChild(body1)
   body1.innerHTML = output.value
 
+  id_tracker+= 500
   let body1_collection = body1.getElementsByTagName('*')
   for (let x = 0; x < body1_collection.length; x++) {
     body1_collection[x].addEventListener("click", function(q) {
@@ -864,6 +871,7 @@ document.getElementById("rc_copy").addEventListener('click', function() {
 document.getElementById("rc_del").addEventListener('click', function() {
   if (selected_element_4form != "body") {
   document.getElementById(selected_element_4form).remove()
+  console.log("DELETE INVOKED")
   }
   else {
     alert('please don\'t remove body')
@@ -1036,8 +1044,7 @@ var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)
 
 
-  output.value = `
-    <div id="div2" style="outline: unset;">
+  output.value = `<div id="div2" style="outline: unset;">
         <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png"
                 style="outline: unset;"></div>
         <div id="div22" style="outline: unset;"><input id="INPUT17"
@@ -1058,8 +1065,7 @@ var screenHeight = window.innerHeight;
     </div>
     `
 
-  document.getElementById("css_output").value = `
-  #div1 {
+  document.getElementById("css_output").value = `#div1 {
     width: 100%;
     border-style: solid;
     border-width: 1px;
@@ -1083,17 +1089,17 @@ var screenHeight = window.innerHeight;
 }
 
 #div4 {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    height: 100%;
-    width: 100%;
-    border-style: none;
-    border-width: 1px;
-    margin: 0;
-    padding: 30px 20% 30px 20%;
-    background-color: #106B19;
-    row-gap: 20px;
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+height:100%;
+width:100%;
+border-style:none;
+border-width:1px;
+margin:0;
+padding:30px 20% 30px 20%;
+background-color:#106B19;
+row-gap:0;
 }
 
 #div5 {
@@ -1110,17 +1116,17 @@ var screenHeight = window.innerHeight;
     padding: 30px;
 }
 
-#div7 {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 2px;
-    background-color: #1AAB28;
-    border-color: #adf7ab;
+.class_of_div7502 {
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+height:230px;
+width:300px;
+border-style:solid;
+border-width:2px;
+border-radius:2px;
+background-color:#1AAB28;
+border-color:#adf7ab;
 }
 
 #div8 {
@@ -1253,29 +1259,38 @@ var screenHeight = window.innerHeight;
     top: 40%;
 }
 
-#div7:hover {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 2px;
-    background-color: #106B19;
-    border-color: #adf7ab;
+#div7 {
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+height:270px;
+width:350px;
+border-style:solid;
+border-width:2px;
+border-radius:2px;
+background-color:#106B19;
+border-color:#adf7ab;
 }
 
 #div7:active {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 230px;
-    width: 300px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 2px;
-    background-color: #1CB82B;
-    border-color: #adf7ab;
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+border-style:solid;
+border-width:2px;
+border-radius:2px;
+background-color:#1CB82B;
+border-color:#adf7ab;
+}
+#div7clone_of_div7502 {
+}#div7:hover {
+display:flex;
+flex-direction:column;
+justify-content:space-between;
+border-style:solid;
+border-width:2px;
+border-radius:2px;
+background-color:#1CB82B;
+border-color:#adf7ab;
 }
 `
