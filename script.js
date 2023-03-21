@@ -1,6 +1,5 @@
-//Note for dumass, try selecting div4 and creating a new element, now start commenting out functions that take place
-// when an element is created, I am thinking draggable, now I play synthetik - have fun :) bug is 477 text change in inputs_change()
-// boom fixed, good work
+//Copy line 811 copies element without assigning it a new ID fuck face- now fix it
+//bug with detection of classed elements, only solution is to refactor or to search for classes instead of just id in form
 
 let id_tracker = 0
 let selected_element_4form = "rightclick_menu"
@@ -26,7 +25,7 @@ let font_array = []
 let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top",
  "left", "bottom", "right", "height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin",
   "padding", "position", "font-family", "font-size", "font-weight", "font-style", "line-height", "background-color", 
-  "color", "row-gap", "column-gap", "border-color"]
+  "color", "row-gap", "column-gap", "border-color", "overflow", "background-image"]
 
 // let input_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
 // "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
@@ -37,7 +36,7 @@ let cssinput_array = ["display_input", "flex_direction", "justify_content", "ali
 "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style",
  "border_width", "border_radius", "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input",
   "fontweight_input", "fontstyle_input", "lineheight_input", "background_color", "color_input", "flex_gap_row",
-   "flex_gap_column", "border_color"]
+   "flex_gap_column", "border_color", "overflow_input", "gradient_input"]
 
 //rgb to hex function for colors
 //match searches for certain elements
@@ -188,7 +187,9 @@ container_create_button.id = "container_create_button"
 container_create_button.addEventListener('click', function(){
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
+  console.log(id_tracker)
   id_tracker += 1
+  console.log(id_tracker)
   created_container.id = "div" + id_tracker
   border_tracker.push(created_container)
   console.log(created_container)
@@ -231,10 +232,12 @@ function selector(selected_element1){
   console.log(selected_element1)
   the_selected_element = selected_element1
   selected_target = selected_element1
+  console.log(selected_target)
 //draggable(selected_element1)
 selected_element1.addEventListener('click', function(q) {
   selected_element_4form = q.target.id
-  selected_target1 = q.target
+  selected_target = q.target
+  document.getElementById(selected_element_4form).innerHTML
 form_update()
 })
 //form_update()  //Is being run before inputs are changed, so it can not find the right match because it does not exist yet
@@ -251,19 +254,19 @@ form_update()
 //display values in form on click
 //ID
 function form_update(){
-  clear()
+  //clear()
 
-    //Grabs all ";"s for input_change()
+    //Grabs all ";"s for input_change() //edit: ??? runs on every new line
     matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
 
   let stylecss = document.getElementById('stylecss').textContent
   let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   let selectedcss = stylecss.substring(first_index, last_index+1)
-  //alternative ... before stylecss instead of Array.from
-  //matches = Array.from(stylecss.matchAll(/;/g))
-  //complicated af string minipulation
-  //LESSON LEARNT, SPACES FUCKING SUCK, REMOVE SPACES FIRST AND BE CAREFUL OF THEM, HARD TO SEE
+  //LEARN alternative ... before stylecss instead of Array.from
+  //LEARN matches = Array.from(stylecss.matchAll(/;/g))
+  //LEARN complicated af string minipulation
+  //IMPORTANT SPACES FUCKING SUCK, REMOVE SPACES FIRST AND BE CAREFUL OF THEM, HARD TO SEE
   let oldmatch
   if (matches) {
    matches.forEach((match) => {
@@ -273,7 +276,7 @@ function form_update(){
     //value = value.replaceAll(" ", "")
     let divide13 = value.indexOf (':')
     let cssproperty = value.substring(1, divide13)
-    cssproperty = cssproperty.replaceAll(" ", "")
+    cssproperty = cssproperty.replaceAll(" ", "") //div507
     let cssparm = value.substring(divide13+1, value.length-1)
     let indexofproperty = cssparm_array.indexOf(cssproperty)
     //Finally
@@ -281,10 +284,15 @@ function form_update(){
     // console.log(selected_element_4form)
     // console.log(oldmatch.index, match.index)
      console.log(stylecss.substring(first_index, last_index))
+     console.log("L", cssproperty, "L")
+     console.log(cssparm)
     // console.log("first index is " + first_index)
     // console.log("last index is " + last_index)
     // console.log(document.getElementById(cssinput_array[indexofproperty]))
+    //fixes if null, use this for when input css is broken or unreliable :) ! as it checks new lines that maybe empty
+    //if (document.getElementById(cssinput_array[indexofproperty]) != null) {
     document.getElementById(cssinput_array[indexofproperty]).value = cssparm
+    //}
     }
     if (oldmatch != match) {
     oldmatch = match
@@ -300,7 +308,7 @@ document.getElementById("form_id").value = document.getElementById(selected_elem
 document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
 
 if (selected_element_4form != "body") {
-document.getElementById("text_input").value = document.getElementById(selected_element_4form).innerHTML
+document.getElementById("text_input").value = selected_target.innerHTML
 }
 //Parent
 document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
@@ -471,9 +479,9 @@ function inputs_change() {
 
 
 //ID submit
-   document.getElementById(selected_element_4form).id = document.getElementById("form_id").value //Lmao found
+console.log(document.getElementById(selected_element_4form).id)
+   selected_target.id = document.getElementById("form_id").value //Lmao found
 //class submit
-
    document.getElementById(selected_element_4form).className = document.getElementById("class_input").value
 
 //Text submit      //FOUND YOU, BUG
@@ -505,9 +513,13 @@ selected_target.src = document.getElementById('img_src').value
 
 //img checkbox natural height / width 
 if (document.getElementById('img_checkbox').checked) { 
-  document.getElementById(selected_element_4form).style.height = document.getElementById(selected_element_4form).naturalHeight;
-  document.getElementById(selected_element_4form).style.width = document.getElementById(selected_element_4form).naturalWidth;
+  document.getElementById(selected_element_4form).style.height = "auto" //document.getElementById(selected_element_4form).naturalHeight;
+  document.getElementById(selected_element_4form).style.width = "auto"//document.getElementById(selected_element_4form).naturalWidth;
 }
+// if (document.getElementById('img_checkbox').checked) {
+//   document.getElementById(selected_element_4form).style.height = "100%"
+//   document.getElementById(selected_element_4form).style.width = "100%"
+// }
 
 // const person = {firstname: {},what: "XD"}
 
@@ -695,7 +707,7 @@ document.getElementById("import_button").addEventListener('click', function(){
   document.body.appendChild(body1)
   body1.innerHTML = output.value
 
-  id_tracker+= 500
+
   let body1_collection = body1.getElementsByTagName('*')
   for (let x = 0; x < body1_collection.length; x++) {
     body1_collection[x].addEventListener("click", function(q) {
@@ -706,6 +718,7 @@ document.getElementById("import_button").addEventListener('click', function(){
       draggable(q.target)
     })
   }
+  id_tracker+= body1_collection.length + 10
 
   document.getElementById("div1").remove()
 })
@@ -802,54 +815,62 @@ document.getElementById(this.innerHTML).style.outline = "unset"
 
 //Right click COPY and DELETE
 document.getElementById("rc_copy").addEventListener('click', function() {
+  console.log("COPY INVOKE")
   let rc_select = document.getElementById(document.getElementById("form_id").value).getElementsByTagName('*')
-  let initial_select = selected_element_4form
+ // let initial_select = selected_element_4form
+
+  //removed class designation , now works with just IDs
 
   //checks and adds class for MAIN
-  if (document.getElementById("class_input").value === "") {
-    id_tracker += 1
-    document.getElementById("class_input").value = "class_of_" + selected_element_4form + id_tracker
-    console.log (document.getElementById("class_input").value)
-    console.log("called")
-    inputs_change()
-    //
-    document.getElementById("CLASS_radio").checked = true
-    radio_id_css = "CSS"
-    inputs_change()
-  }
+  // if (document.getElementById("class_input").value === "") {
+  //   id_tracker += 1
+  //   document.getElementById("class_input").value = "class_of_" + selected_element_4form + id_tracker
+  //   console.log (document.getElementById("class_input").value)
+  //   console.log("called")
+  //   inputs_change()
+  //   //
+  //   document.getElementById("CLASS_radio").checked = true
+  //   radio_id_css = "CSS"
+  //   inputs_change()
+  // }
 
-  //checks and adds class for CHILDREN
-  for (let x = 0; x < rc_select.length; x++) {
-    selected_element_4form = rc_select[x].id
-    //checks and adds class for children
-    if (document.getElementById("class_input").value === "") {
-      id_tracker += 1
-      document.getElementById("class_input").value = "class_of_" + rc_select[x].id + id_tracker
-      inputs_change()
-      //
-      document.getElementById("CLASS_radio").checked = true
-      radio_id_css = "CSS"
-      inputs_change()
-    }
-  }
+  // //checks and adds class for CHILDREN
+  // for (let x = 0; x < rc_select.length; x++) {
+  //   selected_element_4form = rc_select[x].id
+  //   //checks and adds class for children
+  //   if (document.getElementById("class_input").value === "") {
+  //     id_tracker += 1
+  //     document.getElementById("class_input").value = "class_of_" + rc_select[x].id + id_tracker
+  //     inputs_change()
+  //     //
+  //     document.getElementById("CLASS_radio").checked = true
+  //     radio_id_css = "CSS"
+  //     inputs_change()
+  //   }
+  // }
 
-  document.getElementById("ID_radio").checked = true
-  radio_id_css = "ID"
-  selected_element_4form = initial_select
+  // document.getElementById("ID_radio").checked = true
+  // radio_id_css = "ID"
+
+   //selected_element_4form = initial_select
 
     // //cloning process
     clear()
     let clone = document.getElementById(selected_element_4form).cloneNode(true)
     let parent = document.getElementById(selected_element_4form).parentElement
-    clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
+    //clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
     document.getElementById(parent.id).appendChild(clone)
-    selected_element_4form = clone.id
+    //selected_element_4form = clone.id
     console.log(selected_element_4form)
+    console.log(clone + "THE CLONE")
     clear()
-    inputs_change()
-    clone.addEventListener("click", function() {
+    //inputs_change()
+
+    clone.addEventListener("click", function(q) {
+      console.log("CLONE CLICKED")
       selected_element_4form = q.target.id
       selected_target = q.target
+      form_update()
     })
 
 
@@ -870,7 +891,7 @@ document.getElementById("rc_copy").addEventListener('click', function() {
 
 document.getElementById("rc_del").addEventListener('click', function() {
   if (selected_element_4form != "body") {
-  document.getElementById(selected_element_4form).remove()
+  selected_target.remove()
   console.log("DELETE INVOKED")
   }
   else {
@@ -1044,26 +1065,29 @@ var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)
 
 
-  output.value = `<div id="div2" style="outline: unset;">
-        <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png"
-                style="outline: unset;"></div>
-        <div id="div22" style="outline: unset;"><input id="INPUT17"
-                src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
-            <div id="div18" style="outline: unset;">
-                <div id="div19" style="outline: unset;">Something</div>
-                <div id="div20" style="outline: unset;">More</div>
-                <div id="div21" style="outline: unset;">About</div>
-            </div>
-        </div>
-    </div>
-    <div id="div4" style="outline: unset;">
-        <div id="div7" style="outline: unset;" class="">
-            <div id="div11" style="outline: unset;"><img id="IMG13" src="https://i.postimg.cc/rpYJ2tsN/Untitled.png"
-                    style="outline: unset;"></div>
-            <div id="div12" style="outline: unset;">learn</div>
-        </div>
-    </div>
-    `
+  output.value = `<body1 id="body1" style="outline: unset;"><body1 id="body1">
+  <body1 id="body1">
+      <body1 id="body1" style="outline: unset;">
+          <div id="div2" style="outline: unset;">
+              <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png" style="outline: unset;"></div>
+              <div id="div22" style="outline: unset;"><input id="INPUT17" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
+                  <div id="div18" style="outline: unset;">
+                      <div id="div19" style="outline: unset;">Something</div>
+                      <div id="div20" style="outline: unset;">More</div>
+                      <div id="div21" style="outline: unset;">About</div>
+                  </div>
+              </div>
+          </div>
+          <div id="div4" style="outline: unset;" class="">
+              <div id="div502" class="class_of_div502509" style="outline: unset;">
+                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="./assets/csswriter_cap1.PNG" style="outline: unset; height: auto; width: auto;"></div>
+                  <div id="div507" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>
+              </div>
+          <div id="div502" class="class_of_div502509" style="outline: unset;">                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="./assets/website1.PNG" style="outline: unset; height: auto; width: auto;"></div>                  <div id="div1000" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>              </div></div>
+      </body1>
+  </body1>
+</body1><img id="IMG34" class="" src="" style="outline: unset;">
+    </body1>`
 
   document.getElementById("css_output").value = `#div1 {
     width: 100%;
@@ -1089,17 +1113,18 @@ var screenHeight = window.innerHeight;
 }
 
 #div4 {
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-height:100%;
-width:100%;
-border-style:none;
-border-width:1px;
-margin:0;
-padding:30px 20% 30px 20%;
-background-color:#106B19;
-row-gap:0;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: nowrap;
+    height: 100%;
+    width: 100%;
+    border-style: none;
+    border-width: 1px;
+    margin: 0;
+    padding: 30px 20% 30px 20%;
+    background-color: #106B19;
+    row-gap: 0;
+    column-gap: 20px;
 }
 
 #div5 {
@@ -1117,16 +1142,16 @@ row-gap:0;
 }
 
 .class_of_div7502 {
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-height:230px;
-width:300px;
-border-style:solid;
-border-width:2px;
-border-radius:2px;
-background-color:#1AAB28;
-border-color:#adf7ab;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 230px;
+    width: 300px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #1AAB28;
+    border-color: #adf7ab;
 }
 
 #div8 {
@@ -1254,43 +1279,159 @@ border-color:#adf7ab;
     height: 170%;
     width: 100%;
 }
+
 #btn1 {
     display: flex;
     top: 40%;
 }
 
 #div7 {
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-height:270px;
-width:350px;
-border-style:solid;
-border-width:2px;
-border-radius:2px;
-background-color:#106B19;
-border-color:#adf7ab;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 270px;
+    width: 350px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #106B19;
+    border-color: #adf7ab;
 }
 
 #div7:active {
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-border-style:solid;
-border-width:2px;
-border-radius:2px;
-background-color:#1CB82B;
-border-color:#adf7ab;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #1CB82B;
+    border-color: #adf7ab;
 }
-#div7clone_of_div7502 {
-}#div7:hover {
-display:flex;
-flex-direction:column;
-justify-content:space-between;
-border-style:solid;
-border-width:2px;
-border-radius:2px;
-background-color:#1CB82B;
-border-color:#adf7ab;
+
+#div7clone_of_div7502 {}
+
+#div7:hover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 2px;
+    background-color: #1CB82B;
+    border-color: #adf7ab;
+}
+
+.class_of_div502509 {
+}
+
+#div503 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div504 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#IMG505 {
+height: 100%;
+width: 100%;
+padding:5px;
+}
+
+#div506 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div507 {
+display: flex;
+flex-direction: column;
+left: 0;
+bottom: 0;
+right: 0;
+border-width: 1px;
+margin: -49px 0 0 0;
+position: absolute;
+font-family: Comfortaa;
+font-size: 20px;
+font-weight: bold;
+color: #000000;
+background-image: linear-gradient(180deg, rgba(255, 0, 0, 0), rgba(0, 0, 0, 0.5));
+}
+
+#div508 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div502 {
+display: flex;
+flex-direction: column;
+width: 100%;
+border-width: 1px;
+position: relative;
+overflow: hidden;
+}
+
+#div29 {
+height: 100%;
+width: 100%;
+border-width: 1px;
+overflow: hidden;
+}
+
+#div31 {
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+
+#div32 {
+display: flex;
+justify-content: center;
+width: 100%;
+border-width: 1px;
+padding: 30px;
+}
+
+#div33 {
+width: 100%;
+border-width: 1px;
+padding:30px;
+}
+
+#IMG34 {
+    height: 150px;
+    width: 100%;
+    border-style: solid;
+    border-width: 1px;
+    padding: 30px;
+}
+#div1000 {
+display: flex;
+flex-direction: column;
+left: 0;
+bottom: 0;
+right: 0;
+border-width: 1px;
+margin: -49px 0 0 0;
+position: absolute;
+font-family: Comfortaa;
+font-size: 20px;
+font-weight: bold;
+color:#ffffff;
+background-image: linear-gradient(180deg, rgba(255, 0, 0, 0), rgba(0, 0, 0, 0.5));
 }
 `
