@@ -1,5 +1,6 @@
-//Copy line 811 copies element without assigning it a new ID fuck face- now fix it
-//bug with detection of classed elements, only solution is to refactor or to search for classes instead of just id in form
+//Copy line 811 copies element without assigning it a new ID fuck face- now fix it //fxed?
+//bug with detection of classed elements, only solution is to refactor or to search for classes instead of just id in form //used ids
+//Line 800, feature this time not bug, right click needs to set target_element by this and not ID
 
 let id_tracker = 0
 let selected_element_4form = "rightclick_menu"
@@ -10,6 +11,7 @@ let vislock_creation = 1      //lock for +button visability
 let potential_hover = ""
 let matches
 let radio_id_css = "ID"
+//let elementspoint
 
 const person = {}
 let my = {}
@@ -191,20 +193,24 @@ container_create_button.addEventListener('click', function(){
   id_tracker += 1
   console.log(id_tracker)
   created_container.id = "div" + id_tracker
+  created_container.className = "div" + id_tracker
   border_tracker.push(created_container)
-  console.log(created_container)
   selector(created_container)
   // console.log(selected_element_4form)
   // console.log(created_container.id)
   // console.log(created_container)
   // console.log(document.getElementById(selected_element_4form))
+  console.log(document.getElementById("background_color").value)
   clear()
+  console.log(document.getElementById("background_color").value)
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
   document.getElementById('padding_input').value = "30px"
   form_update()
+  console.log(document.getElementById("background_color").value)
   inputs_change()  //breaks everything only if comes first
+  console.log(document.getElementById("background_color").value)
 
   draggable(created_container)
 })
@@ -227,12 +233,9 @@ body_select.addEventListener('click', function(){
 function selector(selected_element1){
   console.log(selected_element_4form)
   selected_element_4form = selected_element1.id
-  console.log(document.getElementById(selected_element_4form))
-  console.log(selected_element_4form)
-  console.log(selected_element1)
   the_selected_element = selected_element1
   selected_target = selected_element1
-  console.log(selected_target)
+  //console.log(selected_target)
 //draggable(selected_element1)
 selected_element1.addEventListener('click', function(q) {
   selected_element_4form = q.target.id
@@ -254,15 +257,25 @@ form_update()
 //display values in form on click
 //ID
 function form_update(){
+  input_updater_ID()
   //clear()
 
     //Grabs all ";"s for input_change() //edit: ??? runs on every new line
     matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
 
   let stylecss = document.getElementById('stylecss').textContent
-  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
+  console.log(selected_target)
+  let first_index = stylecss.indexOf("#" + selected_target.id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   let selectedcss = stylecss.substring(first_index, last_index+1)
+  console.log(selectedcss)
+  console.log(stylecss.substring(first_index, first_index + 10))
+  console.log(first_index)
+  if (first_index === -1) {
+    console.log ("NOT FOUND")
+    return
+  }
+  console.log("IT RUN?!")
   //LEARN alternative ... before stylecss instead of Array.from
   //LEARN matches = Array.from(stylecss.matchAll(/;/g))
   //LEARN complicated af string minipulation
@@ -283,9 +296,10 @@ function form_update(){
     // console.log("value is " + value)
     // console.log(selected_element_4form)
     // console.log(oldmatch.index, match.index)
+    console.log("FORM UPDATE?")
      console.log(stylecss.substring(first_index, last_index))
-     console.log("L", cssproperty, "L")
-     console.log(cssparm)
+     ////console.log("L", cssproperty, "L")
+     ////console.log(cssparm)
     // console.log("first index is " + first_index)
     // console.log("last index is " + last_index)
     // console.log(document.getElementById(cssinput_array[indexofproperty]))
@@ -300,27 +314,29 @@ function form_update(){
   }
   })
 }
+  }  //NO REMOVE
 
-//ID
+function input_updater_ID() {
+    //ID
 console.log(selected_element_4form)
 document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
 //CLASS
 document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
-
+//TEXT
 if (selected_element_4form != "body") {
 document.getElementById("text_input").value = selected_target.innerHTML
 }
 //Parent
 document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
 //Image src
-document.getElementById("img_src").value = document.getElementById(selected_element_4form).src
+document.getElementById("img_src").value = selected_target.src
 
 let coloree_classes = document.getElementsByClassName('coloree')
 for (let x = 0; x < coloree_classes.length; x++) {
   document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
 }
 
-  }  //NO REMOVE
+} //NO REMOVE
 
   //BOOM FOUND YA BITCH
 
@@ -331,6 +347,7 @@ for (let x = 0; x < coloree_classes.length; x++) {
     }
     //document.getElementById("form_id").value = ""
     document.getElementById("background_color").value = "#000001"
+    console.log(document.getElementById("background_color").value)
   }
 
 
@@ -448,7 +465,7 @@ function inputs_change() {
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
       cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
-      console.log(cssline)
+      //console.log(cssline)
 
       person[selected_element_4form][cssparm_array[i]] = document.getElementById(cssinput_array[i]).value
     }
@@ -459,19 +476,24 @@ function inputs_change() {
  
   let css_output = document.createTextNode(cssline)
   let stylecss = document.getElementById('stylecss').textContent
-  let first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
-  let last_index = stylecss.indexOf("}", first_index)
+  if (radio_id_css === "ID") {
+  the_first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
+  }
+  else {
+    the_first_index = stylecss.indexOf("." + document.getElementById(selected_element_4form).id + potential_hover)
+  }
+  let last_index = stylecss.indexOf("}", the_first_index)
   // console.log (first_index)
   // console.log (last_index)
   // console.log(stylecss.substring(first_index, last_index+1))
   // console.log(document.getElementById(selected_element_4form))
   // console.log(document.getElementById(selected_element_4form).id)
   //Deletes the css code
-  if (first_index != -1) {
-    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(first_index, last_index+1), cssline)
+  if (the_first_index != -1) {
+    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(the_first_index, last_index+1), cssline)
   }
   //Then rebinds the new one
-  if (first_index === -1) {
+  if (the_first_index === -1) {
     //document.getElementById('stylecss').appendChild(css_default)
   document.getElementById('stylecss').appendChild(css_output)
   }
@@ -479,23 +501,23 @@ function inputs_change() {
 
 
 //ID submit
-console.log(document.getElementById(selected_element_4form).id)
+console.log(selected_target.id)
    selected_target.id = document.getElementById("form_id").value //Lmao found
 //class submit
-   document.getElementById(selected_element_4form).className = document.getElementById("class_input").value
+console.log(selected_target.className)
+   selected_target.className = document.getElementById("class_input").value
 
 //Text submit      //FOUND YOU, BUG
 if (selected_element_4form != "body") {
   //console.log(selected_target)
-  console.log(selected_target)
-  console.log(selected_element_4form)
+  //console.log(selected_element_4form)
   console.log(document.getElementById('text_input').value)
   //selected_target is not updating
 selected_target.innerHTML = document.getElementById('text_input').value
 }
 //parent input submit
 let parent_id = document.getElementById("parent_input").value
-let child_id = document.getElementById(selected_element_4form)
+let child_id = selected_target
 if (parent_id != "" && parent_id != child_id.parentNode.id) {
   console.log (child_id.parentNode.id)
 document.getElementById(parent_id).appendChild(child_id)
@@ -622,7 +644,7 @@ output.value = ""
 //removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
 let bodyhtml = lines[7]
   console.log(bodyhtml)
-lines.splice(0, 211 + csslines)  //script tag +1 in html and remove stylecss
+lines.splice(0, 218 + csslines)  //script tag +1 in html and remove stylecss
 let merged_output = []
 for (y = 1; y < lines.length; y++) {
   merged_output[y] = lines[y]
@@ -724,7 +746,7 @@ document.getElementById("import_button").addEventListener('click', function(){
 })
 
 
-//Right click visability handler
+//Right click handler
 let alreadyopen = false
 document.addEventListener('contextmenu', function(w) {
   w.preventDefault()
@@ -746,13 +768,15 @@ document.addEventListener('contextmenu', function(w) {
 
   let elementspoint = document.elementsFromPoint(event.clientX, event.clientY)
   for (let x = 0; x < elementspoint.length; x++) {
-    //console.log(elementspoint.length)
-    //console.log(elementspoint[x].id)
 
     if (elementspoint[x].id != "") {
     let rc_children = document.createElement("button")
     document.getElementById('rc_children_container').appendChild(rc_children)
     rc_children.innerHTML = elementspoint[x].id
+    //
+    rc_children.num = elementspoint[x]
+    console.log(rc_children.num)
+    //
     rc_children.addEventListener('contextmenu', rc_btn_rc)
     rc_children.addEventListener('click', rc_btn_click)
     rc_children.addEventListener('mouseover', rc_hover)
@@ -762,6 +786,9 @@ document.addEventListener('contextmenu', function(w) {
   if (elementspoint[0].parentElement.id != "body") {
     let rc_parent = document.createElement("button")
     rc_parent.innerHTML = elementspoint[0].parentElement.id
+    //
+    rc_parent.num = elementspoint[0].parentElement
+    //
     document.getElementById("rc_parent_container").appendChild(rc_parent)
     rc_parent.addEventListener('contextmenu', rc_btn_rc)
     rc_parent.addEventListener('click', rc_btn_click)
@@ -771,7 +798,7 @@ document.addEventListener('contextmenu', function(w) {
 }
 })
 
-//Right click ---> right click
+//Right click ---> right click  //potentially needs the // update as above, untested
 function rc_btn_rc() {
   alreadyopen = true
   setTimeout(() => {
@@ -795,9 +822,13 @@ function rc_btn_rc() {
   
 }
 //Right click ---> left click
-function rc_btn_click() {
-  selected_element_4form = this.innerHTML
-  selected_target = this.innerHTML      //FIX THIS ADD TO OWN BAG
+function rc_btn_click(q) {
+  selected_element_4form = this.innerHTML  //needs to be deprecated
+  console.log(q.target.num)
+  //selected_target = this.innerHTML  //old code when used innerhtml for id instead of target (or this)
+  selected_target = q.target.num     //but perfect as is - may want to unite functions but complex
+  console.log(selected_target, "ITS DONE")
+  clear()
   form_update()
   alreadyopen = false
   document.getElementById("rightclick_menu").style.display = "none"
@@ -856,10 +887,10 @@ document.getElementById("rc_copy").addEventListener('click', function() {
 
     // //cloning process
     clear()
-    let clone = document.getElementById(selected_element_4form).cloneNode(true)
-    let parent = document.getElementById(selected_element_4form).parentElement
+    let clone = selected_target.cloneNode(true)
+    let parent = selected_target.parentElement
     //clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
-    document.getElementById(parent.id).appendChild(clone)
+    parent.appendChild(clone)
     //selected_element_4form = clone.id
     console.log(selected_element_4form)
     console.log(clone + "THE CLONE")
@@ -1065,29 +1096,27 @@ var screenHeight = window.innerHeight;
   console.log(screenWidth, screenHeight)
 
 
-  output.value = `<body1 id="body1" style="outline: unset;"><body1 id="body1">
+  output.value = `
   <body1 id="body1">
-      <body1 id="body1" style="outline: unset;">
-          <div id="div2" style="outline: unset;">
-              <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png" style="outline: unset;"></div>
-              <div id="div22" style="outline: unset;"><input id="INPUT17" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
-                  <div id="div18" style="outline: unset;">
-                      <div id="div19" style="outline: unset;">Something</div>
-                      <div id="div20" style="outline: unset;">More</div>
-                      <div id="div21" style="outline: unset;">About</div>
+  
+    <body1 id="body1" style="outline: unset;"><body1 id="body1" style="outline: unset;"><body1 id="body1">
+      <body1 id="body1">
+          <body1 id="body1" style="outline: unset;">
+              <div id="div2" style="outline: unset;">
+                  <div id="div16" style="outline: unset;"><img id="IMG23" src="https://i.postimg.cc/5NgvdLRv/Untitled-2.png" style="outline: unset;"></div>
+                  <div id="div22" style="outline: unset;"><input id="INPUT17" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/index.html" style="outline: unset;">
+                      <div id="div18" style="outline: unset;">
+                          <div id="div19" style="outline: unset;">Something</div>
+                          <div id="div20" style="outline: unset;">More</div>
+                          <div id="div21" style="outline: unset;">About</div>
+                      </div>
                   </div>
               </div>
-          </div>
-          <div id="div4" style="outline: unset;" class="">
-              <div id="div502" class="class_of_div502509" style="outline: unset;">
-                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="./assets/csswriter_cap1.PNG" style="outline: unset; height: auto; width: auto;"></div>
-                  <div id="div507" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>
-              </div>
-          <div id="div502" class="class_of_div502509" style="outline: unset;">                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="./assets/website1.PNG" style="outline: unset; height: auto; width: auto;"></div>                  <div id="div1000" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>              </div></div>
+              <div id="div4" style="outline: unset;" class="">              <div id="div502" class="class_of_div502509" style="outline: unset;">                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="./assets/csswriter_cap1.PNG" style="outline: unset; height: auto; width: auto;"></div>                  <div id="div507" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>              <img id="IMG34" class="" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/assets/newpage.PNG" style="outline: unset;"></div>          <div id="div502" class="class_of_div502509" style="outline: unset;">                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/assets/website1.PNG" style="outline: unset; height: auto; width: auto;"></div>                  <div id="div1000" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>              <img id="IMG39" class="" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/assets/newpage.PNG" style="outline: unset;"></div><div id="div502" class="class_of_div502509" style="outline: unset;">                  <div id="div29" class="" style="outline: unset;"><img id="IMG505" class="" src="file:///G:/VS%20PROJECTS/CSS%20writer/glitcher255.github.io/assets/website2.PNG" style="outline: unset; height: auto; width: auto;"></div>                  <div id="div507" class="" style="outline: unset;">                      <div id="div32" class="" style="outline: unset;">CSS WRITER</div>                      <div id="div33" class="" style="outline: unset;">Automatically generated CSS code using a simple                          yet potent interface, this website was fully designed using CSS writer</div>                  </div>              <img id="IMG41" class="" src="./assets/newpage.PNG" style="outline: unset;"></div></div>
+          </body1>
       </body1>
-  </body1>
-</body1><img id="IMG34" class="" src="" style="outline: unset;">
-    </body1>`
+    </body1>
+        </body1></body1></body1>`
 
   document.getElementById("css_output").value = `#div1 {
     width: 100%;
@@ -1113,18 +1142,18 @@ var screenHeight = window.innerHeight;
 }
 
 #div4 {
-    display: flex;
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    height: 100%;
-    width: 100%;
-    border-style: none;
-    border-width: 1px;
-    margin: 0;
-    padding: 30px 20% 30px 20%;
-    background-color: #106B19;
-    row-gap: 0;
-    column-gap: 20px;
+display: flex;
+justify-content: space-between;
+flex-wrap: nowrap;
+height: 100%;
+width: 100%;
+border-style: none;
+border-width: 1px;
+margin: 0;
+padding: 30px 10% 30px 10%;
+background-color: #106B19;
+row-gap: 0;
+column-gap: 20px;
 }
 
 #div5 {
@@ -1342,7 +1371,6 @@ var screenHeight = window.innerHeight;
 #IMG505 {
 height: 100%;
 width: 100%;
-padding:5px;
 }
 
 #div506 {
@@ -1413,11 +1441,11 @@ padding:30px;
 }
 
 #IMG34 {
-    height: 150px;
-    width: 100%;
-    border-style: solid;
-    border-width: 1px;
-    padding: 30px;
+right:0;
+height:40px;
+width:40px;
+border-width: 1px;
+position:absolute;
 }
 #div1000 {
 display: flex;
@@ -1434,4 +1462,23 @@ font-weight: bold;
 color:#ffffff;
 background-image: linear-gradient(180deg, rgba(255, 0, 0, 0), rgba(0, 0, 0, 0.5));
 }
+#IMG39 {
+right:0;
+height:40px;
+width:40px;
+border-width: 1px;
+position:absolute;
+}#IMG40 {
+height:50px;
+width:50px;
+border-style: solid;
+border-width: 1px;
+}#IMG41 {
+right:0;
+height:40px;
+width:40px;
+border-width: 1px;
+position:absolute;
+}
+
 `
