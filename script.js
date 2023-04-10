@@ -1,7 +1,3 @@
-//Copy line 811 copies element without assigning it a new ID fuck face- now fix it //fxed?
-//bug with detection of classed elements, only solution is to refactor or to search for classes instead of just id in form //used ids
-//Line 800, feature this time not bug, right click needs to set target_element by this and not ID
-
 let id_tracker = 0
 let selected_element_4form = "rightclick_menu"
 let the_selected_element
@@ -207,6 +203,8 @@ container_create_button.addEventListener('click', function(){
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
   document.getElementById('padding_input').value = "30px"
+  document.getElementById('display_input').value = "flex"
+  document.getElementById('justify_content').value = "center"
   form_update()
   console.log(document.getElementById("background_color").value)
   inputs_change()  //breaks everything only if comes first
@@ -1089,11 +1087,36 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+//positioner only one select
+for (let y = 0 ; y < 5; y ++) {
+  let property_array = ["flex_direction_buttons", "justify_content_buttons", "align_items_buttons", "align_content_buttons", "flex_wrap_buttons"]
+  let input_array = ["flex_direction", "justify_content", "align_items", "align_content", "flex_wrap"]
+for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+  document.getElementsByClassName(property_array[y])[x].addEventListener("click", function () {
 
+    if (this.style.backgroundColor === "rgb(121, 174, 228)") {
+      for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+        document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
+      }
+      //none selected
+      document.getElementById(input_array[y]).value = ""
+      inputs_change()
+    }
+    else {
+      for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+        document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
+      }
+      this.style.backgroundColor = "rgb(121, 174, 228)"
+      console.log(this.getAttribute("data-value"))
+      //one selected
+      document.getElementById(input_array[y]).value = this.getAttribute("data-value")
+      inputs_change()
+    }
 
-var screenWidth = window.innerWidth;
-var screenHeight = window.innerHeight;
-  console.log(screenWidth, screenHeight)
+  })
+}
+
+}
 
 
   output.value = `

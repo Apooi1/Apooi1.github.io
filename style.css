@@ -277,3 +277,28 @@ user-select: none; /* Standard */
   right: 0;
   opacity: 0.8;
 }
+
+.flex_positioner_buttons_container {
+  display: flex;
+}
+
+.justify_content_buttons{
+  border-style: solid;
+  border-width: 1px;
+  /* background-color: #f0f0f0; */
+}
+
+.align_content_buttons{
+  border-style: solid;
+  border-width: 1px;
+}
+
+.align_items_buttons{
+  border-style: solid;
+  border-width: 1px;
+}
+
+.flex_direction_buttons{
+  border-style: solid;
+  border-width: 1px;
+}
