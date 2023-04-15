@@ -271,48 +271,70 @@ function form_update(){
   //IMPORTANT SPACES FUCKING SUCK, REMOVE SPACES FIRST AND BE CAREFUL OF THEM, HARD TO SEE
   let oldmatch
   if (matches) {
-   matches.forEach((match) => {
-    if (match.index > first_index && match.index < last_index) {
-    if (oldmatch) {
-    let value = stylecss.substring(oldmatch.index, match.index)
-    //value = value.replaceAll(" ", "")
-    let divide13 = value.indexOf (':')
-    let cssproperty = value.substring(1, divide13)
-    cssproperty = cssproperty.replaceAll(" ", "") //div507
-    let cssparm = value.substring(divide13+1, value.length-1)
-    let indexofproperty = cssparm_array.indexOf(cssproperty)
-    //Finally
-    // console.log("value is " + value)
-    // console.log(selected_element_4form)
-    // console.log(oldmatch.index, match.index)
-    //console.log("FORM UPDATE?")
-     //console.log(stylecss.substring(first_index, last_index))
-     ////console.log("L", cssproperty, "L")
-    //console.log(cssparm)
-    // console.log("first index is " + first_index)
-    // console.log("last index is " + last_index)
-    // console.log(document.getElementById(cssinput_array[indexofproperty]))
-    //fixes if null, use this for when input css is broken or unreliable :) ! as it checks new lines that maybe empty
-    //if (document.getElementById(cssinput_array[indexofproperty]) != null) {
-    document.getElementById(cssinput_array[indexofproperty]).value = cssparm
-    //}
-    }
-    if (oldmatch != match) {
-    oldmatch = match
-    }
+    matches.forEach((match) => {
+      if (match.index > first_index && match.index < last_index) {
+        if (oldmatch) {
+          let value = stylecss.substring(oldmatch.index, match.index)
+          //value = value.replaceAll(" ", "")
+          let divide13 = value.indexOf(':')
+          let cssproperty = value.substring(1, divide13)
+          cssproperty = cssproperty.replaceAll(" ", "") //div507
+          let cssparm = value.substring(divide13 + 1, value.length - 1)
+          let indexofproperty = cssparm_array.indexOf(cssproperty)
+          //Finally
+          // console.log("value is " + value)
+          // console.log(selected_element_4form)
+          // console.log(oldmatch.index, match.index)
+          //console.log("FORM UPDATE?")
+          //console.log(stylecss.substring(first_index, last_index))
+          ////console.log("L", cssproperty, "L")
+          //console.log(cssparm)
+          // console.log("first index is " + first_index)
+          // console.log("last index is " + last_index)
+          // console.log(document.getElementById(cssinput_array[indexofproperty]))
+          //fixes if null, use this for when input css is broken or unreliable :) ! as it checks new lines that maybe empty
+          //if (document.getElementById(cssinput_array[indexofproperty]) != null) {
+          document.getElementById(cssinput_array[indexofproperty]).value = cssparm
+          //}
+        }
+        if (oldmatch != match) {
+          oldmatch = match
+        }
+      }
+    })
   }
-  })
-}
 
-//finds which selected icon in positioner tab
-positioner_which()
-function positioner_which () {
-  for (let x = 0; x < document.getElementsByClassName("positioner_blue_select").length; x++) {
-    if (document.getElementsByClassName("positioner_blue_select")[x].value) {
-    console.log(document.querySelector("[data-value=" + document.getElementsByClassName("positioner_blue_select")[x].value))
+  //finds which selected icon in positioner tab and then colors it
+  positioner_which()
+  function positioner_which() {
+    // for (let x = 0; x < positioner_colored_array.length; x++) {
+    //   positioner_colored_array[x].style.backgroundColor = "#f0f0f0"
+    //   console.log(positioner_colored_array)
+    // }
+
+    let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
+    //resets all colors with data color on
+    console.log(document.querySelectorAll("[data-color_on=on]").length)
+    for (let x = 0; x < data_color_on_array; x++) {
+      document.querySelectorAll("[data-color_on=on]")[x].style.backgroundColor = "#f0f0f0"
     }
-  } 
-}
+    //sets all data color on to off
+    for (let x = 0; x < data_color_on_array; x++) {
+      console.log(document.querySelectorAll("[data-color_on=on]")[x])
+      document.querySelectorAll("[data-color_on=on]")[0].setAttribute("data-color_on", "off")
+    }
+    //grabs all icons that match input fields - colors icons and sets their data color to on
+    positioner_colored_array = []
+    for (let x = 0; x < document.getElementsByClassName("positioner_blue_select").length; x++) {
+      if (document.getElementsByClassName("positioner_blue_select")[x].value) {
+        let temp = document.getElementsByClassName("positioner_blue_select_parent")[x].querySelector("[data-value=" + document.getElementsByClassName("positioner_blue_select")[x].value)
+        temp.style.backgroundColor = "rgb(121, 174, 228)"
+        temp.setAttribute("data-color_on", "on")
+      }
+    }
+
+  }
+
   }  //NO REMOVE
 
 function input_updater_ID() {
@@ -335,6 +357,8 @@ for (let x = 0; x < coloree_classes.length; x++) {
   document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
 }
 
+
+
 } //NO REMOVE
 
   //BOOM FOUND YA BITCH
@@ -346,7 +370,6 @@ for (let x = 0; x < coloree_classes.length; x++) {
     }
     //document.getElementById("form_id").value = ""
     document.getElementById("background_color").value = "#000001"
-    console.log(document.getElementById("background_color").value)
   }
 
 
@@ -1088,28 +1111,33 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
-//positioner only one select
+//positioner only one select, turns icons blue, should have used radios which is what this is
+//turns color of element ID input_array to blue and references it to data-value
 for (let y = 0 ; y < 5; y ++) {
   let property_array = ["flex_direction_buttons", "justify_content_buttons", "align_items_buttons", "align_content_buttons", "flex_wrap_buttons"]
   let input_array = ["flex_direction", "justify_content", "align_items", "align_content", "flex_wrap"]
+  //click
 for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
   document.getElementsByClassName(property_array[y])[x].addEventListener("click", function () {
-
+    //clicked color, uncolors
     if (this.style.backgroundColor === "rgb(121, 174, 228)") {
-      for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
-        document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
-      }
+      // for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+        this.style.backgroundColor = "#f0f0f0"
+      // }
       //none selected
       document.getElementById(input_array[y]).value = ""
       inputs_change()
     }
+    //clicked uncolored, uncolors all, then colors clicked, basically radio
     else {
       for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
         document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
       }
       this.style.backgroundColor = "rgb(121, 174, 228)"
       console.log(this.getAttribute("data-value"))
-      //one selected
+      //sets attribute for selected element so it can be turned on and off when element is selected
+      this.setAttribute("data-color_on", "on")
+      //one selected, sets input value then updates
       document.getElementById(input_array[y]).value = this.getAttribute("data-value")
       inputs_change()
     }
