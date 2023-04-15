@@ -280,11 +280,13 @@ user-select: none; /* Standard */
 
 .flex_positioner_buttons_container {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .justify_content_buttons{
   border-style: solid;
   border-width: 1px;
+  /* width: 30px; */
   /* background-color: #f0f0f0; */
 }
 
@@ -301,4 +303,12 @@ user-select: none; /* Standard */
 .flex_direction_buttons{
   border-style: solid;
   border-width: 1px;
+}
+
+.positioner_icons {
+  width: 50px;
+}
+
+.positioner_icons1 {
+  width: 50px;
 }

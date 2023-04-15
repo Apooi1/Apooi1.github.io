@@ -185,18 +185,12 @@ container_create_button.id = "container_create_button"
 container_create_button.addEventListener('click', function(){
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
-  console.log(id_tracker)
   id_tracker += 1
   console.log(id_tracker)
   created_container.id = "div" + id_tracker
   created_container.className = "div" + id_tracker
   border_tracker.push(created_container)
   selector(created_container)
-  // console.log(selected_element_4form)
-  // console.log(created_container.id)
-  // console.log(created_container)
-  // console.log(document.getElementById(selected_element_4form))
-  console.log(document.getElementById("background_color").value)
   clear()
   console.log(document.getElementById("background_color").value)
   document.getElementById('width_input').value = "100%"
@@ -206,10 +200,7 @@ container_create_button.addEventListener('click', function(){
   document.getElementById('display_input').value = "flex"
   document.getElementById('justify_content').value = "center"
   form_update()
-  console.log(document.getElementById("background_color").value)
   inputs_change()  //breaks everything only if comes first
-  console.log(document.getElementById("background_color").value)
-
   draggable(created_container)
 })
 
@@ -239,6 +230,7 @@ selected_element1.addEventListener('click', function(q) {
   selected_element_4form = q.target.id
   selected_target = q.target
   document.getElementById(selected_element_4form).innerHTML
+  clear()
 form_update()
 })
 //form_update()  //Is being run before inputs are changed, so it can not find the right match because it does not exist yet
@@ -251,7 +243,6 @@ form_update()
 
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&~~CSS UPDATER~~&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-
 //display values in form on click
 //ID
 function form_update(){
@@ -262,18 +253,18 @@ function form_update(){
     matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
 
   let stylecss = document.getElementById('stylecss').textContent
-  console.log(selected_target)
+  // console.log(selected_target)
   let first_index = stylecss.indexOf("#" + selected_target.id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   let selectedcss = stylecss.substring(first_index, last_index+1)
-  console.log(selectedcss)
-  console.log(stylecss.substring(first_index, first_index + 10))
-  console.log(first_index)
+  // console.log(selectedcss)
+  // console.log(stylecss.substring(first_index, first_index + 10))
+  // console.log(first_index)
   if (first_index === -1) {
     console.log ("NOT FOUND")
     return
   }
-  console.log("IT RUN?!")
+  //console.log("IT RUN?!")
   //LEARN alternative ... before stylecss instead of Array.from
   //LEARN matches = Array.from(stylecss.matchAll(/;/g))
   //LEARN complicated af string minipulation
@@ -294,10 +285,10 @@ function form_update(){
     // console.log("value is " + value)
     // console.log(selected_element_4form)
     // console.log(oldmatch.index, match.index)
-    console.log("FORM UPDATE?")
-     console.log(stylecss.substring(first_index, last_index))
+    //console.log("FORM UPDATE?")
+     //console.log(stylecss.substring(first_index, last_index))
      ////console.log("L", cssproperty, "L")
-     ////console.log(cssparm)
+    //console.log(cssparm)
     // console.log("first index is " + first_index)
     // console.log("last index is " + last_index)
     // console.log(document.getElementById(cssinput_array[indexofproperty]))
@@ -311,6 +302,16 @@ function form_update(){
     }
   }
   })
+}
+
+//finds which selected icon in positioner tab
+positioner_which()
+function positioner_which () {
+  for (let x = 0; x < document.getElementsByClassName("positioner_blue_select").length; x++) {
+    if (document.getElementsByClassName("positioner_blue_select")[x].value) {
+    console.log(document.querySelector("[data-value=" + document.getElementsByClassName("positioner_blue_select")[x].value))
+    }
+  } 
 }
   }  //NO REMOVE
 

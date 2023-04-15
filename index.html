@@ -31,20 +31,22 @@
   </select>
   <button class="flex_positioner">Positioner</button>
   <div class="flex_options" >
-  <INPUT id="flex_direction" class="myinputs select_parents" placeholder="Flex Direction"></INPUT>
+  <INPUT id="flex_direction" class="myinputs select_parents positioner_blue_select" placeholder="Flex Direction"></INPUT>
   <select name="" id="flex_direction_select" class="select_child" style="display: none;">
     <option value="row">row</option>
     <option>column</option>
     <option>"row-reverse"</option>
     <option>column-reverse</option>
   </select>
-  <div class="flex_positioner_buttons_container">
-    <div class="flex_direction_buttons" data-value="row">tst</div>
-    <div class="flex_direction_buttons" data-value="column"></div>
-    <div class="flex_direction_buttons" data-value="row-reverse"></div>
-    <div class="flex_direction_buttons" data-value="column-reverse"></div>
+  <div class="flex_positioner_buttons_container positioner_blue_select_parent">
+    <div class="flex_direction_buttons" data-value="row"><img class="positioner_icons" src="./assets/positioner_icons/flex_direction/row.png" alt=""></div>
+    <div class="flex_direction_buttons" data-value="row-reverse"><img class="positioner_icons" src="./assets/positioner_icons/flex_direction/row-reverse.png" alt=""></div>
+    <div class="flex_direction_buttons" data-value="column"><img class="positioner_icons" src="./assets/positioner_icons/flex_direction/column.png" alt=""></div>
+    <div class="positioner_icons" src="" alt=""> </div>
+    <div class="positioner_icons" src="" alt="" style="margin-right: 4px;"> </div>
+    <div class="flex_direction_buttons" data-value="column-reverse"><img class="positioner_icons" src="./assets/positioner_icons/flex_direction/column-reverse.png" alt=""></div>
   </div>
-  <INPUT id="justify_content" class="myinputs select_parents" placeholder="Justify Content" ></INPUT>
+  <INPUT id="justify_content" class="myinputs select_parents positioner_blue_select" placeholder="Justify Content" ></INPUT>
   <select name="" id="justify_content_select" class="select_child" style="display: none;">
   <option>normal</option>
   <option>center</option>
@@ -54,16 +56,16 @@
   <option>space-around</option>
   <option>space-evenly</option>
 </select>
-<div class="flex_positioner_buttons_container">
-  <div class="justify_content_buttons" data-value="normal">normal</div>
-  <div class="justify_content_buttons" data-value="center">center</div>
-  <div class="justify_content_buttons" data-value="flex-start">flex-start</div>
-  <div class="justify_content_buttons" data-value="flex-end">flex-end</div>
-  <div class="justify_content_buttons" data-value="space-between">space-between</div>
-  <div class="justify_content_buttons" data-value="space-around">space-around</div>
-  <div class="justify_content_buttons" data-value="space-evenly">space-evenly</div>
+<div class="flex_positioner_buttons_container positioner_blue_select_parent">
+  <!-- <div class="justify_content_buttons" data-value="normal"> </div> -->
+  <div class="justify_content_buttons" data-value="center"><img class="positioner_icons" src="./assets/positioner_icons/center.png" alt=""></div>
+  <div class="justify_content_buttons" data-value="flex-start"><img class="positioner_icons" src="./assets/positioner_icons/flex-start.png" alt=""></div>
+  <div class="justify_content_buttons" data-value="flex-end"><img class="positioner_icons" src="./assets/positioner_icons/flex-end.png" alt=""></div>
+  <div class="justify_content_buttons" data-value="space-between"><img class="positioner_icons" src="./assets/positioner_icons/space-between.png" alt=""></div>
+  <div class="justify_content_buttons" data-value="space-around"><img class="positioner_icons" src="./assets/positioner_icons/space-around.png" alt=""></div>
+  <div class="justify_content_buttons" data-value="space-evenly"><img class="positioner_icons" src="./assets/positioner_icons/space-evenly.png" alt=""></div>
 </div>
-<INPUT id="align_items" class="myinputs select_parents" placeholder="Align items"></INPUT>
+<INPUT id="align_items" class="myinputs select_parents positioner_blue_select" placeholder="Align items"></INPUT>
 <select name="" id="align_items_select" class="select_child" style="display: none;">
   <option>normal</option>
   <option>center</option>
@@ -72,14 +74,25 @@
   <option>stretch</option>
   <option>baseline</option>
 </select>
-<div class="flex_positioner_buttons_container">
-  <div class="align_items_buttons" data-value="normal">arr</div>
-  <div class="align_items_buttons" data-value="center">arr</div>
-  <div class="align_items_buttons" data-value="flex-start">arr</div>
-  <div class="align_items_buttons" data-value="flex-end">arr</div>
-  <div class="align_items_buttons" data-value="stretch">arr</div>
-  <div class="align_items_buttons" data-value="baseline">arr</div>
+<div class="flex_positioner_buttons_container positioner_blue_select_parent">
+  <!-- <div class="align_items_buttons" data-value="normal">arr</div> -->
+  <div class="align_items_buttons" data-value="center"><img class="positioner_icons" src="./assets/positioner_icons/align_items/center.png" alt=""></div>
+  <div class="align_items_buttons" data-value="flex-start"><img class="positioner_icons" src="./assets/positioner_icons/align_items/flex-start.png" alt=""></div>
+  <div class="align_items_buttons" data-value="flex-end"><img class="positioner_icons" src="./assets/positioner_icons/align_items/flex-end.png" alt=""></div>
+  <!-- <div class="align_items_buttons" data-value="stretch">arr</div> -->
+  <!-- <div class="align_items_buttons" data-value="baseline">arr</div> -->
 </div>
+
+<INPUT id="flex_wrap" class="myinputs select_parents positioner_blue_select" placeholder="Flex wrap"></INPUT>
+<select name="" id="flex_wrap_select" class="select_child" style="display: none;">
+  <option>wrap</option>
+  <option value="nowrap">nowrap</option>
+</select>
+<div class="flex_positioner_buttons_container positioner_blue_select_parent">
+  <div class="flex_wrap_buttons" data-value="wrap"><img class="positioner_icons" src="./assets/positioner_icons/flex-wrap/flex-wrap.png" alt=""></div>
+  <div class="flex_wrap_buttons" data-value="nowrap"><img class="positioner_icons" src="./assets/positioner_icons/flex-wrap/no-wrap.png" alt=""></div>
+</div>
+
   <INPUT id="align_content" class="myinputs select_parents" placeholder="Align Content"></INPUT>
   <select name="" id="align_content_select" class="select_child" style="display: none;">
     <option>normal</option>
@@ -90,23 +103,14 @@
     <option>space-evenly</option>
     <option>stretch</option>
   </select>
-<div class="flex_positioner_buttons_container">
+<!-- <div class="flex_positioner_buttons_container">
   <div class="align_content_buttons" data-value="center">arr</div>
   <div class="align_content_buttons" data-value="flex-start">arr</div>
   <div class="align_content_buttons" data-value="space-around">arr</div>
   <div class="align_content_buttons" data-value="space-between">ar</div>
   <div class="align_content_buttons" data-value="space-evenly">ar</div>
   <div class="align_content_buttons" data-value="stretch">ar</div>
-</div>
-  <INPUT id="flex_wrap" class="myinputs select_parents" placeholder="Flex wrap"></INPUT>
-  <select name="" id="flex_wrap_select" class="select_child" style="display: none;">
-    <option>wrap</option>
-    <option value="nowrap">nowrap</option>
-  </select>
-  <div class="flex_positioner_buttons_container">
-    <div class="flex_wrap_buttons" data-value="wrap">wrapper</div>
-    <div class="flex_wrap_buttons" data-value="nowrap">no wrap</div>
-  </div>
+</div> -->
   <INPUT id="flex_gap_column" class="myinputs" placeholder="Column Gap"></INPUT>
   <INPUT id="flex_gap_row" class="myinputs" placeholder="Row Gap"></INPUT>
 </div>
