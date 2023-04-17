@@ -17,19 +17,18 @@ let font_array = []
 
 
 let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top",
- "left", "bottom", "right", "height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin",
-  "padding", "position", "font-family", "font-size", "font-weight", "font-style", "line-height", "background-color", 
+  "left", "bottom", "right", "height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin",
+  "padding", "position", "font-family", "font-size", "font-weight", "font-style", "line-height", "background-color",
   "color", "row-gap", "column-gap", "border-color", "overflow", "background-image"]
 
 
 let cssinput_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-"x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style",
- "border_width", "border_radius", "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input",
+  "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style",
+  "border_width", "border_radius", "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input",
   "fontweight_input", "fontstyle_input", "lineheight_input", "background_color", "color_input", "flex_gap_row",
-   "flex_gap_column", "border_color", "overflow_input", "gradient_input"]
+  "flex_gap_column", "border_color", "overflow_input", "gradient_input"]
 
-//rgb to hex function for colors
-//match searches for certain elements
+//rgb to hex function for colors //match searches for certain elements
 //toString(16) changes the element into hexidecimal and once goes over 9 starts at A.. B.. C etc, slice removes 2 elements, join() reattachs the results of R, G and B
 const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice(1).map(n => parseInt(n, 10).toString(16).padStart(2, '0')).join('')}`
 
@@ -40,38 +39,39 @@ const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice
 // button_and_container.id = "button_and_container"
 //draggable(button_and_container)
 
- //+ button
+//+ button
 // let create_new = document.createElement('button')
 // document.getElementById("button_and_container").appendChild(create_new)
 // create_new.innerHTML = "+"
 // create_new.id = "create"
 //+ button click
-document.getElementById("create").addEventListener('click', function() {
-if (vislock_creation === 1) {
-visswitch_create_button()
-}
+document.getElementById("create").addEventListener('click', function () {
+  if (vislock_creation === 1) {
+    visswitch_create_button()
+  }
 })
 // Triggers when children are clicked (create item)
-document.getElementById("button_and_container").addEventListener('click', function(){
-if (vislock_creation === 0) {
-visswitch_create_button()
-}
+document.getElementById("button_and_container").addEventListener('click', function () {
+  if (vislock_creation === 0) {
+    visswitch_create_button()
+  }
 })
 //Switches visability for creation menu
 function visswitch_create_button() {
-if(document.getElementById("select_container").style.display != "none") { document.getElementById("select_container").style.display = "none";
-document.getElementById('create').innerHTML = " + "
-}
-else{ 
-document.getElementById("select_container").style.display = "flex";
-document.getElementById('create').innerHTML = " - "
-}
+  if (document.getElementById("select_container").style.display != "none") {
+    document.getElementById("select_container").style.display = "none";
+    document.getElementById('create').innerHTML = " + "
+  }
+  else {
+    document.getElementById("select_container").style.display = "flex";
+    document.getElementById('create').innerHTML = " - "
+  }
 }
 //Container for creation buttons
 // let select_container = document.createElement("container")
 // document.getElementById("button_and_container").appendChild(select_container)
 // select_container.id = "select_container"
-document.getElementById("select_container").addEventListener("mousedown", function (s){
+document.getElementById("select_container").addEventListener("mousedown", function (s) {
   s.stopPropagation();
 })
 
@@ -85,11 +85,11 @@ button_create_button.innerHTML = "Create Button"
 button_create_button.id = "button_create_button"
 
 //Create: button
-button_create_button.addEventListener('click', function(){
+button_create_button.addEventListener('click', function () {
   let created_button = document.createElement('button')
   document.body.appendChild(created_button)
   created_button.innerHTML = "Button here"
-  id_tracker+= 1
+  id_tracker += 1
   created_button.id = "btn" + id_tracker
   created_button.className = "btn" + id_tracker
   selector(created_button)
@@ -107,14 +107,14 @@ document.getElementById("more_select_container").appendChild(input_create_button
 input_create_button.innerHTML = "User Input"
 input_create_button.id = "input_create_button"
 
-  
+
 //+button select on press
 //Create: Input
-document.getElementById("input_create_button").addEventListener('click', function(){
+document.getElementById("input_create_button").addEventListener('click', function () {
   let created_input = document.createElement("INPUT")
   document.body.appendChild(created_input)
   created_input.value = "INPUTED"
-  id_tracker +=1
+  id_tracker += 1
   created_input.id = created_input.nodeName + id_tracker
   created_input.className = created_input.nodeName + id_tracker
   selector(created_input)
@@ -130,9 +130,9 @@ document.getElementById("more_select_container").appendChild(textarea_create_but
 textarea_create_button.innerHTML = "Text Area"
 textarea_create_button.id = "textarea_create_button"
 
-  
+
 //Create: Text Area
-document.getElementById("textarea_create_button").addEventListener('click', function(){
+document.getElementById("textarea_create_button").addEventListener('click', function () {
   let created_textarea = document.createElement("TEXTAREA")
   document.body.appendChild(created_textarea)
   created_textarea.value = "Write your text here..."
@@ -155,7 +155,7 @@ img_create_button.innerHTML = "Image"
 img_create_button.id = "img_create_button"
 
 //Create: img
-img_create_button.addEventListener('click', function(){
+img_create_button.addEventListener('click', function () {
   let created_img = document.createElement('IMG')
   document.body.appendChild(created_img)
   id_tracker += 1
@@ -170,15 +170,15 @@ img_create_button.addEventListener('click', function(){
   inputs_change()
   draggable(created_img)
 })
-                                   
+
 //Container creation button to create containers
 let container_create_button = document.createElement('button')
 document.getElementById('select_container').appendChild(container_create_button)
 container_create_button.innerHTML = "Container / Div"
 container_create_button.id = "container_create_button"
-  
+
 //Create: container
-container_create_button.addEventListener('click', function(){
+container_create_button.addEventListener('click', function () {
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
   id_tracker += 1
@@ -214,31 +214,31 @@ container_create_button.addEventListener('click', function(){
 
 //------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SELECTOR<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------
 //Find ID of selected element
-function selector(selected_element1){
+function selector(selected_element1) {
   console.log(selected_element_4form)
   selected_element_4form = selected_element1.id
   the_selected_element = selected_element1
   selected_target = selected_element1
   //console.log(selected_target)
-//draggable(selected_element1)
-selected_element1.addEventListener('click', function(q) {
-  selected_element_4form = q.target.id
-  selected_target = q.target
-  document.getElementById(selected_element_4form).innerHTML
-  clear()
-form_update()
-})
+  //draggable(selected_element1)
+  selected_element1.addEventListener('click', function (q) {
+    selected_element_4form = q.target.id
+    selected_target = q.target
+    document.getElementById(selected_element_4form).innerHTML
+    clear()
+    form_update()
+  })
 }
-  
+
 
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&~~CSS UPDATER~~&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 //display values in form on click
-function form_update(){
+function form_update() {
   input_updater_ID()
   //clear()
 
-    //Grabs all ";"s for input_change() //edit: ??? runs on every new line
-    matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
+  //Grabs all ";"s for input_change() //edit: ??? runs on every new line
+  matches = Array.from(document.getElementById('stylecss').textContent.matchAll(/\n/g))
 
   let stylecss = document.getElementById('stylecss').textContent
   // console.log(selected_target)
@@ -251,15 +251,11 @@ function form_update(){
   }
   let first_index = stylecss.indexOf(dot_or_hash + selected_target.id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
-  let selectedcss = stylecss.substring(first_index, last_index+1)
-  // console.log(selectedcss)
-  // console.log(stylecss.substring(first_index, first_index + 10))
-  // console.log(first_index)
+  let selectedcss = stylecss.substring(first_index, last_index + 1)
   if (first_index === -1) {
-    console.log ("NOT FOUND")
+    console.log("NOT FOUND")
     return
   }
-  //console.log("IT RUN?!")
   //LEARN alternative ... before stylecss instead of Array.from
   //LEARN matches = Array.from(stylecss.matchAll(/;/g))
   //LEARN complicated af string minipulation
@@ -273,19 +269,12 @@ function form_update(){
           //value = value.replaceAll(" ", "")
           let divide13 = value.indexOf(':')
           let cssproperty = value.substring(1, divide13)
-          cssproperty = cssproperty.replaceAll(" ", "") //div507
+          cssproperty = cssproperty.replaceAll(" ", "")
           let cssparm = value.substring(divide13 + 1, value.length - 1)
           let indexofproperty = cssparm_array.indexOf(cssproperty)
           //Finally
-          // console.log("value is " + value)
-          // console.log(selected_element_4form)
-          // console.log(oldmatch.index, match.index)
-          //console.log("FORM UPDATE?")
           //console.log(stylecss.substring(first_index, last_index))
-          ////console.log("L", cssproperty, "L")
           //console.log(cssparm)
-          // console.log("first index is " + first_index)
-          // console.log("last index is " + last_index)
           // console.log(document.getElementById(cssinput_array[indexofproperty]))
           //fixes if null, use this for when input css is broken or unreliable :) ! as it checks new lines that maybe empty
           //if (document.getElementById(cssinput_array[indexofproperty]) != null) {
@@ -302,11 +291,6 @@ function form_update(){
   //finds which selected icon in positioner tab and then colors it
   positioner_which()
   function positioner_which() {
-    // for (let x = 0; x < positioner_colored_array.length; x++) {
-    //   positioner_colored_array[x].style.backgroundColor = "#f0f0f0"
-    //   console.log(positioner_colored_array)
-    // }
-
     let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
     //resets all colors with data color on - then //sets all data color on to off
     for (let x = 0; x < data_color_on_array; x++) {
@@ -327,121 +311,117 @@ function form_update(){
 
   }
 
-  }  //NO REMOVE
+}  //NO REMOVE
 
 function input_updater_ID() {
-    //ID
-console.log(selected_element_4form)
-document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
-//CLASS
-document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
-//TEXT
-if (selected_element_4form != "body") {
-document.getElementById("text_input").value = selected_target.innerHTML
-}
-//Parent
-document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
-//Image src
-document.getElementById("img_src").value = selected_target.src
+  //ID
+  console.log(selected_element_4form)
+  document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
+  //CLASS
+  document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
+  //TEXT
+  if (selected_element_4form != "body") {
+    document.getElementById("text_input").value = selected_target.innerHTML
+  }
+  //Parent
+  document.getElementById("parent_input").value = document.getElementById(selected_element_4form).parentElement.id
+  //Image src
+  document.getElementById("img_src").value = selected_target.src
 
-let coloree_classes = document.getElementsByClassName('coloree')
-for (let x = 0; x < coloree_classes.length; x++) {
-  document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
-}
-
-
+  let coloree_classes = document.getElementsByClassName('coloree')
+  for (let x = 0; x < coloree_classes.length; x++) {
+    document.getElementsByClassName('colorers')[x].value = document.getElementsByClassName('coloree')[x].value
+  }
 
 } //NO REMOVE
 
-  //BOOM FOUND YA BITCH
-
-  function clear() {
-    for (let x = 0; x < cssinput_array.length; x++) {
-      update_total = "document.getElementById(\"" + cssinput_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
-      updateresult = Function(update_total)() 
-    }
-    //document.getElementById("form_id").value = ""
-    document.getElementById("background_color").value = "#000001"
-    //resets all colors with data color on - then sets all data color on to off
-    let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
-    for (let x = 0; x < data_color_on_array; x++) {
-      document.querySelectorAll("[data-color_on=on]")[x].style.backgroundColor = "#f0f0f0"
-    }
-    for (let x = 0; x < data_color_on_array; x++) {
-      document.querySelectorAll("[data-color_on=on]")[0].setAttribute("data-color_on", "off")
-    }
+function clear() {
+  for (let x = 0; x < cssinput_array.length; x++) {
+    update_total = "document.getElementById(\"" + cssinput_array[x] + "\").value = \"\"" //document.getElementById(selected_element_4form)." + param_array[x]
+    updateresult = Function(update_total)()
   }
+  //document.getElementById("form_id").value = ""
+  document.getElementById("background_color").value = "#000001"
+  //resets all colors with data color on - then sets all data color on to off
+  let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
+  for (let x = 0; x < data_color_on_array; x++) {
+    document.querySelectorAll("[data-color_on=on]")[x].style.backgroundColor = "#f0f0f0"
+  }
+  for (let x = 0; x < data_color_on_array; x++) {
+    document.querySelectorAll("[data-color_on=on]")[0].setAttribute("data-color_on", "off")
+  }
+}
 
 
-    // >>>>>>>>>>>>>>>>>>>>>>>>>>>>>--DRAG HANDLER--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-  let mousedown_triggered = false
-  let drag_select = null
-  let drag_target
-function draggable(selected){
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>--DRAG HANDLER--<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+let mousedown_triggered = false
+let drag_select = null
+let drag_target
+function draggable(selected) {
   if (selected != document.body) {
-  selected.addEventListener("mousedown", mousedown)
-  function mousedown(q) {
-    if (q.buttons != 1) {
-      return
-    }
+    selected.addEventListener("mousedown", mousedown)
+    function mousedown(q) {
+      if (q.buttons != 1) {
+        return
+      }
       mousedown_triggered = true
-        drag_select = q.target
-      
-    console.log ("selected is ", drag_select.id)
-    let node = drag_select
-    let clone = node.cloneNode()
-    document.body.appendChild(clone)
-    clone.style.position = "absolute"
-    clone.style.display = "none"
-      
-    document.addEventListener("mousemove", mousemover)
-    function mousemover(q) {
-      let rect
-      drag_target = q.target
-      // let rect = selected.parentNode.getBoundingClientRect();
-      // let lefter = event.clientX - rect.left
-      // let toper = event.clientY - rect.top
-      // selected.style.left = lefter + "px"
-      // selected.style.top = toper + "px"
-      document.getElementById("mouse_tooltip").innerHTML = drag_select.id + " child of " + drag_target.id + "?"
-      
+      drag_select = q.target
 
-      if (clone.parentNode != null) {
-      rect = clone.parentNode.getBoundingClientRect();
-      clone.style.display = "block"   //needs only once
-      clone.style.opacity = 0.2
-      let lefter = event.clientX - rect.left
-      let toper = event.clientY - rect.top
-      clone.style.top = toper + 10 + "px"
-      clone.style.left = lefter + 10 + "px"
-      }
-    }
-  
-  document.addEventListener("mouseup", mouseup)
-    function mouseup(q) {
-      q.preventDefault()
-      clone.remove()
-      //console.log("target is " + drag_target.id)
-      if (drag_target != drag_select && drag_select != null && drag_target != "") {
-      drag_target.appendChild(drag_select)
+      console.log("selected is ", drag_select.id)
+      let node = drag_select
+      let clone = node.cloneNode()
+      document.body.appendChild(clone)
+      clone.style.position = "absolute"
+      clone.style.display = "none"
+
+      document.addEventListener("mousemove", mousemover)
+      function mousemover(q) {
+        let rect
+        drag_target = q.target
+        // let rect = selected.parentNode.getBoundingClientRect();
+        // let lefter = event.clientX - rect.left
+        // let toper = event.clientY - rect.top
+        // selected.style.left = lefter + "px"
+        // selected.style.top = toper + "px"
+        document.getElementById("mouse_tooltip").innerHTML = drag_select.id + " child of " + drag_target.id + "?"
+
+
+        if (clone.parentNode != null) {
+          rect = clone.parentNode.getBoundingClientRect();
+          clone.style.display = "block"   //needs only once
+          clone.style.opacity = 0.2
+          let lefter = event.clientX - rect.left
+          let toper = event.clientY - rect.top
+          clone.style.top = toper + 10 + "px"
+          clone.style.left = lefter + 10 + "px"
+        }
       }
 
-    document.removeEventListener("mousemove", mousemover)
-    mousedown_triggered = false
-    drag_select = null
-    drag_target = ""   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
-    //document.removeEventListener("mousedown", mousedown)
+      document.addEventListener("mouseup", mouseup)
+      function mouseup(q) {
+        q.preventDefault()
+        clone.remove()
+        //console.log("target is " + drag_target.id)
+        if (drag_target != drag_select && drag_select != null && drag_target != "") {
+          drag_target.appendChild(drag_select)
+        }
+
+        document.removeEventListener("mousemove", mousemover)
+        mousedown_triggered = false
+        drag_select = null
+        drag_target = ""   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
+        //document.removeEventListener("mousedown", mousedown)
+      }
     }
   }
 }
-}
-  
+
 //colors to input fields
 let colorers_all_classes = document.getElementsByClassName("colorers")
 let colorers_array = []
 for (x = 0; x < colorers_all_classes.length; x++) {
   colorers_array.push(colorers_all_classes[x])
-  document.getElementsByClassName("colorers")[x].addEventListener("change", function() {
+  document.getElementsByClassName("colorers")[x].addEventListener("change", function () {
     console.log(colorers_array.indexOf(this))
     //console.log(document.getElementsByClassName("colorers")[3])
     document.getElementsByClassName("coloree")[colorers_array.indexOf(this)].value = this.value
@@ -454,7 +434,7 @@ for (x = 0; x < colorers_all_classes.length; x++) {
 //loops through all input classes and adds event listeners to change, on change, submits
 let inputs_all_classes = document.getElementsByClassName("myinputs")
 for (let x = 0; x < inputs_all_classes.length; x++) {
-  inputs_all_classes[x].addEventListener ('change', inputs_change)
+  inputs_all_classes[x].addEventListener('change', inputs_change)
 }
 
 function inputs_change() {
@@ -476,17 +456,17 @@ function inputs_change() {
     potential_hover = ":hover"
   }
   if (radio_id_css === "ID") {
-  cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover  +" {" + "\n"
+    cssline = "#" + document.getElementById(selected_element_4form).id + potential_hover + " {" + "\n"
   }
   else /*if (radio_id_css === "CLASS")*/ {
-  cssline = "." + document.getElementById(selected_element_4form).className + potential_hover  +" {" + "\n"
+    cssline = "." + document.getElementById(selected_element_4form).className + potential_hover + " {" + "\n"
   }
   console.log(cssline)        //ENABLE THIS
   //paramter of css values + the value of CURRENT input fields
   person[selected_element_4form] = {}
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
-      cssline +=  cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
+      cssline += cssparm_array[i] + ":" + document.getElementById(cssinput_array[i]).value + ";" + "\n"
       //console.log(cssline)
 
       person[selected_element_4form][cssparm_array[i]] = document.getElementById(cssinput_array[i]).value
@@ -495,85 +475,75 @@ function inputs_change() {
   cssline += "}"
 
   console.log(person)
- 
+
   let css_output = document.createTextNode(cssline)
   let stylecss = document.getElementById('stylecss').textContent
   if (radio_id_css === "ID") {
-  the_first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
+    the_first_index = stylecss.indexOf("#" + document.getElementById(selected_element_4form).id + potential_hover)
   }
   else {
     the_first_index = stylecss.indexOf("." + document.getElementById(selected_element_4form).id + potential_hover)
   }
   let last_index = stylecss.indexOf("}", the_first_index)
-  // console.log (first_index)
-  // console.log (last_index)
-  // console.log(stylecss.substring(first_index, last_index+1))
-  // console.log(document.getElementById(selected_element_4form))
-  // console.log(document.getElementById(selected_element_4form).id)
   //Deletes the css code
   if (the_first_index != -1) {
-    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(the_first_index, last_index+1), cssline)
+    document.getElementById('stylecss').textContent = stylecss.replace(stylecss.substring(the_first_index, last_index + 1), cssline)
   }
   //Then rebinds the new one
   if (the_first_index === -1) {
-    //document.getElementById('stylecss').appendChild(css_default)
-  document.getElementById('stylecss').appendChild(css_output)
+    document.getElementById('stylecss').appendChild(css_output)
   }
-//IT DELETES SHIT MAN THAT IT SHUD NOT
 
 
-//ID submit
-console.log(selected_target.id)
-   selected_target.id = document.getElementById("form_id").value //Lmao found
-//class submit
-console.log(selected_target.className)
-   selected_target.className = document.getElementById("class_input").value
+  //ID submit
+  selected_target.id = document.getElementById("form_id").value //found
+  //class submit
+  console.log(selected_target.className)
+  selected_target.className = document.getElementById("class_input").value
 
-//Text submit      //FOUND YOU, BUG
-if (selected_element_4form != "body") {
-  //console.log(selected_target)
-  //console.log(selected_element_4form)
-  console.log(document.getElementById('text_input').value)
-  //selected_target is not updating
-selected_target.innerHTML = document.getElementById('text_input').value
-}
-//parent input submit
-let parent_id = document.getElementById("parent_input").value
-let child_id = selected_target
-if (parent_id != "" && parent_id != child_id.parentNode.id) {
-  console.log (child_id.parentNode.id)
-document.getElementById(parent_id).appendChild(child_id)
-}
-//sets position from absolute to initial
-if (parent_id === child_id.parentElement.id && child_id.parentElement.id != "body") {
-  // console.log('set')
-let initial_pos = the_selected_element.style.position
-if (initial_pos === "absolute") {
-  the_selected_element.style.position = "initial"
-}
-}
-//img src submit
-selected_target.src = document.getElementById('img_src').value
+  //Text submit      //FOUND BUG
+  if (selected_element_4form != "body") {
+    //console.log(selected_target)
+    console.log(document.getElementById('text_input').value)
+    //selected_target is not updating
+    selected_target.innerHTML = document.getElementById('text_input').value
+  }
+  //parent input submit
+  let parent_id = document.getElementById("parent_input").value
+  let child_id = selected_target
+  if (parent_id != "" && parent_id != child_id.parentNode.id) {
+    console.log(child_id.parentNode.id)
+    document.getElementById(parent_id).appendChild(child_id)
+  }
+  //sets position from absolute to initial
+  if (parent_id === child_id.parentElement.id && child_id.parentElement.id != "body") {
+    let initial_pos = the_selected_element.style.position
+    if (initial_pos === "absolute") {
+      the_selected_element.style.position = "initial"
+    }
+  }
+  //img src submit
+  selected_target.src = document.getElementById('img_src').value
 
-//img checkbox natural height / width 
-if (document.getElementById('img_checkbox').checked) { 
-  document.getElementById(selected_element_4form).style.height = "auto" //document.getElementById(selected_element_4form).naturalHeight;
-  document.getElementById(selected_element_4form).style.width = "auto"//document.getElementById(selected_element_4form).naturalWidth;
-}
-// if (document.getElementById('img_checkbox').checked) {
-//   document.getElementById(selected_element_4form).style.height = "100%"
-//   document.getElementById(selected_element_4form).style.width = "100%"
-// }
+  //img checkbox natural height / width 
+  if (document.getElementById('img_checkbox').checked) {
+    document.getElementById(selected_element_4form).style.height = "auto" //document.getElementById(selected_element_4form).naturalHeight;
+    document.getElementById(selected_element_4form).style.width = "auto"//document.getElementById(selected_element_4form).naturalWidth;
+  }
+  // if (document.getElementById('img_checkbox').checked) {
+  //   document.getElementById(selected_element_4form).style.height = "100%"
+  //   document.getElementById(selected_element_4form).style.width = "100%"
+  // }
 
-// const person = {firstname: {},what: "XD"}
+  // const person = {firstname: {},what: "test"}
 
-// person.firstname.WTF = {}
-// person.firstname.WTF = "WHAT XD"
-// console.log(person)
-// }) //NO REMOVE
+  // person.firstname.WTF = {}
+  // person.firstname.WTF = "WHAT"
+  // console.log(person)
+  // }) //NO REMOVE
 }
 //^^^^^^^^^^^^^!!!!!!!!!!!!!!!!!!!!!>> INPUT SUBMITTER <<!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!^^^^^^^^^^
-  
+
 
 //vislock checkbox for creation menu (create item)
 let vislock_create = document.createElement("INPUT")
@@ -582,7 +552,7 @@ document.getElementById("select_container").appendChild(vislock_create)
 vislock_create.checked = true
 vislock_create.id = "vislock_create"
 
-vislock_create.addEventListener('click', function(){
+vislock_create.addEventListener('click', function () {
   if (vislock_create.checked) {
     vislock_creation = 1
   }
@@ -593,36 +563,36 @@ vislock_create.addEventListener('click', function(){
 
 
 //Moves form left to right
-document.getElementById('form_left_right').addEventListener('click', function(){
-  if(document.getElementById('form_container').style.left == 0) {
-  document.getElementById('form_container').style.right = null
-  document.getElementById('form_container').style.left = 0
-  document.getElementById('form_left_right').style.right = null
-  document.getElementById('form_left_right').style.left = 0
+document.getElementById('form_left_right').addEventListener('click', function () {
+  if (document.getElementById('form_container').style.left == 0) {
+    document.getElementById('form_container').style.right = null
+    document.getElementById('form_container').style.left = 0
+    document.getElementById('form_left_right').style.right = null
+    document.getElementById('form_left_right').style.left = 0
   }
 
   else {
     document.getElementById('form_container').style.left = null
     document.getElementById('form_container').style.right = 0
-  document.getElementById('form_left_right').style.left = null
-  document.getElementById('form_left_right').style.right = 0
+    document.getElementById('form_left_right').style.left = null
+    document.getElementById('form_left_right').style.right = 0
   }
-  
+
 })
 
 
 //Input drop downs visability switcher
 let select_parents = document.getElementsByClassName("select_parents")
 for (let x = 0; x < select_parents.length; x++) {
-  document.getElementsByClassName("select_parents")[x].addEventListener('focus', function() {
+  document.getElementsByClassName("select_parents")[x].addEventListener('focus', function () {
     document.getElementsByClassName('select_child')[x].style.display = "block"
   })
 
-  document.getElementsByClassName("select_child")[x].addEventListener('blur', function() {
+  document.getElementsByClassName("select_child")[x].addEventListener('blur', function () {
     document.getElementsByClassName('select_child')[x].style.display = "none"
   })
 
-  document.getElementsByClassName("select_child")[x].addEventListener('change', function() {
+  document.getElementsByClassName("select_child")[x].addEventListener('change', function () {
     document.getElementsByClassName('select_parents')[x].value = document.getElementsByClassName("select_child")[x].value
     inputs_change()
   })
@@ -631,9 +601,6 @@ for (let x = 0; x < select_parents.length; x++) {
 
 
 
-
-
-  
 //output and counter text areas container
 //Output text area
 let output = document.createElement("TextArea")
@@ -650,102 +617,94 @@ line_counter.id = "line_counter"
 
 
 //update button click
-document.getElementById('output_updater').addEventListener("click", function(){
-//Outputs document to output textarea including own code
-output.value = document.documentElement.innerHTML
-//Cuts code into many pieces
-var lines = output.value.split('\n')
-console.log(lines.length)
-//number of lines of style so it can be deducted
-let csslines = document.getElementById('stylecss').textContent.split('\n').length
-console.log(csslines)
+document.getElementById('output_updater').addEventListener("click", function () {
+  //Outputs document to output textarea including own code
+  output.value = document.documentElement.innerHTML
+  //Cuts code into many pieces
+  var lines = output.value.split('\n')
+  console.log(lines.length)
+  //number of lines of style so it can be deducted
+  let csslines = document.getElementById('stylecss').textContent.split('\n').length
+  console.log(csslines)
 
-//Resets output value
-output.value = ""
-  
-//removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
-let bodyhtml = lines[7]
+  //Resets output value
+  output.value = ""
+
+  //removes the first 200 or so pieces, and joins it back together in a for loop by adding new line after each piece
+  let bodyhtml = lines[7]
   console.log(bodyhtml)
-lines.splice(0, 218 + csslines)  //script tag +1 in html and remove stylecss
-let merged_output = []
-for (y = 1; y < lines.length; y++) {
-  merged_output[y] = lines[y]
-}
-output.value = bodyhtml + "\n" + merged_output.join('\n')
-output.value = output.value.replace('</body>', "")
-//Measures number of lines in output
-var new_lines = output.value.split('\n').length
-//Reset line counter textarea (not line count)
+  lines.splice(0, 265 + csslines)  //script tag +1 in html and remove stylecss
+  let merged_output = []
+  for (y = 1; y < lines.length; y++) {
+    merged_output[y] = lines[y]
+  }
+  output.value = bodyhtml + "\n" + merged_output.join('\n')
+  output.value = output.value.replace('</body>', "")
+  //Measures number of lines in output
+  var new_lines = output.value.split('\n').length
+  //Reset line counter textarea (not line count)
   line_counter.value = ""
-  
-//Loops to write numbers 1 - ?? in line counter textarea
+
+  //Loops to write numbers 1 - ?? in line counter textarea
   for (var x = 1; x < new_lines; x++) {
     line_counter.value += x + "." + "\n"
   }
-
   //output to stylecss textcontent from stylesheet
   document.getElementById("css_output").value = document.getElementById('stylecss').textContent
 })
 
 
 
-  
 //output textarea scroll match with line counter
-document.getElementById("output").addEventListener("scroll", function(){
+document.getElementById("output").addEventListener("scroll", function () {
   line_counter.scrollTop = output.scrollTop
 })
-document.getElementById("line_counter").addEventListener("scroll", function(){
-  output.scrollTop = line_counter.scrollTop 
+document.getElementById("line_counter").addEventListener("scroll", function () {
+  output.scrollTop = line_counter.scrollTop
 })
 
 
 //Open in new tab button CLICK
-document.getElementById('new_tab_btn').addEventListener('click', function(){
-let win = window.open()
+document.getElementById('new_tab_btn').addEventListener('click', function () {
+  let win = window.open()
   win.document.getElementsByTagName('html')[0].remove()
-//let element = document.createElement('body')
+  //let element = document.createElement('body')
   let element = document.createElement('html')
-element.type = "text/javascript"
-element.innerHTML = document.getElementById('output').value
-setTimeout(function(){
-  win.document.append(element)
-}, 1000)
-  
+  element.type = "text/javascript"
+  element.innerHTML = document.getElementById('output').value
+  setTimeout(function () {
+    win.document.append(element)
+  }, 1000)
 })
 
-  
+
 //Output visswitcher hide
 document.getElementById("output_and_counter").style.display = "none"
- //Output visswitcher hide button click
-  document.getElementById("output_visswitch").addEventListener('click', function() {
-    if (document.getElementById("output_and_counter").style.display === "none") {
-      document.getElementById("output_and_counter").style.display = "flex"
-      document.getElementById("output_visswitch").style.bottom = 200
-      document.getElementById("output_visswitch").innerHTML = "hide"
-    }    
-    
-else { 
-  document.getElementById("output_and_counter").style.display = "none"
-output_visswitch.style.bottom = 0
-output_visswitch.innerHTML = "output"
-}
+//Output visswitcher hide button click
+document.getElementById("output_visswitch").addEventListener('click', function () {
+  if (document.getElementById("output_and_counter").style.display === "none") {
+    document.getElementById("output_and_counter").style.display = "flex"
+    document.getElementById("output_visswitch").style.bottom = 200
+    document.getElementById("output_visswitch").innerHTML = "hide"
+  }
+
+  else {
+    document.getElementById("output_and_counter").style.display = "none"
+    output_visswitch.style.bottom = 0
+    output_visswitch.innerHTML = "output"
+  }
 })
 
-document.getElementById("output_exit_button").addEventListener('click', function() {
+document.getElementById("output_exit_button").addEventListener('click', function () {
   document.getElementById("output_and_counter").style.display = "none"
   output_visswitch.style.bottom = 0
   output_visswitch.innerHTML = "output"
 })
 
-  
+
 //Import mode
-document.getElementById("import_button").addEventListener('click', function(){
+document.getElementById("import_button").addEventListener('click', function () {
   document.getElementById("stylecss").textContent = document.getElementById("css_output").value
-  // let tempor = document.createElement('button')
-  // document.body.appendChild(tempor)
-  // tempor.id = "5R21"
-  // selected_element_4form = tempor.id
-  //inputs_change()
   let body1 = document.createElement("body1")
   body1.id = "body1"
   document.body.appendChild(body1)
@@ -754,15 +713,15 @@ document.getElementById("import_button").addEventListener('click', function(){
 
   let body1_collection = body1.getElementsByTagName('*')
   for (let x = 0; x < body1_collection.length; x++) {
-    body1_collection[x].addEventListener("click", function(q) {
+    body1_collection[x].addEventListener("click", function (q) {
       selected_element_4form = q.target.id
-      selected_target = q.target          // FIX THIS PUT IN OWN BAG
+      selected_target = q.target
       clear()
       form_update()
       draggable(q.target)
     })
   }
-  id_tracker+= body1_collection.length + 10
+  id_tracker += body1_collection.length + 10
 
   document.getElementById("div1").remove()
 })
@@ -770,9 +729,8 @@ document.getElementById("import_button").addEventListener('click', function(){
 
 //Right click handler
 let alreadyopen = false
-document.addEventListener('contextmenu', function(w) {
+document.addEventListener('contextmenu', function (w) {
   w.preventDefault()
-
   if (alreadyopen === false) {
     let rcer = document.getElementById("rightclick_menu")
     let rect = rcer.parentNode.getBoundingClientRect();
@@ -780,44 +738,41 @@ document.addEventListener('contextmenu', function(w) {
     let toper = event.clientY - rect.top
     rcer.style.left = lefter + "px"
     rcer.style.top = toper + 1 + "px"
-  document.getElementById("rightclick_menu").style.display = "flex"
-  // document.getElementById("rightclick_menu").style.top = event.clientY + 1
-  // document.getElementById("rightclick_menu").style.left = event.clientX
-  //console.log(document.elementsFromPoint(event.clientX, event.clientY))
-  
-  document.getElementById("rc_children_container").textContent = ""
-  document.getElementById("rc_parent_container").textContent = ""
+    document.getElementById("rightclick_menu").style.display = "flex"
 
-  let elementspoint = document.elementsFromPoint(event.clientX, event.clientY)
-  for (let x = 0; x < elementspoint.length; x++) {
+    document.getElementById("rc_children_container").textContent = ""
+    document.getElementById("rc_parent_container").textContent = ""
 
-    if (elementspoint[x].id != "") {
-    let rc_children = document.createElement("button")
-    document.getElementById('rc_children_container').appendChild(rc_children)
-    rc_children.innerHTML = elementspoint[x].id
-    //
-    rc_children.num = elementspoint[x]
-    console.log(rc_children.num)
-    //
-    rc_children.addEventListener('contextmenu', rc_btn_rc)
-    rc_children.addEventListener('click', rc_btn_click)
-    rc_children.addEventListener('mouseover', rc_hover)
-    rc_children.addEventListener('mouseleave', rc_leave)
+    let elementspoint = document.elementsFromPoint(event.clientX, event.clientY)
+    for (let x = 0; x < elementspoint.length; x++) {
+
+      if (elementspoint[x].id != "") {
+        let rc_children = document.createElement("button")
+        document.getElementById('rc_children_container').appendChild(rc_children)
+        rc_children.innerHTML = elementspoint[x].id
+        //
+        rc_children.num = elementspoint[x]
+        console.log(rc_children.num)
+        //
+        rc_children.addEventListener('contextmenu', rc_btn_rc)
+        rc_children.addEventListener('click', rc_btn_click)
+        rc_children.addEventListener('mouseover', rc_hover)
+        rc_children.addEventListener('mouseleave', rc_leave)
+      }
+    }
+    if (elementspoint[0].parentElement.id != "body") {
+      let rc_parent = document.createElement("button")
+      rc_parent.innerHTML = elementspoint[0].parentElement.id
+      //
+      rc_parent.num = elementspoint[0].parentElement
+      //
+      document.getElementById("rc_parent_container").appendChild(rc_parent)
+      rc_parent.addEventListener('contextmenu', rc_btn_rc)
+      rc_parent.addEventListener('click', rc_btn_click)
+      rc_parent.addEventListener('mouseover', rc_hover)
+      rc_parent.addEventListener('mouseleave', rc_leave)
     }
   }
-  if (elementspoint[0].parentElement.id != "body") {
-    let rc_parent = document.createElement("button")
-    rc_parent.innerHTML = elementspoint[0].parentElement.id
-    //
-    rc_parent.num = elementspoint[0].parentElement
-    //
-    document.getElementById("rc_parent_container").appendChild(rc_parent)
-    rc_parent.addEventListener('contextmenu', rc_btn_rc)
-    rc_parent.addEventListener('click', rc_btn_click)
-    rc_parent.addEventListener('mouseover', rc_hover)
-    rc_parent.addEventListener('mouseleave', rc_leave)
-    }
-}
 })
 
 //Right click ---> right click  //potentially needs the // update as above, untested
@@ -826,7 +781,6 @@ function rc_btn_rc() {
   setTimeout(() => {
     alreadyopen = false
   }, 1)
-  //console.log(document.getElementById(this.innerHTML).childNodes)
   document.getElementById("rc_children_container").textContent = ""
   let allchilds = document.getElementById(this.innerHTML).children
   for (let x = 0; x < allchilds.length; x++) {
@@ -841,7 +795,7 @@ function rc_btn_rc() {
     rc_children.addEventListener('mouseover', rc_hover)
     rc_children.addEventListener('mouseleave', rc_leave)
   }
-  
+
 }
 //Right click ---> left click
 function rc_btn_click(q) {
@@ -849,7 +803,6 @@ function rc_btn_click(q) {
   console.log(q.target.num)
   //selected_target = this.innerHTML  //old code when used innerhtml for id instead of target (or this)
   selected_target = q.target.num     //but perfect as is - may want to unite functions but complex
-  console.log(selected_target, "ITS DONE")
   clear()
   form_update()
   alreadyopen = false
@@ -862,15 +815,15 @@ function rc_hover() {
 }
 //Removes outline on mouseleave
 function rc_leave() {
-document.getElementById(this.innerHTML).style.outline = "unset"
+  document.getElementById(this.innerHTML).style.outline = "unset"
 }
 
 
 //Right click COPY and DELETE
-document.getElementById("rc_copy").addEventListener('click', function() {
+document.getElementById("rc_copy").addEventListener('click', function () {
   console.log("COPY INVOKE")
   let rc_select = document.getElementById(document.getElementById("form_id").value).getElementsByTagName('*')
- // let initial_select = selected_element_4form
+  // let initial_select = selected_element_4form
 
   //removed class designation , now works with just IDs
 
@@ -905,30 +858,28 @@ document.getElementById("rc_copy").addEventListener('click', function() {
   // document.getElementById("ID_radio").checked = true
   // radio_id_css = "ID"
 
-   //selected_element_4form = initial_select
+  //selected_element_4form = initial_select
 
-    // //cloning process
-    clear()
-    let clone = selected_target.cloneNode(true)
-    let parent = selected_target.parentElement
-    //clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
-    parent.appendChild(clone)
-    //selected_element_4form = clone.id
-    console.log(selected_element_4form)
-    console.log(clone + "THE CLONE")
-    clear()
-    //inputs_change()
+  // //cloning process
+  clear()
+  let clone = selected_target.cloneNode(true)
+  let parent = selected_target.parentElement
+  //clone.id =  selected_element_4form + "clone_of_" + selected_element_4form + id_tracker
+  parent.appendChild(clone)
+  //selected_element_4form = clone.id
+  console.log(selected_element_4form)
+  console.log(clone + "THE CLONE")
+  clear()
+  //inputs_change()
 
-    clone.addEventListener("click", function(q) {
-      console.log("CLONE CLICKED")
-      selected_element_4form = q.target.id
-      selected_target = q.target
-      form_update()
-    })
+  clone.addEventListener("click", function (q) {
+    console.log("CLONE CLICKED")
+    selected_element_4form = q.target.id
+    selected_target = q.target
+    form_update()
+  })
 
-
-    //when these commands are run, it deletes a lot of css
-
+  //when these commands are run, it deletes a lot of css
 
   //addeventlistener
   // for (let x = 0; x < rc_select.length; x++) {
@@ -942,10 +893,10 @@ document.getElementById("rc_copy").addEventListener('click', function() {
 
 })
 
-document.getElementById("rc_del").addEventListener('click', function() {
+document.getElementById("rc_del").addEventListener('click', function () {
   if (selected_element_4form != "body") {
-  selected_target.remove()
-  console.log("DELETE INVOKED")
+    selected_target.remove()
+    console.log("DELETE INVOKED")
   }
   else {
     alert('please don\'t remove body')
@@ -961,32 +912,30 @@ function clickany(q) {
 }
 
 //doc hover anywhere
-document.addEventListener ("mouseover", function(q) {
+document.addEventListener("mouseover", function (q) {
   if (q.target.id) {
-  //document.getElementById(q.target.id).style.outline = "2px solid #84ff00"
-  q.target.style.outline = "2px solid #84ff00"
+    q.target.style.outline = "2px solid #84ff00"
   }
 })
-document.addEventListener ("mouseout", function(t) {
+document.addEventListener("mouseout", function (t) {
   if (t.target.id) {
-  //document.getElementById(t.target.id).style.outline = "unset"
-  t.target.style.outline = "unset"
+    t.target.style.outline = "unset"
   }
 })
 
-document.addEventListener("mousemove", function(t) {
+document.addEventListener("mousemove", function (t) {
   let mouse = document.getElementById('mouse_tooltip')
-        let rect = mouse.parentNode.getBoundingClientRect();
-      let lefter = event.clientX - rect.left
-      let toper = event.clientY - rect.top
-      mouse.style.left = lefter + 12 + "px"
-      mouse.style.top = toper + -23 + "px"
-      mouse.innerHTML = t.target.id
+  let rect = mouse.parentNode.getBoundingClientRect();
+  let lefter = event.clientX - rect.left
+  let toper = event.clientY - rect.top
+  mouse.style.left = lefter + 12 + "px"
+  mouse.style.top = toper + -23 + "px"
+  mouse.innerHTML = t.target.id
 })
 
 
 //Border for container visability switcher checkbox
-document.getElementById('border_checkbox').addEventListener('change', function() {
+document.getElementById('border_checkbox').addEventListener('change', function () {
   if (this.checked) {
     console.log(border_tracker.length)
     for (x = 0; x < border_tracker.length; x++) {
@@ -1001,10 +950,10 @@ document.getElementById('border_checkbox').addEventListener('change', function()
     }
   }
 })
-  
+
 //Font family + button for adding fonts
 let fontfamily_finish = false
-document.getElementById('fontfamily_add').addEventListener('click', function() {
+document.getElementById('fontfamily_add').addEventListener('click', function () {
   if (fontfamily_finish === true) {
     document.getElementById("fontfamily_link_container").style.display = "none"
     this.innerHTML = "+"
@@ -1017,25 +966,25 @@ document.getElementById('fontfamily_add').addEventListener('click', function() {
   }
 })
 
-document.getElementById('fontfamily_link_add').addEventListener('click', function() {
+document.getElementById('fontfamily_link_add').addEventListener('click', function () {
   var option = document.createElement("option")
   option.text = document.getElementById("fontfamily_link_input").value
   document.getElementById('fontfamily_items_select').add(option)
 })
 
 //Adds google font from font_arrays (fonts --> + ---> google fonts)
-document.getElementById('fontfamily_link_add_google').addEventListener('click', function() {
+document.getElementById('fontfamily_link_add_google').addEventListener('click', function () {
   var option = document.createElement("option")
   option.text = document.getElementById("fontfamily_link_input_google").value
   document.getElementById('fontfamily_items_select').add(option)
   font_array.push(option.text)
   let font_string
-    font_string = font_array.toString().replaceAll(',', "|")
+  font_string = font_array.toString().replaceAll(',', "|")
   document.getElementById('googlefonts').href = "https://fonts.googleapis.com/css?family=" + font_string
 })
 
 //fonts delete button (fonts ---> remove)
-document.getElementById('fontfamily_link_delete').addEventListener('click', function() {
+document.getElementById('fontfamily_link_delete').addEventListener('click', function () {
   let remove1 = document.getElementById("fontfamily_items_select")
   remove1.remove(document.getElementById("fontfamily_items_select").selectedIndex)
   //potentially problematic, can remove safely under here
@@ -1090,19 +1039,19 @@ function btns_hover() {
 }
 
 for (let x = 0; x < document.getElementsByClassName("radio_id_class").length; x++) {
-document.getElementsByClassName("radio_id_class")[x].addEventListener("change", function() {
-  if (this.id === "ID_radio") {
-    radio_id_css = "ID"
-  }
-  else {
-    radio_id_css = "CSS"
-  }
-})
+  document.getElementsByClassName("radio_id_class")[x].addEventListener("change", function () {
+    if (this.id === "ID_radio") {
+      radio_id_css = "ID"
+    }
+    else {
+      radio_id_css = "CSS"
+    }
+  })
 }
 
 
 //Load random element on load
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   console.log("LOADED")
   let temp_created_container = document.createElement('div')
   document.body.appendChild(temp_created_container)
@@ -1119,38 +1068,34 @@ document.addEventListener("DOMContentLoaded", function() {
 
 //positioner only one select, turns icons blue, should have used radios which is what this is
 //turns color of element ID input_array to blue and references it to data-value
-for (let y = 0 ; y < 5; y ++) {
+for (let y = 0; y < 5; y++) {
   let property_array = ["flex_direction_buttons", "justify_content_buttons", "align_items_buttons", "align_content_buttons", "flex_wrap_buttons"]
   let input_array = ["flex_direction", "justify_content", "align_items", "align_content", "flex_wrap"]
   //click
-for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
-  document.getElementsByClassName(property_array[y])[x].addEventListener("click", function () {
+  for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
     //clicked color, uncolors
-    if (this.style.backgroundColor === "rgb(121, 174, 228)") {
-      // for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+    document.getElementsByClassName(property_array[y])[x].addEventListener("click", function () {
+      if (this.style.backgroundColor === "rgb(121, 174, 228)") {
         this.style.backgroundColor = "#f0f0f0"
-      // }
-      //none selected
-      document.getElementById(input_array[y]).value = ""
-      inputs_change()
-    }
-    //clicked uncolored, uncolors all, then colors clicked, basically radio
-    else {
-      for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
-        document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
+        //none selected
+        document.getElementById(input_array[y]).value = ""
+        inputs_change()
       }
-      this.style.backgroundColor = "rgb(121, 174, 228)"
-      console.log(this.getAttribute("data-value"))
-      //sets attribute for selected element so it can be turned on and off when element is selected
-      this.setAttribute("data-color_on", "on")
-      //one selected, sets input value then updates
-      document.getElementById(input_array[y]).value = this.getAttribute("data-value")
-      inputs_change()
-    }
+      else {
+        //clicked uncolored, uncolors all, then colors clicked, basically radio
+        for (let x = 0; x < document.getElementsByClassName(property_array[y]).length; x++) {
+          document.getElementsByClassName(property_array[y])[x].style.backgroundColor = "#f0f0f0"
+        }
+        this.style.backgroundColor = "rgb(121, 174, 228)"
+        //sets attribute for selected element so it can be turned on and off when element is selected
+        this.setAttribute("data-color_on", "on")
+        //one selected, sets input value then updates
+        document.getElementById(input_array[y]).value = this.getAttribute("data-value")
+        inputs_change()
+      }
 
-  })
-}
-
+    })
+  }
 }
 
 
