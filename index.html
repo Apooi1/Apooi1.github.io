@@ -10,11 +10,11 @@
 
 
 
-<form_container id="form_container">
+<form_container id="form_container" style="opacity: 1;">
   <button id="form_left_right" type="button" style="right: 0;">&lt  &nbsp &nbsp  &gt</button>
   <div>
-    <div class="flexer"> <INPUT id="form_id" class="myinputs width100" placeholder="ID" style="height: 21px;"> </INPUT><INPUT id="ID_radio" class="radio_id_class" type="radio" name="same_radio" checked> </div>
-  <div class="flexer"> <INPUT id="class_input" class="myinputs width100" placeholder="class"></INPUT> <INPUT id="CLASS_radio" class="radio_id_class" type="radio" name="same_radio"> </div>
+    <div class="flexer"> <INPUT id="class_input" class="myinputs width100" placeholder="class"></INPUT> <INPUT id="CLASS_radio" class="radio_id_class" type="radio" name="same_radio" checked> </div>
+    <div class="flexer"> <INPUT id="form_id" class="myinputs width100" placeholder="ID" style="height: 21px;"> </INPUT><INPUT id="ID_radio" class="radio_id_class" type="radio" name="same_radio"> </div>
   <INPUT id="parent_input" class="myinputs" placeholder="Parent"></INPUT>
 </div>
 
@@ -129,10 +129,13 @@
 
 <div><pa>Colors</pa> <br>
   <div class="flexer">
-  <INPUT id="background_color" class="myinputs width100 coloree" placeholder="Background color"> </INPUT> <INPUT id="background_colo" class="myinputs colorers" placeholder="Background color" type="color" value="#000001"></INPUT>
+  Back<INPUT id="background_color" class="myinputs width100 coloree" placeholder="Background color"> </INPUT> <INPUT id="background_colo" class="myinputs colorers" placeholder="Background color" type="color" value="#000001"></INPUT>
   </div>
   <div class="flexer">
-  <INPUT id="color_input" class="myinputs width100 coloree" placeholder="Color"> </INPUT> <INPUT id="color_inpu" class="myinputs colorers" type="color" placeholder="Color" value="#000001"></INPUT>
+  Text...<INPUT id="color_input" class="myinputs width100 coloree" placeholder="Color"> </INPUT> <INPUT id="color_inpu" class="myinputs colorers" type="color" placeholder="Color" value="#000001"></INPUT>
+</div>
+<div class="flexer">
+  Border <INPUT id="border_color" class="myinputs width100 coloree" placeholder="Border color"> </INPUT> <INPUT id="border_colo" class="myinputs colorers" placeholder="Border color" type="color"></INPUT>
 </div>
 </div>
 
@@ -153,9 +156,6 @@
 </select>
 <INPUT id="border_width" class="myinputs" placeholder="Border width"></INPUT>
 <INPUT id="border_radius" class="myinputs" placeholder="Border curve - needs px"></INPUT>
-<div class="flexer">
-  <INPUT id="border_color" class="myinputs width100 coloree" placeholder="Border color"> </INPUT> <INPUT id="border_colo" class="myinputs colorers" placeholder="Border color" type="color"></INPUT>
-</div>
 </div>
 
 <div><pa>Text</pa>
@@ -254,6 +254,12 @@
 
 <button id="output_visswitch" style="left: calc(65% - 250px);">output</button>
 
+<button id="button_and_container">
+  <button id="create">+</button>
+  <container id="select_container">
+  </container>
+  <container id="more_select_container" style="display: none;"></container>
+</button>
 
 <script src="script.js"></script>
 <script src="showhide.js"></script>

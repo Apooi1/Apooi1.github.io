@@ -6,8 +6,7 @@ let unused_hex = "#000001"  //prevent default color from submitting
 let vislock_creation = 1      //lock for +button visability
 let potential_hover = ""
 let matches
-let radio_id_css = "ID"
-//let elementspoint
+let radio_id_css = "CLASS"
 
 const person = {}
 let my = {}
@@ -16,19 +15,12 @@ let wow = {}
 let border_tracker = []
 let font_array = []
 
-// let param_array = ["style.display", "style.flexDirection", "style.justifyContent", "style.alignContent", "style.alignItems", "style.flexWrap", "style.top", "style.left", "style.bottom", "style.right",
-// "style.height", "style.width", "placeholder", "style.borderStyle", "style.borderWidth", "style.borderRadius", "style.margin", "style.padding", "style.position", "style.fontFamily"
-// , "style.fontSize", "style.fontWeight", "style.fontStyle", "style.lineHeight"]
 
 let cssparm_array = ["display", "flex-direction", "justify-content", "align-content", "align-items", "flex-wrap", "top",
  "left", "bottom", "right", "height", "width", "placeholder", "border-style", "border-width", "border-radius", "margin",
   "padding", "position", "font-family", "font-size", "font-weight", "font-style", "line-height", "background-color", 
   "color", "row-gap", "column-gap", "border-color", "overflow", "background-image"]
 
-// let input_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
-// "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style", "border_width", "border_radius",
-// "margin_input", "padding_input", "position_input", "fontfamily_input", "fontsize_input", "fontweight_input", "fontstyle_input"
-// , "lineheight_input"]
 
 let cssinput_array = ["display_input", "flex_direction", "justify_content", "align_content", "align_items", "flex_wrap",
 "x_input", "y_input", "bottom_input", "right_input", "height_input", "width_input", "placeholder_input", "border_style",
@@ -43,23 +35,24 @@ const rgb2hex = (rgb) => `#${rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/).slice
 
 
 //+ button and selection container container
-let button_and_container = document.createElement("button")
-document.body.appendChild(button_and_container)
-button_and_container.id = "button_and_container"
+// let button_and_container = document.createElement("button")
+// document.body.appendChild(button_and_container)
+// button_and_container.id = "button_and_container"
 //draggable(button_and_container)
+
  //+ button
-let create_new = document.createElement('button')
-document.getElementById("button_and_container").appendChild(create_new)
-create_new.innerHTML = "+"
-create_new.id = "create"
+// let create_new = document.createElement('button')
+// document.getElementById("button_and_container").appendChild(create_new)
+// create_new.innerHTML = "+"
+// create_new.id = "create"
 //+ button click
-create_new.addEventListener('click', function() {
+document.getElementById("create").addEventListener('click', function() {
 if (vislock_creation === 1) {
 visswitch_create_button()
 }
 })
 // Triggers when children are clicked (create item)
-button_and_container.addEventListener('click', function(){
+document.getElementById("button_and_container").addEventListener('click', function(){
 if (vislock_creation === 0) {
 visswitch_create_button()
 }
@@ -75,10 +68,10 @@ document.getElementById('create').innerHTML = " - "
 }
 }
 //Container for creation buttons
-let select_container = document.createElement("container")
-document.getElementById("button_and_container").appendChild(select_container)
-select_container.id = "select_container"
-select_container.addEventListener("mousedown", function (s){
+// let select_container = document.createElement("container")
+// document.getElementById("button_and_container").appendChild(select_container)
+// select_container.id = "select_container"
+document.getElementById("select_container").addEventListener("mousedown", function (s){
   s.stopPropagation();
 })
 
@@ -98,6 +91,7 @@ button_create_button.addEventListener('click', function(){
   created_button.innerHTML = "Button here"
   id_tracker+= 1
   created_button.id = "btn" + id_tracker
+  created_button.className = "btn" + id_tracker
   selector(created_button)
   clear()
   document.getElementById('x_input').value = "40%"
@@ -109,7 +103,7 @@ button_create_button.addEventListener('click', function(){
 
 //Input creation button to create Inputs
 let input_create_button = document.createElement("button")
-document.getElementById("select_container").appendChild(input_create_button)
+document.getElementById("more_select_container").appendChild(input_create_button)
 input_create_button.innerHTML = "User Input"
 input_create_button.id = "input_create_button"
 
@@ -122,6 +116,7 @@ document.getElementById("input_create_button").addEventListener('click', functio
   created_input.value = "INPUTED"
   id_tracker +=1
   created_input.id = created_input.nodeName + id_tracker
+  created_input.className = created_input.nodeName + id_tracker
   selector(created_input)
   clear()
   form_update()
@@ -131,7 +126,7 @@ document.getElementById("input_create_button").addEventListener('click', functio
 
 //Text area creation button to create textareas
 let textarea_create_button = document.createElement("button")
-document.getElementById("select_container").appendChild(textarea_create_button)
+document.getElementById("more_select_container").appendChild(textarea_create_button)
 textarea_create_button.innerHTML = "Text Area"
 textarea_create_button.id = "textarea_create_button"
 
@@ -143,7 +138,7 @@ document.getElementById("textarea_create_button").addEventListener('click', func
   created_textarea.value = "Write your text here..."
   id_tracker += 1
   created_textarea.id = created_textarea.nodeName + id_tracker
-  //created_textarea.className = "created_textarea_class"
+  created_textarea.className = created_textarea.nodeName + id_tracker
   selector(created_textarea)
   clear()
   document.getElementById('height_input').value = "120px"
@@ -165,6 +160,7 @@ img_create_button.addEventListener('click', function(){
   document.body.appendChild(created_img)
   id_tracker += 1
   created_img.id = created_img.nodeName + id_tracker
+  created_img.className = created_img.nodeName + id_tracker
   selector(created_img)
   clear()
   document.getElementById('width_input').value = "150px"
@@ -204,20 +200,19 @@ container_create_button.addEventListener('click', function(){
   draggable(created_container)
 })
 
-document.body.id = "body"
-let body_select = document.createElement('button')
-document.getElementById('select_container').appendChild(body_select)
-body_select.style.position = "relative"
-body_select.innerHTML = "Select Background"
-body_select.id = "body_select"
-//body select click
-body_select.addEventListener('click', function(){
-  selector(document.body)
-})
+// document.body.id = "body"
+// let body_select = document.createElement('button')
+// document.getElementById('select_container').appendChild(body_select)
+// body_select.style.position = "relative"
+// body_select.innerHTML = "Select Background"
+// body_select.id = "body_select"
+// //body select click
+// body_select.addEventListener('click', function(){
+//   selector(document.body)
+// })
 
 
 //------------>>>>>>>>>>>>>>>>>>>>>>>>>>>>>SELECTOR<<<<<<<<<<<<<<<<<<<<<<<<<--------------------------------
-
 //Find ID of selected element
 function selector(selected_element1){
   console.log(selected_element_4form)
@@ -233,18 +228,11 @@ selected_element1.addEventListener('click', function(q) {
   clear()
 form_update()
 })
-//form_update()  //Is being run before inputs are changed, so it can not find the right match because it does not exist yet
-//Another BUG occurs when this is disabled however, and that is that line 225 for some reason does not work, why? Idk, tested in replit and works, now delete every single other line of code until it does
-//EDIT: FOUND IT, its FUNCTION CLEAR - I go sleep now, good luck
-//EDIT: clear() only fixes the bug as long as its called, but if its just ignored the bug remains, FUCK
-//EDIT: clear() was same as draggable, the real issue is line 465 rewritting ID, good luck
 }
   
 
-
 //&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&~~CSS UPDATER~~&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
 //display values in form on click
-//ID
 function form_update(){
   input_updater_ID()
   //clear()
@@ -254,7 +242,14 @@ function form_update(){
 
   let stylecss = document.getElementById('stylecss').textContent
   // console.log(selected_target)
-  let first_index = stylecss.indexOf("#" + selected_target.id + potential_hover)
+  let dot_or_hash
+  if (document.getElementById("CLASS_radio").checked) {
+    dot_or_hash = "."
+  }
+  else {
+    dot_or_hash = "#"
+  }
+  let first_index = stylecss.indexOf(dot_or_hash + selected_target.id + potential_hover)
   let last_index = stylecss.indexOf("}", first_index)
   let selectedcss = stylecss.substring(first_index, last_index+1)
   // console.log(selectedcss)
@@ -313,14 +308,11 @@ function form_update(){
     // }
 
     let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
-    //resets all colors with data color on
-    console.log(document.querySelectorAll("[data-color_on=on]").length)
+    //resets all colors with data color on - then //sets all data color on to off
     for (let x = 0; x < data_color_on_array; x++) {
       document.querySelectorAll("[data-color_on=on]")[x].style.backgroundColor = "#f0f0f0"
     }
-    //sets all data color on to off
     for (let x = 0; x < data_color_on_array; x++) {
-      console.log(document.querySelectorAll("[data-color_on=on]")[x])
       document.querySelectorAll("[data-color_on=on]")[0].setAttribute("data-color_on", "off")
     }
     //grabs all icons that match input fields - colors icons and sets their data color to on
@@ -370,6 +362,14 @@ for (let x = 0; x < coloree_classes.length; x++) {
     }
     //document.getElementById("form_id").value = ""
     document.getElementById("background_color").value = "#000001"
+    //resets all colors with data color on - then sets all data color on to off
+    let data_color_on_array = document.querySelectorAll("[data-color_on=on]").length
+    for (let x = 0; x < data_color_on_array; x++) {
+      document.querySelectorAll("[data-color_on=on]")[x].style.backgroundColor = "#f0f0f0"
+    }
+    for (let x = 0; x < data_color_on_array; x++) {
+      document.querySelectorAll("[data-color_on=on]")[0].setAttribute("data-color_on", "off")
+    }
   }
 
 
@@ -1074,12 +1074,18 @@ function btns_hover() {
 
   if (btn_hover_selected === "btn_standard") {
     potential_hover = ""
+    clear()
+    form_update()
   }
   else if (btn_hover_selected === "btn_active") {
     potential_hover = ":active"
+    clear()
+    form_update()
   }
   else if (btn_hover_selected === "btn_hover") {
     potential_hover = ":hover"
+    clear()
+    form_update()
   }
 }
 
