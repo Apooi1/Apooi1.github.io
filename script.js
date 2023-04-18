@@ -402,14 +402,14 @@ function draggable(selected) {
         q.preventDefault()
         clone.remove()
         //console.log("target is " + drag_target.id)
-        if (drag_target != drag_select && drag_select != null && drag_target != "") {
+        if (drag_target != drag_select && drag_select != null && !!drag_target /*!= null && drag_target != ""*/) {
           drag_target.appendChild(drag_select)
         }
 
         document.removeEventListener("mousemove", mousemover)
         mousedown_triggered = false
         drag_select = null
-        drag_target = ""   //breaks shit if you enable it, just delete XD  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
+        drag_target = ""   //breaks stuff if you enable it, just delete  //in other news, the above used to be getElementById("drag_select") rather than q.target it was q.target.id
         //document.removeEventListener("mousedown", mousedown)
       }
     }
