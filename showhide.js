@@ -44,7 +44,6 @@ document.getElementById("select_container").appendChild(more_button)
 more_button.id = "more_button"
 more_button.innerHTML = "show more"
 document.getElementById("more_button").addEventListener('click', function() {
-    console.log("MORE CLICKED")
     if (document.getElementById("more_select_container").style.display === "flex") {
         document.getElementById("more_select_container").style.display = "none"
         document.getElementById("more_button").innerHTML = "show more"

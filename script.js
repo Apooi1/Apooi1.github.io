@@ -182,13 +182,11 @@ container_create_button.addEventListener('click', function () {
   let created_container = document.createElement('div')
   document.body.appendChild(created_container)
   id_tracker += 1
-  console.log(id_tracker)
   created_container.id = "div" + id_tracker
   created_container.className = "div" + id_tracker
   border_tracker.push(created_container)
   selector(created_container)
   clear()
-  console.log(document.getElementById("background_color").value)
   document.getElementById('width_input').value = "100%"
   document.getElementById('border_style').value = "solid"
   document.getElementById('border_width').value = "1px"
@@ -315,7 +313,6 @@ function form_update() {
 
 function input_updater_ID() {
   //ID
-  console.log(selected_element_4form)
   document.getElementById("form_id").value = document.getElementById(selected_element_4form).id
   //CLASS
   document.getElementById("class_input").value = document.getElementById(selected_element_4form).className
@@ -461,8 +458,9 @@ function inputs_change() {
   else /*if (radio_id_css === "CLASS")*/ {
     cssline = "." + document.getElementById(selected_element_4form).className + potential_hover + " {" + "\n"
   }
-  console.log(cssline)        //ENABLE THIS
+  //console.log(cssline)        //ENABLE THIS
   //paramter of css values + the value of CURRENT input fields
+  //object storage test
   person[selected_element_4form] = {}
   for (let i = 0; i < cssinput_array.length; i++) {
     if (document.getElementById(cssinput_array[i]).value != "" && document.getElementById(cssinput_array[i]).value != "#000001") {
@@ -472,9 +470,8 @@ function inputs_change() {
       person[selected_element_4form][cssparm_array[i]] = document.getElementById(cssinput_array[i]).value
     }
   }
+  //object storage test
   cssline += "}"
-
-  console.log(person)
 
   let css_output = document.createTextNode(cssline)
   let stylecss = document.getElementById('stylecss').textContent
@@ -498,14 +495,10 @@ function inputs_change() {
   //ID submit
   selected_target.id = document.getElementById("form_id").value //found
   //class submit
-  console.log(selected_target.className)
   selected_target.className = document.getElementById("class_input").value
 
   //Text submit      //FOUND BUG
   if (selected_element_4form != "body") {
-    //console.log(selected_target)
-    console.log(document.getElementById('text_input').value)
-    //selected_target is not updating
     selected_target.innerHTML = document.getElementById('text_input').value
   }
   //parent input submit
